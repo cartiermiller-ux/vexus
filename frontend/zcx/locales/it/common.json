@@ -5,5 +5,30 @@
     "p": "Unisciti ai trader di tutto il mondo e segui crypto, azioni e mercati globali su un'unica piattaforma.",
     "cta": "Inizia a fare trading",
     "note": "Mercati in tempo reale · Multi-mercato · Trading sicuro"
+  },
+  "stock": {
+    "title": "Mercato azionario",
+    "subtitle": "Indici A-shares / HK / USA e azioni popolari · dati di mercato pubblici",
+    "search": "Cerca nome o codice",
+    "refresh": "Aggiorna",
+    "name": "Nome",
+    "price": "Ultimo prezzo",
+    "change": "Variazione",
+    "changePct": "Variazione %",
+    "open": "Apertura",
+    "prevClose": "Chiusura precedente",
+    "high": "Massimo",
+    "low": "Minimo",
+    "chart": "Grafico a candele giornaliero",
+    "close": "Chiusura",
+    "updated": "Aggiornato",
+    "dataNote": "USA: Alpaca IEX in tempo reale; A-shares/HK: Tencent con ritardo. I prezzi sono rettificati per frazionamenti. Solo a scopo informativo."
+  },
+  "nav": {
+    "home": "Home",
+    "market": "Mercati",
+    "stocks": "Azioni",
+    "tradfi": "Finanza tradizionale",
+    "rewards": "Ricompense"
   }
 }

@@ -5,5 +5,30 @@
     "p": "加入全球交易者的行列，在同一個平台查看加密資產、股票與全球市場行情。",
     "cta": "開始交易",
     "note": "即時行情 · 多市場覆蓋 · 安全交易"
+  },
+  "stock": {
+    "title": "全球股票行情",
+    "subtitle": "A股 / 港股 / 美股指數與熱門股票 · 公開行情數據",
+    "search": "搜尋名稱或代碼",
+    "refresh": "重新整理",
+    "name": "名稱",
+    "price": "最新價",
+    "change": "漲跌",
+    "changePct": "漲跌幅",
+    "open": "今開",
+    "prevClose": "昨收",
+    "high": "最高",
+    "low": "最低",
+    "chart": "日K線",
+    "close": "關閉",
+    "updated": "更新",
+    "dataNote": "美股：Alpaca IEX 即時；A股/港股：騰訊延時行情。美股價格為拆股調整後價格，僅供展示參考。"
+  },
+  "nav": {
+    "home": "首頁",
+    "market": "行情",
+    "stocks": "股票",
+    "tradfi": "TradFi",
+    "rewards": "福利中心"
   }
 }

@@ -5,5 +5,30 @@
     "p": "Schließen Sie sich Tradern weltweit an und verfolgen Sie Krypto, Aktien und globale Märkte auf einer Plattform.",
     "cta": "Jetzt handeln",
     "note": "Echtzeitmärkte · Mehrere Märkte · Sicherer Handel"
+  },
+  "stock": {
+    "title": "Aktienmarkt",
+    "subtitle": "A-Aktien / HK / US-Indizes und beliebte Aktien · öffentliche Marktdaten",
+    "search": "Name oder Code suchen",
+    "refresh": "Aktualisieren",
+    "name": "Name",
+    "price": "Letzter Preis",
+    "change": "Änderung",
+    "changePct": "Änderung %",
+    "open": "Eröffnung",
+    "prevClose": "Vortagesschluss",
+    "high": "Hoch",
+    "low": "Tief",
+    "chart": "Tägliches K-Liniendiagramm",
+    "close": "Schluss",
+    "updated": "Aktualisiert",
+    "dataNote": "US: Alpaca IEX in Echtzeit; A-Aktien/HK: Tencent verzögert. Preise sind splitbereinigt. Nur zur Information."
+  },
+  "nav": {
+    "home": "Startseite",
+    "market": "Märkte",
+    "stocks": "Aktien",
+    "tradfi": "TradFi",
+    "rewards": "Belohnungen"
   }
 }

@@ -5,5 +5,30 @@
     "p": "Rejoignez des traders du monde entier et suivez les cryptos, actions et marchés mondiaux sur une seule plateforme.",
     "cta": "Commencer à trader",
     "note": "Marchés en temps réel · Multi-marchés · Trading sécurisé"
+  },
+  "stock": {
+    "title": "Marché boursier",
+    "subtitle": "Actions A / indices Hong Kong / États-Unis et actions populaires · données publiques de marché",
+    "search": "Rechercher un nom ou un code",
+    "refresh": "Actualiser",
+    "name": "Nom",
+    "price": "Dernier prix",
+    "change": "Variation",
+    "changePct": "Variation %",
+    "open": "Ouverture",
+    "prevClose": "Clôture précédente",
+    "high": "Haut",
+    "low": "Bas",
+    "chart": "Graphique journalier en chandeliers",
+    "close": "Clôture",
+    "updated": "Mis à jour",
+    "dataNote": "États-Unis : Alpaca IEX en temps réel ; actions A/HK : données Tencent différées. Les prix sont ajustés pour les splits. À titre indicatif uniquement."
+  },
+  "nav": {
+    "home": "Accueil",
+    "market": "Marchés",
+    "stocks": "Actions",
+    "tradfi": "Finance traditionnelle",
+    "rewards": "Récompenses"
   }
 }
