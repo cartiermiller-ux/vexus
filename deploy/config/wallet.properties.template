@@ -1,0 +1,12 @@
+# =============================================================================
+# deploy/config/wallet.properties.template
+# 目标位置（三应用各一份）：
+#   web3_project/admin_u/WEB-INF/classes/config/wallet.properties
+#   web3_project/data_u/WEB-INF/classes/config/wallet.properties
+#   源代码/{admin,api,data}/src/main/resources/config/wallet.properties
+#
+# 由 project.wallet.PropertiesUtilWallet 读取（CONFIG_FILENAME = "config/wallet.properties"）。
+# =============================================================================
+
+# 法币/计价默认币种（前台展示换算基准，一般 USD）
+user_default_currency = USD

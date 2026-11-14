@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+		
+    <bean id="userDataService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="userDataService"/>
+		<constructor-arg name="remoteInterface" value="project.user.UserDataService"/>
+	</bean>
+			
+	<bean id="logService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="logService"/>
+		<constructor-arg name="remoteInterface" value="project.log.LogService"/>
+	</bean>
+		
+	<bean id="codeLogService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="codeLogService"/>
+		<constructor-arg name="remoteInterface" value="project.log.CodeLogService"/>
+	</bean>
+	
+	<bean id="sysLogService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="sysLogService"/>
+		<constructor-arg name="remoteInterface" value="project.log.SysLogService"/>
+	</bean>
+		
+	<bean id="adjustmentValueService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="adjustmentValueService"/>
+		<constructor-arg name="remoteInterface" value="project.data.AdjustmentValueService"/>
+	</bean>
+	
+	<bean id="onlineChatMessageService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="onlineChatMessageService"/>
+		<constructor-arg name="remoteInterface" value="project.onlinechat.OnlineChatMessageService"/>
+	</bean>
+		
+	<bean id="onlineChatVisitorMessageService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="onlineChatVisitorMessageService"/>
+		<constructor-arg name="remoteInterface" value="project.onlinechat.OnlineChatVisitorMessageService"/>
+	</bean>
+		
+	<bean id="otcOnlineChatMessageService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="otcOnlineChatMessageService"/>
+		<constructor-arg name="remoteInterface" value="project.onlinechat.otc.OtcOnlineChatMessageService"/>
+	</bean>
+				
+	<bean id="localUserService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="localUserService"/>
+		<constructor-arg name="remoteInterface" value="project.user.LocalUserService"/>
+	</bean>
+		
+	<bean id="c2cPaymentMethodConfigService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="c2cPaymentMethodConfigService"/>
+		<constructor-arg name="remoteInterface" value="project.c2c.C2cPaymentMethodConfigService"/>
+	</bean>
+		
+	<bean id="c2cPaymentMethodService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="c2cPaymentMethodService"/>
+		<constructor-arg name="remoteInterface" value="project.c2c.C2cPaymentMethodService"/>
+	</bean>
+		
+	<bean id="c2cUserService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="c2cUserService"/>
+		<constructor-arg name="remoteInterface" value="project.c2c.C2cUserService"/>
+	</bean>
+		
+	<bean id="c2cUserParamBaseSetService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="c2cUserParamBaseSetService"/>
+		<constructor-arg name="remoteInterface" value="project.c2c.C2cUserParamBaseSetService"/>
+	</bean>
+
+	<bean id="c2cAdvertService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="c2cAdvertService"/>
+		<constructor-arg name="remoteInterface" value="project.c2c.C2cAdvertService"/>
+	</bean>
+		
+	<bean id="c2cOrderService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="c2cOrderService"/>
+		<constructor-arg name="remoteInterface" value="project.c2c.C2cOrderService"/>
+	</bean>
+
+	<bean id="c2cAppealService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="c2cAppealService"/>
+		<constructor-arg name="remoteInterface" value="project.c2c.C2cAppealService"/>
+	</bean>
+
+	<bean id="c2cTranslateService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="c2cTranslateService"/>
+		<constructor-arg name="remoteInterface" value="project.c2c.C2cTranslateService"/>
+	</bean>
+		
+	<bean id="futuresOrderService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="futuresOrderService"/>
+		<constructor-arg name="remoteInterface" value="project.futures.FuturesOrderService"/>
+	</bean>
+		
+	<bean id="minerOrderProfitService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="minerOrderProfitService"/>
+		<constructor-arg name="remoteInterface" value="project.miner.job.MinerOrderProfitService"/>
+	</bean>
+		
+	<bean id="loanOrderService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="loanOrderService"/>
+		<constructor-arg name="remoteInterface" value="project.loan.LoanOrderService"/>
+	</bean>
+		
+	<bean id="loanRelationOrderService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="loanRelationOrderService"/>
+		<constructor-arg name="remoteInterface" value="project.loan.LoanRelationOrderService"/>
+	</bean>
+</beans>

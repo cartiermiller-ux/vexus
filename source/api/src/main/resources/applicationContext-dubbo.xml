@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">      
+	
+	<bean id="userDataService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="userDataService"/>
+		<constructor-arg name="remoteInterface" value="project.user.UserDataService"/>
+	</bean>
+	
+	<bean id="logService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="logService"/>
+		<constructor-arg name="remoteInterface" value="project.log.LogService"/>
+	</bean>
+		
+	<bean id="codeLogService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="codeLogService"/>
+		<constructor-arg name="remoteInterface" value="project.log.CodeLogService"/>
+	</bean>
+	
+	<bean id="sysLogService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="sysLogService"/>
+		<constructor-arg name="remoteInterface" value="project.log.SysLogService"/>
+	</bean>
+		
+	<bean id="adjustmentValueService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="adjustmentValueService"/>
+		<constructor-arg name="remoteInterface" value="project.data.AdjustmentValueService"/>
+	</bean>
+		
+	<bean id="hobiDataService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="hobiDataService"/>
+		<constructor-arg name="remoteInterface" value="project.hobi.HobiDataService"/>
+	</bean>
+		
+	<bean id="futuresOrderService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="futuresOrderService"/>
+		<constructor-arg name="remoteInterface" value="project.futures.FuturesOrderService"/>
+	</bean>
+		
+	<bean id="contractLockService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="contractLockService"/>
+		<constructor-arg name="remoteInterface" value="project.contract.ContractLockService"/>
+	</bean>
+	
+	<bean id="loanOrderService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="loanOrderService"/>
+		<constructor-arg name="remoteInterface" value="project.loan.LoanOrderService"/>
+	</bean>
+		
+	<bean id="loanRelationOrderService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="loanRelationOrderService"/>
+		<constructor-arg name="remoteInterface" value="project.loan.LoanRelationOrderService"/>
+	</bean>
+</beans>

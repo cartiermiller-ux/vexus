@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+	
+	<bean id="financeService" class="project.finance.internal.FinanceServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="secUserService" ref="secUserService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+	</bean>
+	
+	<bean id="financeOrderService" class="project.finance.internal.FinanceOrderServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="walletService" ref="walletService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="financeService" ref="financeService" />
+		<property name="userDataService" ref="userDataService" />
+		<property name="partyService" ref="partyService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="userRecomService" ref="userRecomService" />
+	</bean>
+	
+	<bean id="financeLoadCacheService" class="project.finance.data.loadcache.FinanceLoadCacheService">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="financeOrder1DayJob" class="project.finance.job.FinanceOrder1DayJob">
+		<property name="financeOrderService" ref="financeOrderService" />
+		<property name="sysLogService" ref="sysLogService" />
+	</bean>
+	
+	<bean id="financeOrderCreateRecomService" class="project.finance.job.FinanceOrderCreateRecomServiceImpl">
+		<property name="financeOrderService" ref="financeOrderService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="userRecomService" ref="userRecomService" />
+		<property name="partyService" ref="partyService" />
+		<property name="walletService" ref="walletService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+	</bean>
+	
+	<bean id="financeOrderCreateRecomJob" class="project.finance.job.FinanceOrderCreateRecomJob">
+		<property name="financeOrderCreateRecomService" ref="financeOrderCreateRecomService" />
+		<property name="sysLogService" ref="sysLogService" />
+	</bean>
+</beans>

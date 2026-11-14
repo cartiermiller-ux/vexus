@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+	
+	<bean id="newsService" class="project.news.internal.NewsServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="partyService" ref="partyService" />		
+		<property name="userRecomService" ref="userRecomService" />
+	</bean>
+	
+	<bean id="newsLoadCacheService" class="project.news.data.loadcache.NewsLoadCacheService">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+</beans>

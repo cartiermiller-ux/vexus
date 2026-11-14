@@ -1,0 +1,34 @@
+#vexus-ai-root{position:relative;z-index:99999;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+#vexus-ai-fab{position:fixed;right:24px;bottom:96px;z-index:99999;display:flex;align-items:center;gap:8px;height:52px;padding:0 18px 0 10px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:linear-gradient(135deg,rgba(124,92,255,.92),rgba(66,110,255,.9));color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 14px 36px rgba(56,90,255,.42),inset 0 1px 0 rgba(255,255,255,.35);backdrop-filter:blur(14px)}
+#vexus-ai-fab:hover{transform:translateY(-1px);box-shadow:0 18px 44px rgba(56,90,255,.52)}
+.vexus-ai-fab-orb{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#b9a8ff 45%,#5b7cff);box-shadow:0 0 16px rgba(170,150,255,.8);display:inline-block}
+#vexus-ai-panel{position:fixed;right:24px;bottom:164px;z-index:99999;width:386px;height:560px;display:flex;flex-direction:column;overflow:hidden;border-radius:22px;border:1px solid rgba(255,255,255,.2);background:linear-gradient(160deg,rgba(25,21,48,.96),rgba(12,10,26,.97));box-shadow:0 30px 90px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.14);backdrop-filter:blur(26px) saturate(150%)}
+#vexus-ai-panel.vexus-ai-hidden{display:none}
+.vexus-ai-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.09);background:linear-gradient(120deg,rgba(124,92,255,.25),rgba(48,150,255,.12))}
+.vexus-ai-head-text{display:flex;flex-direction:column;gap:3px}
+.vexus-ai-head-text strong{color:#fff;font-size:16px;letter-spacing:.3px}
+.vexus-ai-head-text small{color:rgba(255,255,255,.6);font-size:11px}
+#vexus-ai-close{width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;font-size:20px;line-height:1;cursor:pointer}
+#vexus-ai-close:hover{background:rgba(255,255,255,.2)}
+.vexus-ai-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin}
+.vexus-ai-row{display:flex;align-items:flex-start;gap:9px}
+.vexus-ai-row.is-user{flex-direction:row-reverse}
+.vexus-ai-avatar{flex:0 0 28px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;background:linear-gradient(135deg,#7c5cff,#3696ff)}
+.vexus-ai-row.is-user .vexus-ai-avatar{background:#2b2350;color:#cfc9e0}
+.vexus-ai-bubble{max-width:76%;padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.55;color:#fff;white-space:pre-wrap;word-break:break-word;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
+.vexus-ai-row.is-user .vexus-ai-bubble{background:linear-gradient(135deg,rgba(84,120,255,.9),rgba(124,92,255,.9));border-color:rgba(255,255,255,.18);color:#fff}
+.vexus-ai-typing .vexus-ai-bubble{color:rgba(255,255,255,.68);font-style:italic}
+.vexus-ai-quick{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 8px}
+.vexus-ai-quick button{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.07);color:rgba(255,255,255,.82);border-radius:999px;font-size:11px;padding:5px 10px;cursor:pointer}
+.vexus-ai-quick button:hover{background:rgba(124,92,255,.3);border-color:rgba(160,140,255,.5)}
+.vexus-ai-input-wrap{display:flex;align-items:flex-end;gap:8px;padding:10px 14px 10px 16px;border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.12)}
+#vexus-ai-input{flex:1;resize:none;min-height:38px;max-height:96px;padding:9px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-size:13px;line-height:1.4;outline:none}
+#vexus-ai-input::placeholder{color:rgba(255,255,255,.42)}
+#vexus-ai-send{height:38px;padding:0 16px;border:1px solid rgba(255,255,255,.22);border-radius:12px;background:linear-gradient(135deg,#5b7cff,#8b5cff);color:#fff;font-size:13px;font-weight:600;cursor:pointer}
+.vexus-ai-foot{padding:0 16px 10px;color:rgba(255,255,255,.38);font-size:10px;line-height:1.4;text-align:center}
+@media (max-width:600px){
+  #vexus-ai-fab{right:16px;bottom:84px;height:46px;padding:0 14px 0 8px;font-size:12px}
+  .vexus-ai-fab-orb{width:30px;height:30px}
+  #vexus-ai-panel{right:12px;left:12px;bottom:138px;width:auto;height:74vh;max-height:620px;border-radius:18px}
+  .vexus-ai-bubble{max-width:82%;font-size:13px}
+}

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+		
+	<bean id="pledgeConfigService" class="project.monitor.pledge.internal.PledgeConfigServiceImpl">
+		<property name="partyService" ref="partyService" />
+		<property name="userRecomService" ref="userRecomService" />		
+	</bean>
+	
+	<bean id="pledgeGalaxyConfigService" class="project.monitor.pledgegalaxy.internal.PledgeGalaxyConfigServiceImpl">
+		<property name="partyService" ref="partyService" />
+		<property name="userRecomService" ref="userRecomService" />
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="pledgeGalaxyOrderService" ref="pledgeGalaxyOrderService" />
+	</bean>
+	
+	<bean id="pledgeOrderService" class="project.monitor.pledge.internal.PledgeOrderServiceImpl">
+		<property name="pledgeConfigService" ref="pledgeConfigService" />
+		<property name="partyService" ref="partyService" />
+	</bean>
+	
+	<bean id="pledgeService" class="project.monitor.pledge.internal.PledgeServiceImpl">
+		<property name="walletService" ref="walletService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="dataService" ref="dataService" />
+		<property name="autoMonitorDAppLogService" ref="autoMonitorDAppLogService" />
+	</bean>
+	
+	<!-- 质押2.0 -->
+	<bean id="pledgeGalaxyOrderService" class="project.monitor.pledgegalaxy.internal.PledgeGalaxyOrderServiceImpl">
+		<property name="walletService" ref="walletService"/>
+		<property name="moneyLogService" ref="moneyLogService"/>
+		<property name="redisHandler" ref="redisHandler"/>
+		<property name="userRecomService" ref="userRecomService"/>
+		<property name="partyService" ref="partyService"/>
+		<property name="dAppAccountService" ref="dAppAccountService"/>
+		<property name="pledgeGalaxyConfigService" ref="pledgeGalaxyConfigService"/>
+		<property name="tipService" ref="tipService"/>
+		<property name="pledgeGalaxyProfitService" ref="pledgeGalaxyProfitService"/>
+	</bean>
+	
+	<bean id="pledgeGalaxyLoadCacheService" class="project.monitor.pledgegalaxy.data.loadcache.PledgeGalaxyLoadCacheService">
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="pledgeGalaxyProfitService" class="project.monitor.pledgegalaxy.internal.PledgeGalaxyProfitServiceImpl">
+		<property name="walletService" ref="walletService"/>
+		<property name="pledgeGalaxyOrderService" ref="pledgeGalaxyOrderService"/>
+		<property name="moneyLogService" ref="moneyLogService"/>
+		<property name="userDataService" ref="userDataService"/>
+		<property name="sysparaService" ref="sysparaService"/>
+	</bean>
+	
+	<bean id="pledgeGalaxyOrderStatusUpdateJob" class="project.monitor.pledgegalaxy.job.PledgeGalaxyOrderStatusUpdateJob">
+		<property name="autoMonitorOrderService" ref="autoMonitorOrderService" />
+		<property name="pledgeGalaxyOrderService" ref="pledgeGalaxyOrderService" />
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<bean id="pledgeGalaxyProfitStatusUpdateJob" class="project.monitor.pledgegalaxy.job.PledgeGalaxyProfitStatusUpdateJob">
+		<property name="pledgeGalaxyProfitService" ref="pledgeGalaxyProfitService" />
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<!-- 生成质押收益记录 -->
+	<bean id="pledgeGalaxyProfitCreateJob" class="project.monitor.pledgegalaxy.job.PledgeGalaxyProfitCreateJob">
+		<property name="pledgeGalaxyOrderService" ref="pledgeGalaxyOrderService" />
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<bean id="pledgeGalaxyTeamProfitCreateJob" class="project.monitor.pledgegalaxy.job.PledgeGalaxyTeamProfitCreateJob">
+		<property name="pledgeGalaxyOrderService" ref="pledgeGalaxyOrderService" />
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+</beans>

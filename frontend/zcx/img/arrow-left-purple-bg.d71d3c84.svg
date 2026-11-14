@@ -1,0 +1,21 @@
+<svg width="135" height="221" viewBox="0 0 135 221" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="::after">
+<g id="arrow-bg-1.svg fill" clip-path="url(#clip0_4934_17540)">
+<g id="arrow-bg-1.svg" clip-path="url(#clip1_4934_17540)">
+<path id="Vector" d="M123.154 209.008L23.2607 102.16L123.154 6.87099" stroke="url(#paint0_linear_4934_17540)" stroke-width="31.5949"/>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_4934_17540" x1="12.1285" y1="115.128" x2="131.027" y2="107.521" gradientUnits="userSpaceOnUse">
+<stop stop-color="#9264F3" stop-opacity="0.26"/>
+<stop offset="0.864583" stop-color="#8F71D0" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="clip0_4934_17540">
+<rect width="134.51" height="220.37" fill="white" transform="matrix(-1 0 0 -1 134.89 220.523)"/>
+</clipPath>
+<clipPath id="clip1_4934_17540">
+<rect width="134.51" height="225.856" fill="white" transform="matrix(-1 0 0 -1 134.89 220.523)"/>
+</clipPath>
+</defs>
+</svg>

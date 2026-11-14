@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+	
+	<bean id="onlineChatMessageService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="onlineChatMessageService"/>
+		<constructor-arg name="remoteInterface" value="project.onlinechat.OnlineChatMessageService"/>
+	</bean>
+	
+	<bean id="onlineChatVisitorMessageService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="onlineChatVisitorMessageService"/>
+		<constructor-arg name="remoteInterface" value="project.onlinechat.OnlineChatVisitorMessageService"/>
+	</bean>
+		
+	<bean id="otcOnlineChatMessageService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="otcOnlineChatMessageService"/>
+		<constructor-arg name="remoteInterface" value="project.onlinechat.otc.OtcOnlineChatMessageService"/>
+	</bean>
+</beans>

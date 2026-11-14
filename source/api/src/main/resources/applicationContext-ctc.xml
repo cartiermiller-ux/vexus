@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+		
+	<bean id="c2cPaymentMethodConfigService" class="project.c2c.internal.C2cPaymentMethodConfigServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+ 		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="c2cPaymentMethodService" class="project.c2c.internal.C2cPaymentMethodServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+ 		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="c2cUserService" class="project.c2c.internal.C2cUserServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+ 		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="c2cUserParamBaseSetService" class="project.c2c.internal.C2cUserParamBaseSetServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+ 		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+ 	
+	<bean id="c2cAdvertService" class="project.c2c.internal.C2cAdvertServiceImpl">
+		<property name="pagedDao" ref="pagedDao" />
+ 		<property name="redisHandler" ref="redisHandler" />
+ 		<property name="exchangeRateService" ref="exchangeRateService" />
+ 		<property name="itemService" ref="itemService" />
+ 		<property name="dataService" ref="dataService" />
+ 		<property name="sysparaService" ref="sysparaService" />
+ 		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+ 	
+ 	<bean id="c2cOrderService" class="project.c2c.internal.C2cOrderServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="pagedDao" ref="pagedDao" />
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="c2cAdvertService" ref="c2cAdvertService" />
+		<property name="c2cUserService" ref="c2cUserService" />
+		<property name="dataService" ref="dataService" />
+		<property name="exchangeRateService" ref="exchangeRateService" />
+		<property name="walletService" ref="walletService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="c2cPaymentMethodService" ref="c2cPaymentMethodService" />
+		<property name="userDataService" ref="userDataService" />
+		<property name="tipService" ref="tipService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="kycService" ref="kycService" />
+		<property name="kycHighLevelService" ref="kycHighLevelService" />
+		<property name="partyService" ref="partyService" />
+		<property name="smsSendService" ref="smsSendService" />
+		<property name="emailSendService" ref="emailSendService" />
+	</bean>
+ 	
+	<bean id="c2cAppealService" class="project.c2c.internal.C2cAppealServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+ 		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+ 	
+	<bean id="c2cTranslateService" class="project.c2c.internal.C2cTranslateServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+ 		<property name="redisHandler" ref="redisHandler" />
+ 		<property name="c2cAdvertService" ref="c2cAdvertService" />
+	</bean>
+	
+	<bean id="c2cUserStatisticsService" class="project.c2c.internal.C2cUserStatisticsServiceImpl">
+		<property name="namedParameterJdbcTemplate" ref="namedParameterJdbcTemplate" />
+ 		<property name="c2cUserService" ref="c2cUserService" />
+	</bean>
+</beans>

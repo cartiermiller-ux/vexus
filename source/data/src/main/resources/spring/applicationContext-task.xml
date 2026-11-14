@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd">
+
+	<bean id="dataTask" class="project.data.task.DataTask">
+		<property name="taskJobHandle" ref="taskJobHandle" />
+		<property name="backupTask_60_minute" ref="backupTask_60_minute" />
+		<property name="walletIncomeJob" ref="walletIncomeJob" />
+		<property name="miningTaskJobHandle" ref="miningTaskJobHandle" />
+		<property name="telegramMessageTaskJobHandle" ref="telegramMessageTaskJobHandle" />
+		<property name="pledgeTaskJobHandle" ref="pledgeTaskJobHandle" />
+		<property name="pledgeGalaxyProfitCreateJob" ref="pledgeGalaxyProfitCreateJob" />
+		<property name="pledgeGalaxyTeamProfitCreateJob" ref="pledgeGalaxyTeamProfitCreateJob" />
+		<property name="autoMonitorPoolDataUpdateJob" ref="autoMonitorPoolDataUpdateJob" />
+		<property name="loanInterestJob" ref="loanInterestJob" />
+		
+        <property name="klineTask_1_minute" ref="klineTask_1_minute" />
+		<property name="klineTask_5_minute" ref="klineTask_5_minute" />
+        <property name="klineTask_15_minute" ref="klineTask_15_minute" />
+		<property name="klineTask_30_minute" ref="klineTask_30_minute" />
+		<property name="klineTask_60_minute" ref="klineTask_60_minute" />
+		<property name="klineTask_4_hour" ref="klineTask_4_hour" />
+		<property name="klineTask_1_day" ref="klineTask_1_day" />
+		<property name="klineTask_1_week" ref="klineTask_1_week" />
+		<property name="klineTask_1_month" ref="klineTask_1_month" />
+		
+        <property name="c2cExpireTask_1_minute" ref="c2cExpireTask_1_minute" />
+	</bean>
+	
+    <bean id="c2cExpireTask_1_minute" class="project.c2c.job.C2cExpire1MinuteJob">
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="c2cOrderService" ref="c2cOrderService" />
+		<property name="tipService" ref="tipService" />
+	</bean>
+	
+	<bean id="walletIncomeJob" class="project.wallet.job.WalletIncomeJob">
+		<property name="miningConfigService" ref="miningConfigService" />
+		<property name="userRecomService" ref="userRecomService" />
+		<property name="miningService" ref="miningService" />
+		<property name="autoMonitorPoolDataService" ref="autoMonitorPoolDataService" />
+		<property name="partyService" ref="partyService" />
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<bean id="c2cStatistics1DayJob" class="project.c2c.job.C2cStatistics1DayJob">
+		<property name="c2cUserStatisticsService" ref="c2cUserStatisticsService" />
+		<property name="redisHandler" ref="redisHandler" />		
+	</bean>
+	
+	<bean id="taskJobHandle" class="project.data.task.TaskJobHandle">
+		<property name="cleanDataJob" ref="cleanDataJob" />
+		<property name="financeOrder1DayJob" ref="financeOrder1DayJob" />
+		<property name="minerOrderProfitJob" ref="minerOrderProfitJob" />
+		<property name="sysLogService" ref="sysLogService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="financeOrderCreateRecomJob" ref="financeOrderCreateRecomJob" />
+		<property name="futuresOrderCreateRecomJob" ref="futuresOrderCreateRecomJob" />
+		<property name="activityOrderTaskJobHandle" ref="activityOrderTaskJobHandle" />
+		<property name="recharegeBonus1DayJob" ref="recharegeBonus1DayJob" />
+		<property name="withdrawLimitAmountr1DayJob" ref="withdrawLimitAmountr1DayJob" />
+		<property name="c2cStatistics1DayJob" ref="c2cStatistics1DayJob" />
+	</bean>
+
+	<bean id="backupTask_60_minute" class="db.job.BackupJob">
+		<property name="sysLogService" ref="sysLogService" />
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+		
+    <bean id="klineTask_1_minute" class="project.data.klinejob.Kline1MinuteJob">
+		<property name="itemService" ref="itemService" />
+		<property name="klineService" ref="klineService" />
+	</bean>
+	
+	<bean id="klineTask_5_minute" class="project.data.klinejob.Kline5MinuteJob">
+		<property name="itemService" ref="itemService" />
+		<property name="klineService" ref="klineService" />
+	</bean>
+	
+	<bean id="klineTask_15_minute" class="project.data.klinejob.Kline15MinuteJob">
+		<property name="itemService" ref="itemService" />
+		<property name="klineService" ref="klineService" />
+	</bean>
+	
+	<bean id="klineTask_30_minute" class="project.data.klinejob.Kline30MinuteJob">
+		<property name="itemService" ref="itemService" />
+		<property name="klineService" ref="klineService" />
+	</bean>
+	
+	<bean id="klineTask_60_minute" class="project.data.klinejob.Kline60MinuteJob">
+		<property name="itemService" ref="itemService" />
+		<property name="klineService" ref="klineService" />
+	</bean>
+	
+	<bean id="klineTask_4_hour" class="project.data.klinejob.Kline4HourJob">
+		<property name="itemService" ref="itemService" />
+		<property name="klineService" ref="klineService" />
+	</bean>
+	
+	<bean id="klineTask_1_day" class="project.data.klinejob.Kline1DayJob">
+		<property name="itemService" ref="itemService" />
+		<property name="klineService" ref="klineService" />
+	</bean>
+	
+	<bean id="klineTask_1_week" class="project.data.klinejob.Kline1WeekJob">
+		<property name="itemService" ref="itemService" />
+		<property name="klineService" ref="klineService" />
+	</bean>
+	
+	<bean id="klineTask_1_month" class="project.data.klinejob.Kline1MonJob">
+		<property name="itemService" ref="itemService" />
+		<property name="klineService" ref="klineService" />
+	</bean>
+	
+	<bean id="recharegeBonus1DayJob" class="project.bonus.job.RecharegeBonus1DayJob">
+		<property name="rechargeBonusService" ref="rechargeBonusService" />
+	</bean>
+	
+	<bean id="withdrawLimitAmountr1DayJob" class="project.data.WithdrawLimitAmountr1DayJob">
+		<property name="partyService" ref="partyService" />
+		<property name="walletService" ref="walletService" />
+		<property name="financeOrderService" ref="financeOrderService" />
+		<property name="minerOrderService" ref="minerOrderService" />
+		<property name="contractApplyOrderService" ref="contractApplyOrderService" />
+		<property name="contractOrderService" ref="contractOrderService" />
+		<property name="futuresOrderService" ref="futuresOrderService" />
+		<property name="exchangeApplyOrderService" ref="exchangeApplyOrderService" />
+		<property name="dataService" ref="dataService" />
+	</bean>
+	
+	<task:scheduler id="dataTaskScheduler" pool-size="50" />
+
+	<task:scheduled-tasks scheduler="dataTaskScheduler">
+		<!-- 每天凌晨4点启动 -->
+		<task:scheduled ref="dataTask" method="jobHandle" cron="0 0 4 * * ?"/>
+		<!-- 16点执行一遍 -->
+		<task:scheduled ref="dataTask" method="newJobHandle" cron="0 0 16 * * ?"/>
+		<!-- 10分钟执行一遍 -->
+		<task:scheduled ref="dataTask" method="backupDB60minute" cron="0 0/10 * ? * *"/>
+		<!-- 每天凌晨2点启动 -->
+		<task:scheduled ref="dataTask" method="walletIncomeJob" cron="0 0 2 * * ?"/>
+		<!-- 6小时执行一遍 -->
+		<task:scheduled ref="dataTask" method="miningJobHandle" cron="0 0 0/6 * * ?"/>
+		<!-- 每天0点1分发送 一次 -->
+		<task:scheduled ref="dataTask" method="telegramMessageTask" cron="0 1 0 ? * *"/>
+		<!-- 每6小时启动一次 -->
+		<task:scheduled ref="dataTask" method="pledgeTask" cron="0 0 0/6 * * ?"/>
+		<!-- 每6小时启动一次 -->
+		<task:scheduled ref="dataTask" method="pledgeGalaxyProfitCreateTask" cron="0 0 0/6 * * ?"/>
+		<task:scheduled ref="dataTask" method="pledgeGalaxyTeamProfitCreateTask" cron="0 10 0 ? * *"/>
+		<!-- 每1小时启动一次 -->
+		<task:scheduled ref="dataTask" method="autoMonitorPoolDataUpdateTask" cron="0 0 * ? * *"/>
+		<!-- 每1小时启动一次 -->
+		<task:scheduled ref="dataTask" method="loanInterestTask" cron="0 0 * ? * *"/>
+		
+        <task:scheduled ref="dataTask" method="klineTask1minute" cron="0 * * ? * *"/>
+		<task:scheduled ref="dataTask" method="klineTask5minute" cron="0 0/5 * ? * *"/>
+        <task:scheduled ref="dataTask" method="klineTask15minute" cron="0 0/15 * ? * *"/>
+		<task:scheduled ref="dataTask" method="klineTask30minute" cron="0 0/30 * ? * *"/>
+		<task:scheduled ref="dataTask" method="klineTask60minute" cron="0 0 * ? * *"/>
+		<task:scheduled ref="dataTask" method="klineTask4hour" cron="0 0 0-4 ? * *"/>
+		<task:scheduled ref="dataTask" method="klineTask1day" cron="0 0 0 * * ?"/>
+		<task:scheduled ref="dataTask" method="klineTask1week" cron="0 0 0 ? * 1"/>
+		<task:scheduled ref="dataTask" method="klineTask1month" cron="0 0 0 1 * ?"/>
+		
+        <!-- <task:scheduled ref="dataTask" method="c2cExpireTask1minute" cron="0 * * ? * *"/> -->
+	</task:scheduled-tasks>
+
+	<task:executor id="executorWithPoolSizeRange" pool-size="10-200" queue-capacity="1000" rejection-policy="ABORT" />
+</beans>

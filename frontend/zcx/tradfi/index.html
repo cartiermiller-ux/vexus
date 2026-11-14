@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vexus TradFi · 全球市场</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 20% -10%,#2b2350 0%,#0d0a1a 55%,#08060f 100%);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.vx-header{height:64px;display:flex;align-items:center;gap:34px;padding:0 40px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(9,7,18,.72);backdrop-filter:blur(18px);position:sticky;top:0;z-index:20}
+.vx-logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:1px;font-size:18px}
+.vx-logo img{width:28px}
+.vx-nav{display:flex;gap:24px;font-size:14px;color:rgba(255,255,255,.72)}
+.vx-nav a:hover{color:#fff}
+.vx-nav .active{color:#bda7ff;font-weight:700}
+.vx-user{margin-left:auto;font-size:13px;color:rgba(255,255,255,.65)}
+.vx-wrap{max-width:1280px;margin:0 auto;padding:32px 24px 60px}
+.vx-title{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:20px}
+.vx-title h1{font-size:30px;margin:0 0 8px}
+.vx-title p{margin:0;color:rgba(255,255,255,.55);font-size:13px}
+.vx-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.vx-tab{height:36px;padding:0 15px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:rgba(255,255,255,.72);cursor:pointer;font-size:13px}
+.vx-tab:hover{background:rgba(124,92,255,.22);color:#fff}
+.vx-tab.active{border-color:rgba(167,139,250,.6);background:rgba(124,92,255,.28);color:#fff}
+.vx-panel{border:1px solid rgba(255,255,255,.09);border-radius:16px;overflow:hidden;background:rgba(14,11,28,.7);backdrop-filter:blur(12px);margin-bottom:20px}
+.vx-panel-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.vx-panel-head strong{font-size:15px}
+.vx-panel-head span{font-size:12px;color:rgba(255,255,255,.4)}
+#tvchart{height:520px}
+.vx-widget{width:100%}
+.vx-foot{margin-top:18px;font-size:12px;color:rgba(255,255,255,.35);line-height:1.7}
+@media(max-width:700px){.vx-header{padding:0 16px;gap:16px}.vx-nav{display:none}.vx-wrap{padding:22px 14px 40px}.vx-title h1{font-size:23px}#tvchart{height:380px}}
+</style>
+</head>
+<body>
+<header class="vx-header">
+  <a class="vx-logo" href="/"><img src="/img/logos.4d851092.svg" alt="">VEXUS</a>
+  <nav class="vx-nav">
+    <a href="/">首页</a>
+    <a href="/#/market">行情</a>
+    <a href="/stocks/">股票</a>
+    <a class="active" href="/tradfi/">TradFi</a>
+    <a href="/#/promote">福利中心</a>
+  </nav>
+  <div class="vx-user">全球指数 / 外汇 / 商品 / 黄金</div>
+</header>
+<main class="vx-wrap">
+  <div class="vx-title">
+    <div>
+      <h1>全球传统金融市场</h1>
+      <p>TradFi 行情由 TradingView 官方 Widget 提供，覆盖指数、外汇、大宗商品、黄金与美股</p>
+    </div>
+  </div>
+
+  <div class="vx-tabs" id="tabs">
+    <button class="vx-tab active" data-symbol="OANDA:XAUUSD" data-name="黄金 XAU/USD">黄金</button>
+    <button class="vx-tab" data-symbol="FOREXCOM:SPXUSD" data-name="标普500">标普500</button>
+    <button class="vx-tab" data-symbol="FOREXCOM:NSXUSD" data-name="纳斯达克100">纳指</button>
+    <button class="vx-tab" data-symbol="FOREXCOM:DJI" data-name="道琼斯">道指</button>
+    <button class="vx-tab" data-symbol="FX:EURUSD" data-name="欧元/美元">EUR/USD</button>
+    <button class="vx-tab" data-symbol="FX:USDJPY" data-name="美元/日元">USD/JPY</button>
+    <button class="vx-tab" data-symbol="TVC:USOIL" data-name="WTI 原油">原油</button>
+    <button class="vx-tab" data-symbol="NASDAQ:AAPL" data-name="苹果 AAPL">美股</button>
+  </div>
+
+  <div class="vx-panel">
+    <div class="vx-panel-head"><strong>实时图表</strong><span id="chartName">黄金 XAU/USD</span></div>
+    <div id="tvchart"></div>
+  </div>
+
+  <div class="vx-panel">
+    <div class="vx-panel-head"><strong>全球市场概览</strong><span>TradingView Market Overview</span></div>
+    <div class="tradingview-widget-container vx-widget">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+      {
+        "colorTheme": "dark",
+        "dateRange": "12M",
+        "showChart": true,
+        "locale": "zh_CN",
+        "width": "100%",
+        "height": "620",
+        "largeChartUrl": "",
+        "isTransparent": true,
+        "showSymbolLogo": true,
+        "showFloatingTooltip": true,
+        "plotLineColorGrowing": "rgba(167,139,250,1)",
+        "plotLineColorFalling": "rgba(167,139,250,1)",
+        "gridLineColor": "rgba(240,243,250,0)",
+        "scaleFontColor": "rgba(255,255,255,.6)",
+        "belowLineFillColorGrowing": "rgba(167,139,250,0.12)",
+        "belowLineFillColorFalling": "rgba(167,139,250,0.12)",
+        "belowLineFillColorGrowingBottom": "rgba(167,139,250,0)",
+        "belowLineFillColorFallingBottom": "rgba(167,139,250,0)",
+        "symbolActiveColor": "rgba(167,139,250,0.16)",
+        "tabs": [
+          {
+            "title": "指数",
+            "symbols": [
+              {"s":"FOREXCOM:SPXUSD","d":"标普500"},
+              {"s":"FOREXCOM:NSXUSD","d":"纳斯达克100"},
+              {"s":"FOREXCOM:DJI","d":"道琼斯"},
+              {"s":"INDEX:NKY","d":"日经225"},
+              {"s":"INDEX:HSI","d":"恒生指数"}
+            ]
+          },
+          {
+            "title": "外汇",
+            "symbols": [
+              {"s":"FX:EURUSD","d":"EUR/USD"},
+              {"s":"FX:GBPUSD","d":"GBP/USD"},
+              {"s":"FX:USDJPY","d":"USD/JPY"},
+              {"s":"FX:AUDUSD","d":"AUD/USD"}
+            ]
+          },
+          {
+            "title": "商品",
+            "symbols": [
+              {"s":"OANDA:XAUUSD","d":"黄金"},
+              {"s":"TVC:USOIL","d":"WTI 原油"},
+              {"s":"COMEX:SI1!","d":"白银"},
+              {"s":"COMEX:HG1!","d":"铜"}
+            ]
+          },
+          {
+            "title": "美股",
+            "symbols": [
+              {"s":"NASDAQ:AAPL","d":"苹果"},
+              {"s":"NASDAQ:TSLA","d":"特斯拉"},
+              {"s":"NASDAQ:NVDA","d":"英伟达"},
+              {"s":"NASDAQ:MSFT","d":"微软"}
+            ]
+          }
+        ]
+      }
+      </script>
+    </div>
+  </div>
+
+  <div class="vx-foot">
+    行情数据由 TradingView 官方免费 Widget 提供；如所在网络无法加载，请检查网络或稍后重试。<br>
+    外汇/商品/指数仅供行情展示，不构成投资建议。
+  </div>
+</main>
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
+(function(){
+  var current = {symbol:'OANDA:XAUUSD', name:'黄金 XAU/USD'};
+  function createChart(){
+    document.getElementById('tvchart').innerHTML = '';
+    document.getElementById('chartName').textContent = current.name;
+    new TradingView.widget({
+      container_id: 'tvchart',
+      autosize: true,
+      symbol: current.symbol,
+      interval: 'D',
+      timezone: 'Asia/Shanghai',
+      theme: 'dark',
+      style: '1',
+      locale: 'zh_CN',
+      toolbar_bg: '#0e0b1c',
+      enable_publishing: false,
+      allow_symbol_change: true,
+      hide_side_toolbar: false,
+      studies: ['Volume@tv-basicstudies']
+    });
+  }
+  document.getElementById('tabs').addEventListener('click', function(e){
+    var b = e.target.closest('.vx-tab');
+    if(!b) return;
+    Array.prototype.forEach.call(document.querySelectorAll('.vx-tab'), function(x){x.classList.remove('active');});
+    b.classList.add('active');
+    current = {symbol:b.getAttribute('data-symbol'), name:b.getAttribute('data-name')};
+    createChart();
+  });
+  createChart();
+})();
+</script>
+</body>
+</html>

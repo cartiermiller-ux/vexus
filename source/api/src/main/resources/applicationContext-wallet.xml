@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+		
+	<bean id="walletService" class="project.wallet.internal.WalletServiceImpl">
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="dataService" ref="dataService" />
+		<property name="partyService" ref="partyService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="userDataService" ref="userDataService" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="walletLogService" class="project.wallet.internal.WalletLogServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="pagedQueryDao" ref="pagedDao" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+		
+	<bean id="exchangeRateService" class="project.wallet.rate.internal.ExchangeRateServiceImpl">
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="userRateConfigService" class="project.wallet.rate.internal.UserRateConfigServiceImpl">
+		<property name="exchangeRateService" ref="exchangeRateService" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="assetService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="assetService"/>
+		<constructor-arg name="remoteInterface" value="project.wallet.AssetService"/>
+	</bean>
+</beans>

@@ -1,0 +1,22 @@
+# =============================================================================
+# deploy/config/db.properties.template
+# 目标位置（后台/数据应用的「数据库备份与恢复」模块使用）：
+#   web3_project/admin_u/WEB-INF/classes/config/db.properties
+#   web3_project/data_u/WEB-INF/classes/config/db.properties   （如存在）
+#   源代码/{admin,api,data}/src/main/resources/config/db.properties
+#
+# 由 db.PropertiesUtilDB 读取（CONFIG_FILENAME = "config/db.properties"）。
+# 用于后台「数据库备份 / 还原」功能（mysqldump/mysql 调用），与 jdbc 配置相互独立。
+# db.password 同样是 3DES 密文（LocalDruidDataSource 同款算法），
+# 用 deploy/tools 生成；若该功能不用可忽略此项。
+# =============================================================================
+
+# 备份/还原操作连接的目标库（一般与 jdbc.url 同库；也可指向单独备份库）
+db.ip = 127.0.0.1
+db.port = 3306
+db.database.name = jiaoyipan
+db.username = vexus
+db.password = <用 deploy/tools/db_password.py encrypt '你的数据库密码' 生成>
+
+# 备份文件落地目录（绝对路径，需可写）
+db.backup.path = /backup

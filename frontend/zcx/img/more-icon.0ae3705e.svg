@@ -1,0 +1,38 @@
+<svg width="1440" height="140" viewBox="0 0 1440 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="120.0" cy="36.0" r="22" fill="#f7931a"/>
+<text x="120.0" y="41.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">B</text>
+<text x="120.0" y="68.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">BTC</text>
+<circle cx="360.0" cy="36.0" r="22" fill="#627eea"/>
+<text x="360.0" y="41.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">E</text>
+<text x="360.0" y="68.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">ETH</text>
+<circle cx="600.0" cy="36.0" r="22" fill="#26a17b"/>
+<text x="600.0" y="41.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">U</text>
+<text x="600.0" y="68.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">USDT</text>
+<circle cx="840.0" cy="36.0" r="22" fill="#f3ba2f"/>
+<text x="840.0" y="41.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">B</text>
+<text x="840.0" y="68.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">BNB</text>
+<circle cx="1080.0" cy="36.0" r="22" fill="#9945ff"/>
+<text x="1080.0" y="41.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">S</text>
+<text x="1080.0" y="68.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">SOL</text>
+<circle cx="1320.0" cy="36.0" r="22" fill="#23292f"/>
+<text x="1320.0" y="41.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">X</text>
+<text x="1320.0" y="68.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">XRP</text>
+<circle cx="120.0" cy="98.0" r="22" fill="#c2a633"/>
+<text x="120.0" y="103.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">D</text>
+<text x="120.0" y="130.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">DOGE</text>
+<circle cx="360.0" cy="98.0" r="22" fill="#0033ad"/>
+<text x="360.0" y="103.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">A</text>
+<text x="360.0" y="130.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">ADA</text>
+<circle cx="600.0" cy="98.0" r="22" fill="#eb0029"/>
+<text x="600.0" y="103.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">T</text>
+<text x="600.0" y="130.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">TRX</text>
+<circle cx="840.0" cy="98.0" r="22" fill="#e84142"/>
+<text x="840.0" y="103.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">A</text>
+<text x="840.0" y="130.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">AVAX</text>
+<circle cx="1080.0" cy="98.0" r="22" fill="#2a5ada"/>
+<text x="1080.0" y="103.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">L</text>
+<text x="1080.0" y="130.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">LINK</text>
+<circle cx="1320.0" cy="98.0" r="22" fill="#e6007a"/>
+<text x="1320.0" y="103.0" fill="#ffffff" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">D</text>
+<text x="1320.0" y="130.0" fill="#cfc9e0" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle">DOT</text>
+</svg>

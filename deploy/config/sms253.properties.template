@@ -1,0 +1,22 @@
+# =============================================================================
+# deploy/config/sms253.properties.template
+# 目标位置：web3_project/{admin_u,data_u}/WEB-INF/classes/config/sms253.properties
+#           源代码/{admin,api,data}/src/main/resources/config/sms253.properties
+#
+# 253 云短信（创蓝）通道配置。可选：不配置则短信验证码/短信通知不可用。
+# 后台「系统参数」里 t_syspara.send_code_type 决定实际短信通道：
+#   smsbao（短信宝，配置见 t_syspara 的 smsbao_u/smsbao_p/smsbao_sign）
+#   sms253 / moduyun（摩杜云，见 t_syspara.send_code_moduyun）
+# =============================================================================
+
+# 国内通道
+sms.url = http://smssh1.253.com/msg/send/json
+sms.version = 1
+sms.account = <253账号>
+sms.pswd = <253密码>
+
+# 国际通道
+sms253.inter.url = http://intapi.253.com/send/json
+sms253.inter.account = <国际通道账号>
+sms253.inter.pswd = <国际通道密码>
+sms253.inter = true

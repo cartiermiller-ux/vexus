@@ -1,0 +1,11 @@
+# =============================================================================
+# deploy/config/autoe2due.properties.template
+# 目标位置：web3_project/{admin_u,data_u}/WEB-INF/classes/config/autoe2due.properties
+#           dapp/src/config/autoe2due.properties
+#
+# 由 dapp/project/monitor/PropertiesUtilAutoe 读取（CONFIG_FILENAME = "config/autoe2due.properties"）。
+# chartext 为图表/第三方对接用的文本串，保持与源码默认一致即可，一般无需修改。
+# =============================================================================
+
+#chartext = ew2h2dief3ugyrufhr33d
+chartext = Ufi32;sjdu3u2hfew

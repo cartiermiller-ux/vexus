@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <meta charset=utf-8>
+        <meta http-equiv=X-UA-Compatible content="IE=edge">
+        <meta name=viewport content="width=device-width,initial-scale=1">
+        <link rel=icon href=/favicon.ico>
+        <title>Vexus</title>
+        <style>
+            /* html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  background: rgba(0,0,0,0.9);
+} */
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            .body {
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+                background: rgba(0,0,0,0.9);
+            }
+
+            .loader, .loader span, .spinner {
+                position: absolute;
+                width: 200px;
+                height: 200px;
+                top: 50%;
+                left: 50%;
+                margin: -100px 0 0 -100px;
+            }
+
+            .loader span {
+                line-height: 200px;
+                padding-left: 60px;
+                font-size: 20px;
+                font-family: 'Roboto', sans-serif;
+                letter-spacing: 1px;
+                color: rgba(255,255,255,0);
+                text-shadow: 0 0 0 rgba(255,255,255,0.75), 0 0 2px #1e90ff, 0 0 4px #1e90ff, 0 0 6px #1e90ff, 0 0 8px #1e90ff, 0 0 10px #1e90ff;
+            }
+
+            .spinner {
+                border-radius: 50%;
+                box-shadow: 3px 0 1px -1px #fff, 5px 0 5px rgba(30,144,255,0.5), inset -10px 0 10px -5px rgba(30,144,255,0.5);
+                -webkit-animation: loading 1s linear infinite;
+                animation: loading 1s linear infinite;
+            }
+
+            .spinner:before {
+                position: absolute;
+                width: 160px;
+                height: 160px;
+                margin: 10% 0 0 10%;
+                border-radius: 50%;
+                content: " ";
+                box-shadow: 2px 0 1px -1px #fff, 10px 0 5px -5px rgba(30,144,255,0.5), inset -3px 0 3px rgba(30,144,255,0.5);
+            }
+
+            @-webkit-keyframes loading {
+                from {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes loading {
+                from {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+        <link href=/css/chunk-04584ef1.54cd164b.css rel=prefetch>
+        <link href=/css/chunk-0795628b.7ad03cc1.css rel=prefetch>
+        <link href=/css/chunk-0cf6354c.c09ba849.css rel=prefetch>
+        <link href=/css/chunk-0e8afcef.714c3851.css rel=prefetch>
+        <link href=/css/chunk-0ee17df4.3fa6755d.css rel=prefetch>
+        <link href=/css/chunk-0f7921de.5c3f2373.css rel=prefetch>
+        <link href=/css/chunk-119c62b2.0460057b.css rel=prefetch>
+        <link href=/css/chunk-1463239c.2c77e59c.css rel=prefetch>
+        <link href=/css/chunk-1d18bd3c.68e7af9a.css rel=prefetch>
+        <link href=/css/chunk-22514a18.caa5f295.css rel=prefetch>
+        <link href=/css/chunk-23004713.d6d1d6eb.css rel=prefetch>
+        <link href=/css/chunk-23b751eb.60fd59d1.css rel=prefetch>
+        <link href=/css/chunk-26d3ca06.fcaa0c25.css rel=prefetch>
+        <link href=/css/chunk-29e8b082.7f199536.css rel=prefetch>
+        <link href=/css/chunk-2e0f6d7a.ac08fddf.css rel=prefetch>
+        <link href=/css/chunk-2e1e300e.d7d5d952.css rel=prefetch>
+        <link href=/css/chunk-31abd090.8917b263.css rel=prefetch>
+        <link href=/css/chunk-33d201d8.18dec1c0.css rel=prefetch>
+        <link href=/css/chunk-353862f5.acd4c2b6.css rel=prefetch>
+        <link href=/css/chunk-374faf3f.08d30cf2.css rel=prefetch>
+        <link href=/css/chunk-3e1c15ba.8e33fe7c.css rel=prefetch>
+        <link href=/css/chunk-3ed05a1a.dfc467b6.css rel=prefetch>
+        <link href=/css/chunk-413f3e99.53933414.css rel=prefetch>
+        <link href=/css/chunk-4fb8a23a.bf83bcb4.css rel=prefetch>
+        <link href=/css/chunk-4fc09584.ac7e52d6.css rel=prefetch>
+        <link href=/css/chunk-547f7978.a0f8406d.css rel=prefetch>
+        <link href=/css/chunk-59e76fa4.2953f4a7.css rel=prefetch>
+        <link href=/css/chunk-66efdf58.5b50abee.css rel=prefetch>
+        <link href=/css/chunk-678e95f1.984fd54e.css rel=prefetch>
+        <link href=/css/chunk-68343a20.5104637d.css rel=prefetch>
+        <link href=/css/chunk-6884bf8d.8469dd93.css rel=prefetch>
+        <link href=/css/chunk-6d22b594.74c09eae.css rel=prefetch>
+        <link href=/css/chunk-6e20d47a.a87eca00.css rel=prefetch>
+        <link href=/css/chunk-6e2fa4e4.eaddf58f.css rel=prefetch>
+        <link href=/css/chunk-6f3cd7dd.6738f7d1.css rel=prefetch>
+        <link href=/css/chunk-71536907.2e944aff.css rel=prefetch>
+        <link href=/css/chunk-740fd09e.a8c3583f.css rel=prefetch>
+        <link href=/css/chunk-76f06656.53d56913.css rel=prefetch>
+        <link href=/css/chunk-79f685e1.c49adb16.css rel=prefetch>
+        <link href=/css/chunk-7a77b298.3bf6f61a.css rel=prefetch>
+        <link href=/css/chunk-7b7c0f48.0428b34c.css rel=prefetch>
+        <link href=/css/chunk-7bf40b24.b83caba9.css rel=prefetch>
+        <link href=/css/chunk-7c19f9a0.60aefabb.css rel=prefetch>
+        <link href=/css/chunk-7d0ebc0e.7f2f4107.css rel=prefetch>
+        <link href=/css/chunk-7d6279a0.ce0bc989.css rel=prefetch>
+        <link href=/css/chunk-7dd52423.299c0202.css rel=prefetch>
+        <link href=/css/chunk-829283b4.b0ebc3d0.css rel=prefetch>
+        <link href=/css/chunk-89d662ba.0d458ae1.css rel=prefetch>
+        <link href=/css/chunk-91e00e56.207a931b.css rel=prefetch>
+        <link href=/css/chunk-a2d7708c.048deb26.css rel=prefetch>
+        <link href=/css/chunk-b4950e3c.230a621f.css rel=prefetch>
+        <link href=/css/chunk-b77d0e96.c58894c1.css rel=prefetch>
+        <link href=/css/chunk-cb7f9642.2d610755.css rel=prefetch>
+        <link href=/css/chunk-cf6d724e.50833fd9.css rel=prefetch>
+        <link href=/css/chunk-d47553f8.f1e993e1.css rel=prefetch>
+        <link href=/css/chunk-d751548c.c3c7e4d2.css rel=prefetch>
+        <link href=/css/chunk-e2779a70.64091b2e.css rel=prefetch>
+        <link href=/css/chunk-f673b2ae.42809c15.css rel=prefetch>
+        <link href=/css/chunk-fa0a6cde.08787eaf.css rel=prefetch>
+        <link href=/js/chunk-04584ef1.f9ca0d93.js rel=prefetch>
+        <link href=/js/chunk-0795628b.0c5c1a74.js rel=prefetch>
+        <link href=/js/chunk-0cf6354c.e3f8ca4a.js rel=prefetch>
+        <link href=/js/chunk-0e8afcef.dc012848.js rel=prefetch>
+        <link href=/js/chunk-0ee17df4.bcd92114.js rel=prefetch>
+        <link href=/js/chunk-0f7921de.762a72eb.js rel=prefetch>
+        <link href=/js/chunk-119c62b2.e1058350.js rel=prefetch>
+        <link href=/js/chunk-1463239c.90d1a14b.js rel=prefetch>
+        <link href=/js/chunk-1d18bd3c.a2276666.js rel=prefetch>
+        <link href=/js/chunk-22514a18.96c9b735.js rel=prefetch>
+        <link href=/js/chunk-23004713.8663785a.js rel=prefetch>
+        <link href=/js/chunk-23b751eb.6c892b07.js rel=prefetch>
+        <link href=/js/chunk-26d3ca06.8734b6fe.js rel=prefetch>
+        <link href=/js/chunk-29e8b082.c583e89d.js rel=prefetch>
+        <link href=/js/chunk-2d0a4476.a40a8453.js rel=prefetch>
+        <link href=/js/chunk-2d0aed0b.cc5ddbe4.js rel=prefetch>
+        <link href=/js/chunk-2e0f6d7a.e48629f4.js rel=prefetch>
+        <link href=/js/chunk-2e1e300e.b763ad17.js rel=prefetch>
+        <link href=/js/chunk-31abd090.d39c787f.js rel=prefetch>
+        <link href=/js/chunk-33d201d8.de628c4b.js rel=prefetch>
+        <link href=/js/chunk-353862f5.de864b0e.js rel=prefetch>
+        <link href=/js/chunk-374faf3f.db7c467f.js rel=prefetch>
+        <link href=/js/chunk-3e1c15ba.383e7d9c.js rel=prefetch>
+        <link href=/js/chunk-3ed05a1a.5e23a0a0.js rel=prefetch>
+        <link href=/js/chunk-413f3e99.418f8d22.js rel=prefetch>
+        <link href=/js/chunk-4fb8a23a.326b664b.js rel=prefetch>
+        <link href=/js/chunk-4fc09584.606be58d.js rel=prefetch>
+        <link href=/js/chunk-547f7978.60643b2c.js rel=prefetch>
+        <link href=/js/chunk-59e76fa4.a93bcdea.js rel=prefetch>
+        <link href=/js/chunk-66efdf58.8c9b61d3.js rel=prefetch>
+        <link href=/js/chunk-678e95f1.60dafea1.js rel=prefetch>
+        <link href=/js/chunk-68343a20.d8991013.js rel=prefetch>
+        <link href=/js/chunk-6884bf8d.741f9684.js rel=prefetch>
+        <link href=/js/chunk-6d22b594.3af8764b.js rel=prefetch>
+        <link href=/js/chunk-6e20d47a.ac3c6943.js rel=prefetch>
+        <link href=/js/chunk-6e2fa4e4.f1996167.js rel=prefetch>
+        <link href=/js/chunk-6f3cd7dd.d316d8ad.js rel=prefetch>
+        <link href=/js/chunk-71536907.8f2e8033.js rel=prefetch>
+        <link href=/js/chunk-740fd09e.99c3c40f.js rel=prefetch>
+        <link href=/js/chunk-76f06656.969e3ec6.js rel=prefetch>
+        <link href=/js/chunk-773abd6c.58cbdd11.js rel=prefetch>
+        <link href=/js/chunk-79f685e1.90880345.js rel=prefetch>
+        <link href=/js/chunk-7a77b298.485d7a67.js rel=prefetch>
+        <link href=/js/chunk-7b7c0f48.08d7ae4d.js rel=prefetch>
+        <link href=/js/chunk-7bf40b24.95665de6.js rel=prefetch>
+        <link href=/js/chunk-7c19f9a0.121c34b8.js rel=prefetch>
+        <link href=/js/chunk-7d0ebc0e.b4d2d460.js rel=prefetch>
+        <link href=/js/chunk-7d6279a0.688be5d4.js rel=prefetch>
+        <link href=/js/chunk-7dd52423.d4a02905.js rel=prefetch>
+        <link href=/js/chunk-829283b4.4db6bdd5.js rel=prefetch>
+        <link href=/js/chunk-89d662ba.014bfd3d.js rel=prefetch>
+        <link href=/js/chunk-91e00e56.ea6ad434.js rel=prefetch>
+        <link href=/js/chunk-a2d7708c.11d356b6.js rel=prefetch>
+        <link href=/js/chunk-b4950e3c.a01b5e5d.js rel=prefetch>
+        <link href=/js/chunk-b77d0e96.27ce3875.js rel=prefetch>
+        <link href=/js/chunk-cb7f9642.3003fe0d.js rel=prefetch>
+        <link href=/js/chunk-cf6d724e.09ff59a8.js rel=prefetch>
+        <link href=/js/chunk-d47553f8.10b39a63.js rel=prefetch>
+        <link href=/js/chunk-d751548c.9c3b1599.js rel=prefetch>
+        <link href=/js/chunk-e2779a70.6ae5c386.js rel=prefetch>
+        <link href=/js/chunk-f673b2ae.e0c54186.js rel=prefetch>
+        <link href=/js/chunk-fa0a6cde.7f91a513.js rel=prefetch>
+        <link href=/css/app.4d3d865b.css rel=preload as=style>
+        <link href=/css/chunk-vendors.f0574db9.css rel=preload as=style>
+        <link href=/js/app.71218f6a.js rel=preload as=script>
+        <link href=/js/chunk-vendors.86b39d2f.js rel=preload as=script>
+        <link href=/css/chunk-vendors.f0574db9.css rel=stylesheet>
+        <link href=/css/app.4d3d865b.css rel=stylesheet>
+    <style>.swiper-container .swiper-wrapper{transition-timing-function:linear!important;}</style>
+<style id="vexus-image-fix">
+.free-div-1[data-v-634cccce]{width:auto!important;height:879px!important;object-fit:contain!important;}
+@media (max-width:580px){
+  .free-div-1[data-v-634cccce]{width:100%!important;height:auto!important;transform:scale(1.1)!important;margin:60px auto!important;}
+}
+</style>
+
+<link rel="preload" as="script" href="/js/chunk-vendors.86b39d2f.js">
+<link rel="preload" as="script" href="/js/app.71218f6a.js">
+<style id="vexus-promote-bg">
+.css-hp51qo, .css-hp51qo[data-v-1bdf8e3a] {
+  background-image: none !important;
+  position: relative;
+}
+.css-hp51qo::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: url('/img/page-background-clean.svg?v=20261115') no-repeat 25% 60%;
+  opacity: .55;
+  pointer-events: none;
+}
+</style>
+
+<link rel="stylesheet" href="/css/vexus-nav.css?v=20261128b">
+</head>
+    <body>
+        <noscript>
+            <strong>We're sorry but doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+        </noscript>
+        <div id=app></div>
+        <script src=/js/chunk-vendors.86b39d2f.js></script>
+        <script src=/js/app.71218f6a.js></script>
+    <script id="vexus-strip-hash">
+(function () {
+  var MARK = 'vexus-strip-hash';
+  if (window.__vexusHashFix) return;
+  window.__vexusHashFix = true;
+  function strip() {
+    try {
+      if (window.location.hash) {
+        window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+      }
+    } catch (e) {}
+  }
+  window.addEventListener('hashchange', function () { setTimeout(strip, 0); });
+  window.addEventListener('load', strip);
+  document.addEventListener('DOMContentLoaded', strip);
+  setInterval(strip, 400);
+})();
+</script>
+<script id="vexus-hide-empty-message">
+(function () {
+  if (window.__vexusMsgFix) return;
+  window.__vexusMsgFix = true;
+  function clean() {
+    try {
+      var list = document.querySelectorAll('.el-message, .el-notification');
+      for (var i = 0; i < list.length; i++) {
+        var el = list[i];
+        var text = (el.innerText || '').replace(/\s+/g, '');
+        if (!text) { el.style.display = 'none'; }
+      }
+    } catch (e) {}
+  }
+  setInterval(clean, 250);
+  window.addEventListener('load', clean);
+  document.addEventListener('DOMContentLoaded', clean);
+})();
+</script>
+<script src="/js/lucide.min.js?v=20261115"></script>
+<script src="/js/vexus-nav.js?v=20261129b" defer></script>
+<script src="/js/vexus-chat.js?v=20261126" defer></script>
+</body>
+</html>

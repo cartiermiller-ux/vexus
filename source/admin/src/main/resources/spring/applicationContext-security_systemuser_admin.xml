@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+	
+	<bean id="adminSystemUserService" class="systemuser.internal.AdminSystemUserServiceImpl">
+		<property name="logService" ref="logService" />
+		<property name="roleService" ref="roleService" />
+		<property name="secUserService" ref="secUserService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="googleAuthService" ref="googleAuthService" />
+	</bean>
+
+	<bean id="adminRoleAuthorityService" class="systemuser.internal.AdminRoleAuthorityServiceImpl">
+		<property name="roleService" ref="roleService" />
+		<property name="resourceService" ref="resourceService" />
+		<property name="resourceMappingService" ref="resourceMappingService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="secUserService" ref="secUserService" />
+		<property name="googleAuthService" ref="googleAuthService" />
+	</bean>
+	
+	<bean id="resourceMappingService" class="systemuser.internal.ResourceMappingServiceImpl"/>
+		
+	<bean id="customerService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="customerService"/>
+		<constructor-arg name="remoteInterface" value="systemuser.CustomerService"/>
+	</bean>
+		
+	<bean id="adminCustomerService" class="systemuser.internal.AdminCustomerServiceImpl">
+		<property name="logService" ref="logService"/>
+		<property name="secUserService" ref="secUserService"/>
+		<property name="passwordEncoder" ref="passwordEncoder"/>
+		<property name="customerService" ref="customerService"/>
+		<property name="adminSystemUserService" ref="adminSystemUserService"/>
+		<property name="onlineChatMessageService" ref="onlineChatMessageService"/>
+	</bean>
+</beans>

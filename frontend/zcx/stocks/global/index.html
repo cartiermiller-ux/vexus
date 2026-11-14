@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vexus 全球股票市场</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 20% -10%,#2b2350 0%,#0d0a1a 55%,#08060f 100%);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.vx-header{height:64px;display:flex;align-items:center;gap:34px;padding:0 40px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(9,7,18,.72);backdrop-filter:blur(18px);position:sticky;top:0;z-index:20}
+.vx-logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:1px;font-size:18px}
+.vx-logo img{width:28px}
+.vx-nav{display:flex;gap:24px;font-size:14px;color:rgba(255,255,255,.72)}
+.vx-nav a:hover{color:#fff}
+.vx-nav .active{color:#bda7ff;font-weight:700}
+.vx-user{margin-left:auto;font-size:13px;color:rgba(255,255,255,.65)}
+.vx-wrap{max-width:1280px;margin:0 auto;padding:32px 24px 60px}
+.vx-title h1{font-size:30px;margin:0 0 8px}
+.vx-title p{margin:0;color:rgba(255,255,255,.55);font-size:13px}
+.vx-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.vx-tab{height:36px;padding:0 15px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:rgba(255,255,255,.72);cursor:pointer;font-size:13px}
+.vx-tab:hover{background:rgba(124,92,255,.22);color:#fff}
+.vx-tab.active{border-color:rgba(167,139,250,.6);background:rgba(124,92,255,.28);color:#fff}
+.vx-panel{border:1px solid rgba(255,255,255,.09);border-radius:16px;overflow:hidden;background:rgba(14,11,28,.7);backdrop-filter:blur(12px);margin-bottom:20px}
+.vx-panel-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.vx-panel-head strong{font-size:15px}
+.vx-panel-head span{font-size:12px;color:rgba(255,255,255,.4)}
+#tvchart{height:520px}
+.vx-widget{width:100%}
+.vx-foot{margin-top:18px;font-size:12px;color:rgba(255,255,255,.35);line-height:1.7}
+@media(max-width:700px){.vx-header{padding:0 16px;gap:16px}.vx-nav{display:none}.vx-wrap{padding:22px 14px 40px}.vx-title h1{font-size:23px}#tvchart{height:380px}}
+</style>
+</head>
+<body>
+<header class="vx-header">
+  <a class="vx-logo" href="/"><img src="/img/logos.4d851092.svg" alt="">VEXUS</a>
+  <nav class="vx-nav">
+    <a href="/">首页</a>
+    <a href="/#/market">行情</a>
+    <a class="active" href="/stocks/global/">股票</a>
+    <a href="/stocks/">股票行情</a>
+    <a href="/tradfi/">TradFi</a>
+    <a href="/#/promote">福利中心</a>
+  </nav>
+  <div class="vx-user">美股 / 港股 / 日股 / 韩股 / A股</div>
+</header>
+<main class="vx-wrap">
+  <div class="vx-title">
+    <h1>全球股票市场</h1>
+    <p>由 TradingView 官方 Widget 提供：美股、港股、日股、韩股、A股行情与图表</p>
+  </div>
+
+  <div class="vx-tabs" id="tabs">
+    <button class="vx-tab active" data-symbol="NASDAQ:AAPL" data-name="苹果 AAPL">美股</button>
+    <button class="vx-tab" data-symbol="HKEX:700" data-name="腾讯控股 00700">港股</button>
+    <button class="vx-tab" data-symbol="TSE:7203" data-name="丰田 7203">日股</button>
+    <button class="vx-tab" data-symbol="KRX:005930" data-name="三星电子 005930">韩股</button>
+    <button class="vx-tab" data-symbol="SSE:600519" data-name="贵州茅台 600519">A股</button>
+  </div>
+
+  <div class="vx-panel">
+    <div class="vx-panel-head"><strong>股票图表</strong><span id="chartName">苹果 AAPL</span></div>
+    <div id="tvchart"></div>
+  </div>
+
+  <div class="vx-panel">
+    <div class="vx-panel-head"><strong>全球股票市场概览</strong><span>TradingView Market Overview</span></div>
+    <div class="tradingview-widget-container vx-widget">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+      {
+        "colorTheme": "dark",
+        "dateRange": "12M",
+        "showChart": true,
+        "locale": "zh_CN",
+        "width": "100%",
+        "height": "620",
+        "largeChartUrl": "",
+        "isTransparent": true,
+        "showSymbolLogo": true,
+        "showFloatingTooltip": true,
+        "plotLineColorGrowing": "rgba(167,139,250,1)",
+        "plotLineColorFalling": "rgba(167,139,250,1)",
+        "gridLineColor": "rgba(240,243,250,0)",
+        "scaleFontColor": "rgba(255,255,255,.6)",
+        "belowLineFillColorGrowing": "rgba(167,139,250,0.12)",
+        "belowLineFillColorFalling": "rgba(167,139,250,0.12)",
+        "belowLineFillColorGrowingBottom": "rgba(167,139,250,0)",
+        "belowLineFillColorFallingBottom": "rgba(167,139,250,0)",
+        "symbolActiveColor": "rgba(167,139,250,0.16)",
+        "tabs": [
+          {
+            "title": "美股",
+            "symbols": [
+              {"s":"NASDAQ:AAPL","d":"苹果"},
+              {"s":"NASDAQ:TSLA","d":"特斯拉"},
+              {"s":"NASDAQ:NVDA","d":"英伟达"},
+              {"s":"NASDAQ:MSFT","d":"微软"},
+              {"s":"NYSE:BRK.B","d":"伯克希尔B"}
+            ]
+          },
+          {
+            "title": "港股",
+            "symbols": [
+              {"s":"HKEX:700","d":"腾讯控股"},
+              {"s":"HKEX:9988","d":"阿里巴巴"},
+              {"s":"HKEX:3690","d":"美团"},
+              {"s":"HKEX:1810","d":"小米集团"}
+            ]
+          },
+          {
+            "title": "日股",
+            "symbols": [
+              {"s":"TSE:7203","d":"丰田汽车"},
+              {"s":"TSE:6758","d":"索尼"},
+              {"s":"TSE:9984","d":"软银集团"},
+              {"s":"TSE:8306","d":"三菱UFJ"}
+            ]
+          },
+          {
+            "title": "韩股",
+            "symbols": [
+              {"s":"KRX:005930","d":"三星电子"},
+              {"s":"KRX:000660","d":"SK海力士"},
+              {"s":"KRX:035420","d":"NAVER"},
+              {"s":"KRX:005380","d":"现代汽车"}
+            ]
+          },
+          {
+            "title": "A股",
+            "symbols": [
+              {"s":"SSE:600519","d":"贵州茅台"},
+              {"s":"SZSE:300750","d":"宁德时代"},
+              {"s":"SSE:601318","d":"中国平安"},
+              {"s":"SZSE:000858","d":"五粮液"}
+            ]
+          }
+        ]
+      }
+      </script>
+    </div>
+  </div>
+
+  <div class="vx-foot">
+    行情数据由 TradingView 官方免费 Widget 提供；如网络无法加载，请检查网络或稍后重试。<br>
+    股票行情仅供展示，不构成投资建议。
+  </div>
+</main>
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
+(function(){
+  var current = {symbol:'NASDAQ:AAPL', name:'苹果 AAPL'};
+  function createChart(){
+    document.getElementById('tvchart').innerHTML = '';
+    document.getElementById('chartName').textContent = current.name;
+    new TradingView.widget({
+      container_id: 'tvchart',
+      autosize: true,
+      symbol: current.symbol,
+      interval: 'D',
+      timezone: 'Asia/Shanghai',
+      theme: 'dark',
+      style: '1',
+      locale: 'zh_CN',
+      toolbar_bg: '#0e0b1c',
+      enable_publishing: false,
+      allow_symbol_change: true,
+      hide_side_toolbar: false,
+      studies: ['Volume@tv-basicstudies']
+    });
+  }
+  document.getElementById('tabs').addEventListener('click', function(e){
+    var b = e.target.closest('.vx-tab');
+    if(!b) return;
+    Array.prototype.forEach.call(document.querySelectorAll('.vx-tab'), function(x){x.classList.remove('active');});
+    b.classList.add('active');
+    current = {symbol:b.getAttribute('data-symbol'), name:b.getAttribute('data-name')};
+    createChart();
+  });
+  createChart();
+})();
+</script>
+</body>
+</html>

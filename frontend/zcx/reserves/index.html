@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vexus 储备金证明</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 20% -10%,#2b2350 0%,#0d0a1a 55%,#08060f 100%);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.vx-header{height:64px;display:flex;align-items:center;gap:30px;padding:0 40px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(9,7,18,.72);backdrop-filter:blur(18px);position:sticky;top:0;z-index:20}
+.vx-logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:1px;font-size:18px}
+.vx-logo img{width:28px}
+.vx-nav{display:flex;gap:24px;font-size:14px;color:rgba(255,255,255,.72)}
+.vx-nav a:hover,.vx-nav .active{color:#fff}
+.vx-nav .active{color:#bda7ff;font-weight:700}
+.vx-user{margin-left:auto;font-size:13px;color:rgba(255,255,255,.6)}
+.vx-wrap{max-width:1120px;margin:0 auto;padding:32px 24px 60px}
+.vx-title h1{font-size:30px;margin:0 0 8px}
+.vx-title p{margin:0;color:rgba(255,255,255,.55);font-size:13px;line-height:1.7}
+.vx-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin:22px 0}
+.vx-card{padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(155deg,rgba(255,255,255,.08),rgba(255,255,255,.025));backdrop-filter:blur(12px)}
+.vx-card .label{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:10px}
+.vx-card .value{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.vx-card .sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:8px}
+.vx-panel{margin-top:18px;border:1px solid rgba(255,255,255,.09);border-radius:16px;overflow:hidden;background:rgba(14,11,28,.7);backdrop-filter:blur(12px)}
+.vx-panel-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.vx-panel-head strong{font-size:15px}
+.vx-panel-head span{font-size:12px;color:rgba(255,255,255,.4)}
+.vx-table{width:100%;border-collapse:collapse;font-size:13px}
+.vx-table th,.vx-table td{padding:12px 18px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+.vx-table th{font-size:12px;color:rgba(255,255,255,.45);font-weight:500}
+.vx-table tr:last-child td{border-bottom:0}
+.vx-green{color:#25d6a2}.vx-muted{color:rgba(255,255,255,.45)}
+.vx-note{margin-top:16px;padding:14px 16px;border-radius:12px;background:rgba(124,92,255,.10);border:1px solid rgba(167,139,250,.22);font-size:12px;line-height:1.8;color:rgba(255,255,255,.6)}
+.vx-foot{margin-top:18px;font-size:12px;color:rgba(255,255,255,.35);line-height:1.7}
+@media(max-width:700px){.vx-header{padding:0 16px;gap:14px}.vx-nav{display:none}.vx-wrap{padding:22px 14px 40px}.vx-title h1{font-size:23px}.vx-table th,.vx-table td{padding:10px 12px}}
+</style>
+</head>
+<body>
+<header class="vx-header">
+  <a class="vx-logo" href="/"><img src="/img/logos.4d851092.svg" alt="">VEXUS</a>
+  <nav class="vx-nav">
+    <a href="/">首页</a>
+    <a href="/#/market">行情</a>
+    <a href="/stocks/">股票</a>
+    <a class="active" href="/reserves/">储备金证明</a>
+    <a href="/news/">资讯</a>
+  </nav>
+  <div class="vx-user">Proof of Reserves · Vexus</div>
+</header>
+<main class="vx-wrap">
+  <div class="vx-title">
+    <h1>储备金证明</h1>
+    <p>客户负债与链上储备对照，展示平台储备率与资产覆盖情况。<br>当前页面为展示框架，正式数据需接入审计机构或链上地址后更新。</p>
+  </div>
+
+  <div class="vx-cards">
+    <div class="vx-card"><div class="label">总储备（USD）</div><div class="value">$ 268,430,000</div><div class="sub">示例数据 · 待审计更新</div></div>
+    <div class="vx-card"><div class="label">总负债（USD）</div><div class="value">$ 245,120,000</div><div class="sub">客户资产合计</div></div>
+    <div class="vx-card"><div class="label">储备率</div><div class="value vx-green">109.5%</div><div class="sub">储备 / 负债</div></div>
+    <div class="vx-card"><div class="label">审计状态</div><div class="value" style="font-size:18px;line-height:1.5">待接入审计</div><div class="sub">支持 Merkle 树验证</div></div>
+  </div>
+
+  <div class="vx-panel">
+    <div class="vx-panel-head"><strong>资产储备明细</strong><span>示例数据</span></div>
+    <table class="vx-table">
+      <thead><tr><th>资产</th><th>链上储备</th><th>客户负债</th><th>储备率</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr><td>BTC</td><td>4,120.55 BTC</td><td>3,850.20 BTC</td><td class="vx-green">107.0%</td><td class="vx-green">覆盖</td></tr>
+        <tr><td>ETH</td><td>52,300.18 ETH</td><td>48,900.00 ETH</td><td class="vx-green">106.9%</td><td class="vx-green">覆盖</td></tr>
+        <tr><td>USDT</td><td>96,450,000 USDT</td><td>91,200,000 USDT</td><td class="vx-green">105.7%</td><td class="vx-green">覆盖</td></tr>
+        <tr><td>USDC</td><td>38,200,000 USDC</td><td>35,800,000 USDC</td><td class="vx-green">106.7%</td><td class="vx-green">覆盖</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="vx-panel">
+    <div class="vx-panel-head"><strong>Merkle 根与验证</strong><span>预留</span></div>
+    <table class="vx-table">
+      <tbody>
+        <tr><td class="vx-muted" style="width:180px">Merkle Root</td><td style="font-family:ui-monospace,Menlo,Consolas,monospace">0x7f3a9c...e21b8d（示例）</td></tr>
+        <tr><td class="vx-muted">快照时间</td><td>2026-11-15 00:00:00（UTC+8）</td></tr>
+        <tr><td class="vx-muted">验证方式</td><td>用户可下载 Merkle 证明，核对账户余额是否包含在根节点中</td></tr>
+        <tr><td class="vx-muted">审计机构</td><td>待接入</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="vx-note">
+    说明：本页当前为储备金证明展示框架，数值为示例；正式上线请接入第三方审计或链上地址后替换数据，避免向用户展示未经审计的资产数据。
+  </div>
+  <div class="vx-foot">储备金证明不构成投资建议。</div>
+</main>
+</body>
+</html>

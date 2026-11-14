@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+	
+	<bean id="identifyingCodeService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="identifyingCodeService"/>
+		<constructor-arg name="remoteInterface" value="project.user.idcode.IdentifyingCodeService"/>
+	</bean>
+		
+	<bean id="identifyingCodeTimeWindowService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="identifyingCodeTimeWindowService"/>
+		<constructor-arg name="remoteInterface" value="project.user.idcode.IdentifyingCodeTimeWindowService"/>
+	</bean>
+		
+	<bean id="userService" class="project.user.internal.UserServiceImpl">
+		<property name="partyService" ref="partyService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="secUserService" ref="secUserService" />
+		<property name="onlineUserService" ref="onlineUserService" />
+	</bean>
+	
+	<bean id="onlineUserService" class="project.user.internal.OnlineUserService">
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="adminKycService" class=" project.user.kyc.internal.AdminKycServiceImpl">
+		<property name="partyService" ref="partyService" />
+		<property name="userRecomService" ref="userRecomService" />
+		<property name="kycService" ref="kycService" />
+		<property name="tipService" ref="tipService" />
+		<property name="secUserService" ref="secUserService" />
+		<property name="logService" ref="logService" />
+	</bean> 
+	
+	<bean id="adminKycHighLevelService" class=" project.user.kyc.internal.AdminKycHighLevelServiceImpl">
+		<property name="partyService" ref="partyService" />
+		<property name="userRecomService" ref="userRecomService" />
+		<property name="kycHighLevelService" ref="kycHighLevelService" />
+		<property name="tipService" ref="tipService" />
+	</bean>
+
+	<bean id="kycService" class="project.user.kyc.internal.KycServiceImpl">
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<bean id="kycHighLevelService" class="project.user.kyc.internal.KycHighLevelServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="tokenService" class="project.user.token.internal.TokenServiceImpl">
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+    <bean id="userSafewordApplyService" class="project.user.internal.UserSafewordApplyServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="kycService" ref="kycService" />
+		<property name="tipService" ref="tipService" />
+	</bean>
+	
+	<bean id="adminUserSafewordApplyService" class="project.user.internal.AdminUserSafewordApplyServiceImpl">
+		<property name="partyService" ref="partyService" />
+		<property name="userRecomService" ref="userRecomService" />
+		<property name="kycService" ref="kycService" />
+		<property name="userSafewordApplyService" ref="userSafewordApplyService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="secUserService" ref="secUserService" />
+		<property name="tipService" ref="tipService" />
+	</bean>
+	
+    <bean id="geetestService" class="project.user.captcha.internal.GeetestServiceImpl"/>
+		
+	<bean id="googleAuthService" class="project.user.googleauth.internal.GoogleAuthServiceImpl">
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="secUserService" ref="secUserService" />
+		<property name="qRGenerateService" ref="qRGenerateService" />
+		<property name="logService" ref="logService" />
+	</bean>
+</beans>

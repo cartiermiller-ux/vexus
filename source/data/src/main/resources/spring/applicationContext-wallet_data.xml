@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+	
+	<bean id="walletService" class="project.wallet.internal.WalletServiceImpl">
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="dataService" ref="dataService" />
+		<property name="partyService" ref="partyService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="userDataService" ref="userDataService" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="walletLogService" class="project.wallet.internal.WalletLogServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="pagedQueryDao" ref="pagedDao" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="exchangeRateService" class="project.wallet.rate.internal.ExchangeRateServiceImpl">
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="walletLoadCacheService" class="data.loadcache.WalletLoadCacheService">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="walletDao" class="project.wallet.consumer.WalletDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="walletConsumeServer" class="project.wallet.consumer.WalletConsumeServer">
+		<property name="walletDao" ref="walletDao" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="walletExtendConsumeServer" class="project.wallet.consumer.WalletExtendConsumeServer">
+		<property name="walletDao" ref="walletDao" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="assetService" class="project.wallet.internal.AssetServiceImpl">
+		<property name="dataService" ref="dataService" />
+		<property name="walletService" ref="walletService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="itemService" ref="itemService" />		
+		<property name="contractOrderService" ref="contractOrderService" />
+		<property name="contractApplyOrderService" ref="contractApplyOrderService" />
+		<property name="financeOrderService" ref="financeOrderService" />
+		<property name="minerOrderService" ref="minerOrderService" />
+		<property name="futuresOrderService" ref="futuresOrderService" />
+		<property name="exchangeApplyOrderService" ref="exchangeApplyOrderService" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+</beans>

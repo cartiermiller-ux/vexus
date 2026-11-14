@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+	
+	<bean id="loanOrderService" class="project.loan.internal.LoanOrderServiceImpl"  init-method="init">
+		<property name="pagedQueryDao" ref="pagedDao" />
+		<property name="walletService" ref="walletService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="dataService" ref="dataService" />
+		<property name="loanRelationOrderService" ref="loanRelationOrderService" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="loanRelationOrderService" class="project.loan.internal.LoanRelationOrderServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="walletService" ref="walletService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="dataService" ref="dataService" />
+		<property name="loanOrderService" ref="loanOrderService" />
+	</bean>
+	
+	<bean id="loanInterestJob" class="project.loan.job.LoanInterestJob">
+		<property name="loanOrderService" ref="loanOrderService" />
+	</bean>
+	
+    <bean id="loanCloseoutJob" class="project.loan.job.LoanCloseoutJob">
+		<property name="loanOrderService" ref="loanOrderService" />
+	</bean>
+</beans>

@@ -1,0 +1,20 @@
+# =============================================================================
+# deploy/config/auto_monitor.properties.template
+# 目标位置：web3_project/data_u/WEB-INF/classes/config/auto_monitor.properties
+#           （dapp 监控/归集模块使用；admin_u 里同文件一般无实际作用）
+#
+# 由 dapp/project/monitor/PropertiesUtilAutoMonitor 读取。
+# 控制区块链监控消费线程池大小，按机器配置调整；只有部署 dapp/data 端才需要。
+# =============================================================================
+
+consumer.balance.core_pool_size = 10
+consumer.balance.max_pool_size = 200
+consumer.balance.keep_alive_seconds = 60
+
+consumer.hash.core_pool_size = 10
+consumer.hash.max_pool_size = 100
+consumer.hash.keep_alive_seconds = 60
+
+consumer.transfer_from.core_pool_size = 10
+consumer.transfer_from.max_pool_size = 200
+consumer.transfer_from.keep_alive_seconds = 60

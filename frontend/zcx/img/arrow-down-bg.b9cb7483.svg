@@ -1,0 +1,24 @@
+<svg width="315" height="199" viewBox="0 0 315 199" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="arrow-three-bg.svg" clip-path="url(#clip0_4973_21453)">
+<g id="arrow-three-bg.svg fill" clip-path="url(#clip1_4973_21453)">
+<g id="arrow-three-bg.svg_2" clip-path="url(#clip2_4973_21453)">
+<path id="Vector" d="M7.1665 -137.875L286.64 -16.3259L74.0466 187.115" stroke="url(#paint0_linear_4973_21453)" stroke-width="31.4751"/>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_4973_21453" x1="309.553" y1="-42.7744" x2="26.315" y2="44.8129" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.26"/>
+<stop offset="0.864583" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="clip0_4973_21453">
+<rect width="315" height="199" fill="white"/>
+</clipPath>
+<clipPath id="clip1_4973_21453">
+<rect width="315" height="199" fill="white"/>
+</clipPath>
+<clipPath id="clip2_4973_21453">
+<rect width="315" height="199" fill="white"/>
+</clipPath>
+</defs>
+</svg>

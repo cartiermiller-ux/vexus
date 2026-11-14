@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vexus 模拟交易</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 20% -10%,#2b2350 0%,#0d0a1a 55%,#08060f 100%);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.vx-header{height:64px;display:flex;align-items:center;gap:30px;padding:0 40px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(9,7,18,.72);backdrop-filter:blur(18px);position:sticky;top:0;z-index:20}
+.vx-logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:1px;font-size:18px}
+.vx-logo img{width:28px}
+.vx-nav{display:flex;gap:24px;font-size:14px;color:rgba(255,255,255,.72)}
+.vx-nav a:hover,.vx-nav .active{color:#fff}
+.vx-nav .active{color:#bda7ff;font-weight:700}
+.vx-user{margin-left:auto;font-size:13px;color:rgba(255,255,255,.6)}
+.vx-wrap{max-width:1320px;margin:0 auto;padding:28px 24px 50px}
+.vx-title h1{font-size:28px;margin:0 0 8px}
+.vx-title p{margin:0;color:rgba(255,255,255,.55);font-size:13px}
+.vx-grid{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:18px}
+.vx-panel{border:1px solid rgba(255,255,255,.09);border-radius:16px;overflow:hidden;background:rgba(14,11,28,.72);backdrop-filter:blur(12px)}
+.vx-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.vx-panel-head strong{font-size:15px}
+.vx-panel-head span{font-size:12px;color:rgba(255,255,255,.4)}
+.vx-chart{height:430px}
+.vx-chart-empty{height:430px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-size:13px}
+.vx-form{padding:16px}
+.vx-row{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.vx-row label{width:68px;font-size:12px;color:rgba(255,255,255,.55)}
+.vx-select,.vx-input{flex:1;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff;padding:0 10px;outline:none;font-size:13px}
+.vx-input::placeholder{color:rgba(255,255,255,.35)}
+.vx-price{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.vx-pct{font-size:12px;margin-left:8px}
+.up{color:#25d6a2}.down{color:#ff6b8b}
+.vx-actions{display:flex;gap:10px;margin:6px 0 14px}
+.vx-btn{flex:1;height:42px;border-radius:10px;border:0;cursor:pointer;font-weight:700;font-size:14px}
+.vx-buy{background:linear-gradient(135deg,#25d6a2,#1a9f7a);color:#04130f}
+.vx-sell{background:linear-gradient(135deg,#ff6b8b,#d94363);color:#1b040a}
+.vx-btn:disabled{opacity:.45;cursor:not-allowed}
+.vx-balance{display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px}
+.vx-balance b{font-size:16px}
+.vx-pos{width:100%;border-collapse:collapse;font-size:12px}
+.vx-pos th,.vx-pos td{padding:9px 8px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);white-space:nowrap}
+.vx-pos th{color:rgba(255,255,255,.42);font-weight:500}
+.vx-close{background:none;border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:6px;padding:4px 8px;cursor:pointer;font-size:11px}
+.vx-empty{padding:24px 10px;text-align:center;color:rgba(255,255,255,.35);font-size:12px}
+.vx-foot{margin-top:16px;font-size:12px;color:rgba(255,255,255,.35);line-height:1.7}
+@media(max-width:900px){.vx-header{padding:0 16px;gap:14px}.vx-nav{display:none}.vx-wrap{padding:20px 14px 40px}.vx-grid{grid-template-columns:1fr}.vx-chart{height:320px}}
+</style>
+</head>
+<body>
+<header class="vx-header">
+  <a class="vx-logo" href="/"><img src="/img/logos.4d851092.svg" alt="">VEXUS</a>
+  <nav class="vx-nav">
+    <a href="/">首页</a>
+    <a href="/#/market">行情</a>
+    <a href="/stocks/">股票</a>
+    <a class="active" href="/paper/">模拟交易</a>
+    <a href="/tradfi/">TradFi</a>
+  </nav>
+  <div class="vx-user">模拟资金 · 不涉及真实资产</div>
+</header>
+<main class="vx-wrap">
+  <div class="vx-title">
+    <h1>模拟交易</h1>
+    <p>使用虚拟资金练习股票交易，真实行情来自现有股票行情接口；不构成投资建议。</p>
+  </div>
+  <div class="vx-grid">
+    <div class="vx-panel">
+      <div class="vx-panel-head"><strong id="chartTitle">上证指数</strong><span id="chartSub">sh000001 · 日K</span></div>
+      <div id="chart" class="vx-chart"></div>
+    </div>
+    <div>
+      <div class="vx-panel">
+        <div class="vx-balance"><span>虚拟可用资金</span><b id="balance">--</b></div>
+        <div class="vx-form">
+          <div class="vx-row"><label>交易标的</label><select id="symbol" class="vx-select"></select></div>
+          <div class="vx-row"><label>最新价</label><div><span class="vx-price" id="price">--</span><span class="vx-pct" id="pct"></span></div></div>
+          <div class="vx-row"><label>数量</label><input id="qty" class="vx-input" type="number" min="1" step="1" value="100" placeholder="股数"></div>
+          <div class="vx-actions">
+            <button id="buy" class="vx-btn vx-buy">买入</button>
+            <button id="sell" class="vx-btn vx-sell">卖出</button>
+          </div>
+          <div style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.6">初始虚拟资金 100,000；买入按最新价扣款，卖出按最新价结算；刷新页面持仓保留。</div>
+        </div>
+      </div>
+      <div class="vx-panel" style="margin-top:16px">
+        <div class="vx-panel-head"><strong>持仓</strong><span id="posCount">0 项</span></div>
+        <table class="vx-pos"><thead><tr><th>标的</th><th>数量</th><th>成本</th><th>现价</th><th>盈亏</th><th></th></tr></thead><tbody id="posBody"></tbody></table>
+        <div id="posEmpty" class="vx-empty">暂无持仓</div>
+      </div>
+    </div>
+  </div>
+  <div class="vx-foot">模拟交易仅用于学习演示，所有价格来自公开行情，虚拟资金不具备任何现实价值。</div>
+</main>
+<script src="/js/lightweight-charts.standalone.production.js"></script>
+<script>
+(function(){
+  var KEY='vexus_paper_v1';
+  var state=JSON.parse(localStorage.getItem(KEY)||'null')||{balance:100000,positions:{}};
+  var list=[], current=null, chart=null, candle=null, vol=null;
+
+  function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+  function fmt(v){return Number(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  function cls(v){return v>=0?'up':'down';}
+
+  function renderBalance(){document.getElementById('balance').textContent=fmt(state.balance)+' USDT';}
+  function renderPositions(){
+    var body=document.getElementById('posBody'); body.innerHTML='';
+    var keys=Object.keys(state.positions); var count=0;
+    keys.forEach(function(k){
+      var p=state.positions[k]; if(!p||!p.qty) return;
+      var item=list.find(function(x){return x.market===k;}) || {name:k,price:p.cost};
+      var price=Number(item.price||p.cost); var pnl=(price-p.cost)*p.qty;
+      count++;
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td>'+item.name+'</td><td>'+p.qty+'</td><td>'+fmt(p.cost)+'</td><td>'+fmt(price)+'</td><td class="'+cls(pnl)+'">'+(pnl>=0?'+':'')+fmt(pnl)+'</td><td><button class="vx-close" data-close="'+k+'">平仓</button></td>';
+      body.appendChild(tr);
+    });
+    document.getElementById('posEmpty').style.display=count?'none':'block';
+    document.getElementById('posCount').textContent=count+' 项';
+    body.querySelectorAll('[data-close]').forEach(function(b){b.addEventListener('click',function(){closePos(b.getAttribute('data-close'));});});
+  }
+  function refreshPrices(cb){
+    fetch('/api/stock!list.action',{credentials:'same-origin'}).then(function(r){return r.json();}).then(function(res){
+      if(res&&res.code==='0'&&res.data&&res.data.list){list=res.data.list;renderPositions(); if(current){var it=list.find(function(x){return x.market===current.market;}); if(it){showPrice(it);}} if(cb)cb();}
+    }).catch(function(){});
+  }
+  function showPrice(item){
+    document.getElementById('price').textContent=fmt(item.price);
+    var pct=Number(item.changePercent||0); var el=document.getElementById('pct');
+    el.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%'; el.className='vx-pct '+cls(pct);
+  }
+  function loadChart(symbol){
+    var el=document.getElementById('chart');
+    el.innerHTML='<div class="vx-chart-empty">K线加载中…</div>';
+    fetch('/api/stock!kline.action?symbol='+encodeURIComponent(symbol),{credentials:'same-origin'}).then(function(r){return r.json();}).then(function(res){
+      if(!res||res.code!=='0'||!res.data||!res.data.list){el.innerHTML='<div class="vx-chart-empty">暂无K线数据</div>';return;}
+      el.innerHTML='';
+      if(chart){try{chart.remove();}catch(e){}chart=null;}
+      chart=LightweightCharts.createChart(el,{width:el.clientWidth||900,height:el.clientHeight||430,layout:{background:{color:'#0e0b1c'},textColor:'#a99fc9'},grid:{vertLines:{color:'rgba(255,255,255,.05)'},horzLines:{color:'rgba(255,255,255,.05)'}},rightPriceScale:{borderColor:'rgba(255,255,255,.12)'},timeScale:{borderColor:'rgba(255,255,255,.12)'}});
+      candle=chart.addCandlestickSeries({upColor:'#25d6a2',downColor:'#ff6b8b',borderVisible:false,wickUpColor:'#25d6a2',wickDownColor:'#ff6b8b'});
+      candle.setData(res.data.list.map(function(x){return {time:x.date,open:x.open,high:x.high,low:x.low,close:x.close};}));
+      vol=chart.addHistogramSeries({priceFormat:{type:'volume'},priceScaleId:''}); vol.priceScale().applyOptions({scaleMargins:{top:.82,bottom:0}});
+      vol.setData(res.data.list.map(function(x){return {time:x.date,value:x.volume,color:x.close>=x.open?'rgba(37,214,162,.45)':'rgba(255,107,139,.45)'};}));
+      chart.timeScale().fitContent();
+    }).catch(function(){el.innerHTML='<div class="vx-chart-empty">K线加载失败</div>';});
+  }
+  function fillSymbols(){
+    var sel=document.getElementById('symbol'); sel.innerHTML='';
+    list.forEach(function(x){var o=document.createElement('option');o.value=x.market;o.textContent=(x.name||x.code)+' ('+(x.market||x.code)+')';sel.appendChild(o);});
+    if(!list.length) return;
+    var def=list.find(function(x){return x.market==='sh000001';})||list[0];
+    sel.value=def.market; current=def;
+    document.getElementById('chartTitle').textContent=def.name||def.code;
+    document.getElementById('chartSub').textContent=(def.market||def.code)+' · 日K';
+    showPrice(def); loadChart(def.market||def.code);
+  }
+  function buy(){
+    if(!current) return;
+    var qty=parseInt(document.getElementById('qty').value,10); if(!qty||qty<=0){alert('请输入数量');return;}
+    var price=Number(current.price); var cost=qty*price;
+    if(cost>state.balance){alert('虚拟可用资金不足');return;}
+    state.balance-=cost;
+    var p=state.positions[current.market]||{qty:0,cost:0};
+    p.cost=((p.cost*p.qty)+cost)/(p.qty+qty); p.qty+=qty; state.positions[current.market]=p;
+    save();renderBalance();renderPositions();
+  }
+  function sell(){
+    if(!current) return;
+    var qty=parseInt(document.getElementById('qty').value,10); if(!qty||qty<=0){alert('请输入数量');return;}
+    var p=state.positions[current.market]; if(!p||p.qty<qty){alert('持仓不足');return;}
+    var price=Number(current.price); state.balance+=qty*price; p.qty-=qty;
+    if(p.qty<=0) delete state.positions[current.market];
+    save();renderBalance();renderPositions();
+  }
+  function closePos(k){
+    var p=state.positions[k]; if(!p) return;
+    var item=list.find(function(x){return x.market===k;})||{price:p.cost};
+    state.balance+=p.qty*Number(item.price||p.cost); delete state.positions[k];
+    save();renderBalance();renderPositions();
+  }
+  document.getElementById('symbol').addEventListener('change',function(e){
+    var it=list.find(function(x){return x.market===e.target.value;}); if(!it) return;
+    current=it; document.getElementById('chartTitle').textContent=it.name||it.code; document.getElementById('chartSub').textContent=(it.market||it.code)+' · 日K'; showPrice(it); loadChart(it.market||it.code);
+  });
+  document.getElementById('buy').addEventListener('click',buy);
+  document.getElementById('sell').addEventListener('click',sell);
+  window.addEventListener('resize',function(){if(chart){chart.applyOptions({width:document.getElementById('chart').clientWidth||900});}});
+  renderBalance();
+  refreshPrices(function(){fillSymbols();});
+  setInterval(function(){refreshPrices();},15000);
+})();
+</script>
+</body>
+</html>

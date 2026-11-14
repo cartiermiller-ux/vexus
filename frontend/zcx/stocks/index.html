@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vexus 股票行情</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 20% -10%,#2b2350 0%,#0d0a1a 55%,#08060f 100%);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.vx-header{height:64px;display:flex;align-items:center;gap:34px;padding:0 40px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(9,7,18,.72);backdrop-filter:blur(18px);position:sticky;top:0;z-index:20}
+.vx-logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:1px;font-size:18px}
+.vx-logo img{width:28px}
+.vx-nav{display:flex;gap:26px;font-size:14px;color:rgba(255,255,255,.72)}
+.vx-nav a:hover{color:#fff}
+.vx-nav .active{color:#bda7ff;font-weight:700}
+.vx-user{margin-left:auto;font-size:13px;color:rgba(255,255,255,.65)}
+.vx-wrap{max-width:1240px;margin:0 auto;padding:34px 24px 60px}
+.vx-title{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.vx-title h1{font-size:30px;margin:0 0 8px}
+.vx-title p{margin:0;color:rgba(255,255,255,.55);font-size:13px}
+.vx-tools{display:flex;align-items:center;gap:10px}
+.vx-search{height:38px;width:220px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.07);color:#fff;padding:0 12px;outline:none}
+.vx-search::placeholder{color:rgba(255,255,255,.4)}
+.vx-refresh{height:38px;padding:0 16px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
+.vx-refresh:hover{background:rgba(124,92,255,.28)}
+.vx-time{font-size:12px;color:rgba(255,255,255,.42)}
+.vx-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:24px}
+.vx-card{padding:16px 18px;border-radius:15px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(150deg,rgba(255,255,255,.075),rgba(255,255,255,.025));backdrop-filter:blur(10px)}
+.vx-card .name{font-size:13px;color:rgba(255,255,255,.72);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vx-card-logo{width:22px;height:22px;border-radius:6px;object-fit:contain;background:#fff;padding:2px;vertical-align:middle;margin-right:7px}
+.vx-card .price{font-size:25px;font-weight:700;margin:8px 0 4px;font-variant-numeric:tabular-nums}
+.vx-card .pct{font-size:13px}
+.up{color:#25d6a2}.down{color:#ff6b8b}
+.vx-panel{border:1px solid rgba(255,255,255,.09);border-radius:16px;overflow:hidden;background:rgba(14,11,28,.7);backdrop-filter:blur(12px)}
+.vx-table{width:100%;border-collapse:collapse;font-size:14px}
+.vx-table th,.vx-table td{padding:13px 18px;text-align:left;white-space:nowrap}
+.vx-table th{font-size:12px;font-weight:500;color:rgba(255,255,255,.45);border-bottom:1px solid rgba(255,255,255,.08)}
+.vx-table td{border-bottom:1px solid rgba(255,255,255,.055);font-variant-numeric:tabular-nums}
+.vx-table tr:last-child td{border-bottom:0}
+.vx-table tbody tr:hover{background:rgba(124,92,255,.10)}
+.vx-name{display:flex;align-items:center;gap:10px}
+.vx-dot{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:linear-gradient(135deg,#7c5cff,#3d7dff);color:#fff}
+.vx-logo-img{width:30px;height:30px;border-radius:9px;object-fit:contain;background:#fff;padding:3px;flex:0 0 auto}
+.vx-code{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.vx-tag{display:inline-block;padding:2px 7px;border-radius:6px;font-size:10px;color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);margin-left:6px;vertical-align:middle}
+.vx-empty{padding:50px 20px;text-align:center;color:rgba(255,255,255,.45);font-size:14px}
+.vx-table tbody tr{cursor:pointer}
+.vx-chart-panel{margin-top:20px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(14,11,28,.82);overflow:hidden}
+.vx-chart-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.vx-chart-head strong{font-size:16px;color:#fff}
+.vx-chart-head span{margin-left:10px;font-size:12px;color:rgba(255,255,255,.42)}
+#chartClose{height:30px;padding:0 13px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
+#chartClose:hover{background:rgba(124,92,255,.3)}
+.vx-chart-empty{height:420px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.45);font-size:14px}
+.vx-foot{margin-top:18px;font-size:12px;color:rgba(255,255,255,.35);line-height:1.7}
+@media(max-width:700px){.vx-header{padding:0 16px;gap:16px}.vx-nav{display:none}.vx-wrap{padding:22px 14px 40px}.vx-title h1{font-size:23px}.vx-search{width:150px}.vx-table th:nth-child(4),.vx-table td:nth-child(4),.vx-table th:nth-child(6),.vx-table td:nth-child(6){display:none}.vx-table th,.vx-table td{padding:11px 12px;font-size:13px}}
+</style>
+</head>
+<body>
+<header class="vx-header">
+  <a class="vx-logo" href="/"><img src="/img/logos.4d851092.svg" alt="">VEXUS</a>
+  <nav class="vx-nav">
+    <a href="/">首页</a>
+    <a href="/#/market">行情</a>
+    <a href="/#/trade/btc_usdt">交易</a>
+    <a class="active" href="/stocks/">股票</a>
+    <a href="/#/promote">福利中心</a>
+  </nav>
+  <div class="vx-user">股票行情 · 公开数据</div>
+</header>
+<main class="vx-wrap">
+  <div class="vx-title">
+    <div>
+      <h1>全球股票行情</h1>
+      <p>美股为 Alpaca IEX 实时数据；A股 / 港股为腾讯公开行情（延时/收盘），美股价格为拆股后价格，仅供展示参考</p>
+    </div>
+    <div class="vx-tools">
+      <input id="q" class="vx-search" placeholder="搜索名称或代码">
+      <button id="refresh" class="vx-refresh">刷新</button>
+      <span id="updated" class="vx-time"></span><span id="quoteTime" class="vx-time" style="margin-left:8px"></span>
+    </div>
+  </div>
+  <div id="cards" class="vx-cards"></div>
+  <div class="vx-panel">
+    <table class="vx-table">
+      <thead><tr><th>名称</th><th>最新价</th><th>涨跌</th><th>涨跌幅</th><th>今开</th><th>昨收</th><th>最高</th><th>最低</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div id="empty" class="vx-empty" style="display:none">行情加载中…</div>
+  </div>
+  <div id="chartPanel" class="vx-chart-panel" style="display:none">
+    <div class="vx-chart-head">
+      <div><strong id="chartTitle">--</strong><span id="chartSub"></span></div>
+      <button id="chartClose" type="button">关闭</button>
+    </div>
+    <div id="chart" style="height:420px"></div>
+  </div>
+  <div class="vx-foot">
+    数据来源：美股 Alpaca IEX 实时行情；A股/港股腾讯公开行情（延时）。美股价格为拆股调整后价格（如 NVDA 为 10:1 拆股后），不构成投资建议。<br>
+    股票 / TradFi 交易功能开发中，当前仅提供行情浏览。
+  </div>
+</main>
+<script src="/js/lightweight-charts.standalone.production.js"></script>
+<script>
+(function(){
+  var cards=document.getElementById('cards'), rows=document.getElementById('rows'), empty=document.getElementById('empty'),
+      q=document.getElementById('q'), updated=document.getElementById('updated'), all=[];
+  var chart=null, candleSeries=null, volumeSeries=null, chartSymbol='';
+
+  function closeChart(){
+    var p=document.getElementById('chartPanel');
+    if(chart){ try{chart.remove();}catch(e){} chart=null; candleSeries=null; volumeSeries=null; }
+    if(p) p.style.display='none';
+  }
+
+  function renderKline(list){
+    var el=document.getElementById('chart');
+    if(!window.LightweightCharts){ el.innerHTML='<div class="vx-chart-empty">图表 SDK 未加载</div>'; return; }
+    if(chart){ try{chart.remove();}catch(e){} chart=null; }
+    el.innerHTML='';
+    chart=LightweightCharts.createChart(el,{
+      width: el.clientWidth || 1000,
+      height: 420,
+      layout:{background:{color:'#0e0b1c'},textColor:'#a99fc9'},
+      grid:{vertLines:{color:'rgba(255,255,255,.05)'},horzLines:{color:'rgba(255,255,255,.05)'}},
+      rightPriceScale:{borderColor:'rgba(255,255,255,.12)'},
+      timeScale:{borderColor:'rgba(255,255,255,.12)',timeVisible:false}
+    });
+    candleSeries=chart.addCandlestickSeries({
+      upColor:'#25d6a2',downColor:'#ff6b8b',borderVisible:false,
+      wickUpColor:'#25d6a2',wickDownColor:'#ff6b8b'
+    });
+    candleSeries.setData(list.map(function(x){return {time:x.date,open:x.open,high:x.high,low:x.low,close:x.close};}));
+    volumeSeries=chart.addHistogramSeries({priceFormat:{type:'volume'},priceScaleId:''});
+    volumeSeries.priceScale().applyOptions({scaleMargins:{top:0.82,bottom:0}});
+    volumeSeries.setData(list.map(function(x){return {time:x.date,value:x.volume,color:x.close>=x.open?'rgba(37,214,162,.45)':'rgba(255,107,139,.45)'};}));
+    chart.timeScale().fitContent();
+  }
+
+  function openChart(x){
+    var panel=document.getElementById('chartPanel');
+    var title=document.getElementById('chartTitle');
+    var sub=document.getElementById('chartSub');
+    var el=document.getElementById('chart');
+    panel.style.display='block';
+    title.textContent=x.name||'';
+    sub.textContent=(x.market||x.code||'')+' · 日K';
+    chartSymbol=marketOf(x);
+    el.innerHTML='<div class="vx-chart-empty">K线加载中…</div>';
+    fetch('/api/stock!kline.action?symbol='+encodeURIComponent(chartSymbol),{credentials:'same-origin'})
+      .then(function(r){return r.json();})
+      .then(function(res){
+        if(res&&res.code==='0'&&res.data&&res.data.list&&res.data.list.length){ renderKline(res.data.list); }
+        else { el.innerHTML='<div class="vx-chart-empty">'+(res&&res.msg||'暂无K线数据')+'</div>'; }
+      }).catch(function(){ el.innerHTML='<div class="vx-chart-empty">K线加载失败</div>'; });
+    panel.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  document.getElementById('chartClose').addEventListener('click', closeChart);
+  window.addEventListener('resize', function(){ if(chart){ chart.applyOptions({width:document.getElementById('chart').clientWidth||1000}); } });
+  function cls(v){ return v>=0?'up':'down'; }
+  function fmt(v){ if(v===null||v===undefined||isNaN(v)) return '--'; return Number(v).toFixed(v>=1000?2:3).replace(/\.?0+$/,''); }
+  function marketOf(x){
+    var m=String(x.market||x.code||'').trim();
+    var i=m.indexOf('v_');
+    if(i>=0) m=m.substring(i+2);
+    return m;
+  }
+  function loadAlpaca(cb){
+    var us = all.filter(function(x){ return /^us/i.test(marketOf(x)); });
+    if(!us.length){ if(cb) cb(); return; }
+    var syms = us.map(function(x){ return marketOf(x).replace(/^us/i,''); }).join(',');
+    fetch('/api/alpaca!snapshots.action?symbols='+encodeURIComponent(syms),{credentials:'same-origin'})
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if(res && res.code==='0' && res.data && res.data.list){
+          res.data.list.forEach(function(q){
+            var target = all.find(function(x){ return marketOf(x).toUpperCase() === ('US'+q.symbol).toUpperCase(); });
+            if(!target) return;
+            target.price = q.price;
+            target.prevClose = q.prevClose;
+            target.open = q.open;
+            target.high = q.high;
+            target.low = q.low;
+            target.change = q.change;
+            target.changePercent = q.changePercent;
+            target.time = q.time;
+            target.source = 'Alpaca IEX';
+          });
+          var qte = document.getElementById('quoteTime');
+          if(qte) qte.textContent = '美股实时 Alpaca IEX ' + res.data.updated;
+        }
+        if(cb) cb();
+      }).catch(function(){ if(cb) cb(); });
+  }
+
+  var stream = null, streamSymbols = '';
+  function startStream(){
+    var us = all.filter(function(x){ return /^us/i.test(marketOf(x)); });
+    if(!us.length || !window.EventSource) return;
+    var syms = us.map(function(x){ return marketOf(x).replace(/^us/i,''); }).join(',');
+    if(stream && streamSymbols === syms) return;
+    if(stream){ try{stream.close();}catch(e){} stream=null; }
+    streamSymbols = syms;
+    stream = new EventSource('/api/alpaca!stream.action?symbols='+encodeURIComponent(syms));
+    stream.addEventListener('status', function(e){
+      try{
+        var d=JSON.parse(e.data), qte=document.getElementById('quoteTime');
+        if(d.status==='live' && qte){ qte.textContent='Alpaca IEX 逐笔实时'; }
+      }catch(err){}
+    });
+    stream.addEventListener('trade', function(e){
+      try{
+        var q=JSON.parse(e.data);
+        var target=all.find(function(x){ return marketOf(x).toUpperCase() === ('US'+q.symbol).toUpperCase(); });
+        if(!target) return;
+        target.price=Number(q.price); target.time=q.time; target.source='Alpaca WS';
+        if(target.prevClose){ target.change=target.price-target.prevClose; target.changePercent=(target.change/target.prevClose)*100; }
+        render();
+      }catch(err){}
+    });
+    stream.onerror=function(){ /* EventSource reconnects automatically */ };
+  }
+  window.addEventListener('beforeunload', function(){ if(stream){ try{stream.close();}catch(e){} } });
+
+  function avatar(x){
+    var initial=esc((x.name||'?').slice(0,2));
+    var logo='/img/stock-logos/'+encodeURIComponent(marketOf(x))+'.svg';
+    return `<img class="vx-logo-img" src="${logo}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="vx-dot" style="display:none">${initial}</div>`;
+  }
+  function render(){
+    var key=(q.value||'').trim().toLowerCase();
+    var list=all.filter(function(x){ return !key || (x.name&&x.name.toLowerCase().indexOf(key)>=0)||(x.code&&x.code.toLowerCase().indexOf(key)>=0); });
+    cards.innerHTML='';
+    list.slice(0,4).forEach(function(x){
+      var d=document.createElement('div'); d.className='vx-card';
+      d.innerHTML='<div class="name"><img class="vx-card-logo" src="/img/stock-logos/'+encodeURIComponent(marketOf(x))+'.svg" alt="" onerror="this.style.display=\'none\'">'+esc(x.name)+' <span class="vx-tag">'+(x.type==='index'?'指数':x.type==='stock'?'股票':'全球')+'</span></div>'+
+        '<div class="price">'+fmt(x.price)+'</div>'+
+        '<div class="pct '+cls(x.changePercent)+'">'+(x.change>=0?'+':'')+fmt(x.change)+' / '+(x.changePercent>=0?'+':'')+fmt(x.changePercent)+'%</div>';
+      cards.appendChild(d);
+    });
+    rows.innerHTML='';
+    empty.style.display=list.length?'none':'block';
+    empty.textContent=list.length?'':'没有匹配的行情';
+    list.forEach(function(x){
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td><div class="vx-name">'+avatar(x)+'<div><div>'+esc(x.name)+'</div><div class="vx-code">'+esc(x.code||'')+'</div></div></div></td>'+
+        '<td>'+fmt(x.price)+'</td>'+
+        '<td class="'+cls(x.change)+'">'+(x.change>=0?'+':'')+fmt(x.change)+'</td>'+
+        '<td class="'+cls(x.changePercent)+'">'+(x.changePercent>=0?'+':'')+fmt(x.changePercent)+'%</td>'+
+        '<td>'+fmt(x.open)+'</td><td>'+fmt(x.prevClose)+'</td><td>'+fmt(x.high)+'</td><td>'+fmt(x.low)+'</td>';
+      tr.addEventListener('click', (function(item){ return function(){ openChart(item); }; })(x));
+      rows.appendChild(tr);
+    });
+  }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function load(){
+    empty.style.display='block'; empty.textContent='行情加载中…';
+    fetch('/api/stock!list.action',{credentials:'same-origin'}).then(function(r){return r.json();}).then(function(res){
+      if(res&&res.code==='0'&&res.data&&res.data.list){ all=res.data.list; updated.textContent='更新 '+res.data.updated; var qt=res.data.list&&res.data.list[0]&&res.data.list[0].time; var qte=document.getElementById('quoteTime'); if(qte) qte.textContent=qt?('行情 '+qt):''; render(); loadAlpaca(function(){ render(); startStream(); }); }
+      else { empty.style.display='block'; empty.textContent=(res&&res.msg)||'行情加载失败'; }
+    }).catch(function(){ empty.style.display='block'; empty.textContent='行情加载失败，请稍后重试'; });
+  }
+  q.addEventListener('input',render);
+  document.getElementById('refresh').addEventListener('click',load);
+  load();
+  setInterval(load,15000);
+})();
+</script>
+</body>
+</html>

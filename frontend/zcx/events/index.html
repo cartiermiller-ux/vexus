@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vexus 活动中心</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 20% -10%,#2b2350 0%,#0d0a1a 55%,#08060f 100%);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.vx-header{height:64px;display:flex;align-items:center;gap:30px;padding:0 40px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(9,7,18,.72);backdrop-filter:blur(18px);position:sticky;top:0;z-index:20}
+.vx-logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:1px;font-size:18px}
+.vx-logo img{width:28px}
+.vx-nav{display:flex;gap:24px;font-size:14px;color:rgba(255,255,255,.72)}
+.vx-nav a:hover,.vx-nav .active{color:#fff}
+.vx-nav .active{color:#bda7ff;font-weight:700}
+.vx-user{margin-left:auto;font-size:13px;color:rgba(255,255,255,.6)}
+.vx-wrap{max-width:1280px;margin:0 auto;padding:32px 24px 60px}
+.vx-title h1{font-size:30px;margin:0 0 8px}
+.vx-title p{margin:0;color:rgba(255,255,255,.55);font-size:13px}
+.vx-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:22px 0}
+.vx-card{padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(155deg,rgba(255,255,255,.08),rgba(255,255,255,.025));backdrop-filter:blur(12px)}
+.vx-card .ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(167,139,250,.16);border:1px solid rgba(167,139,250,.3);color:#c4b5fd;font-size:18px;margin-bottom:14px}
+.vx-card h3{margin:0 0 8px;font-size:17px}
+.vx-card p{margin:0 0 16px;font-size:12px;line-height:1.65;color:rgba(255,255,255,.5)}
+.vx-card a{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:9px;background:rgba(124,92,255,.3);border:1px solid rgba(167,139,250,.4);font-size:12px;color:#fff}
+.vx-card a:hover{background:rgba(124,92,255,.5)}
+.vx-panel{border:1px solid rgba(255,255,255,.09);border-radius:16px;overflow:hidden;background:rgba(14,11,28,.7);backdrop-filter:blur(12px)}
+.vx-panel-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.vx-panel-head strong{font-size:15px}
+.vx-panel-head span{font-size:12px;color:rgba(255,255,255,.4)}
+.vx-foot{margin-top:18px;font-size:12px;color:rgba(255,255,255,.35);line-height:1.7}
+@media(max-width:700px){.vx-header{padding:0 16px;gap:14px}.vx-nav{display:none}.vx-wrap{padding:22px 14px 40px}.vx-title h1{font-size:23px}}
+</style>
+</head>
+<body>
+<header class="vx-header">
+  <a class="vx-logo" href="/"><img src="/img/logos.4d851092.svg" alt="">VEXUS</a>
+  <nav class="vx-nav">
+    <a href="/">首页</a>
+    <a href="/#/market">行情</a>
+    <a href="/stocks/">股票</a>
+    <a class="active" href="/events/">活动</a>
+    <a href="/#/promote">福利中心</a>
+  </nav>
+  <div class="vx-user">活动中心 · Vexus</div>
+</header>
+<main class="vx-wrap">
+  <div class="vx-title">
+    <h1>活动中心</h1>
+    <p>股票活动、合约活动、邀请返佣与市场财经日历</p>
+  </div>
+
+  <div class="vx-cards">
+    <div class="vx-card">
+      <div class="ico">📈</div>
+      <h3>股票活动</h3>
+      <p>参与股票行情交易活动，查看热门股票与全球市场表现，完成任务领取奖励。</p>
+      <a href="/#/promote">进入股票活动 →</a>
+    </div>
+    <div class="vx-card">
+      <div class="ico">📊</div>
+      <h3>合约活动</h3>
+      <p>永续/交割合约活动专区，查看合约活动规则与参与方式。</p>
+      <a href="/#/promote">进入合约活动 →</a>
+    </div>
+    <div class="vx-card">
+      <div class="ico">🎁</div>
+      <h3>邀请返佣</h3>
+      <p>邀请好友注册交易，获得返佣奖励；在推广中心查看邀请数据与返佣记录。</p>
+      <a href="/#/promote">进入推广中心 →</a>
+    </div>
+    <div class="vx-card">
+      <div class="ico">📅</div>
+      <h3>财经日历</h3>
+      <p>全球重要经济数据与财经事件日历，辅助判断市场波动。</p>
+      <a href="#calendar">查看财经日历 →</a>
+    </div>
+  </div>
+
+  <div class="vx-panel" id="calendar">
+    <div class="vx-panel-head"><strong>财经日历</strong><span>TradingView Economic Calendar</span></div>
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+      {
+        "colorTheme": "dark",
+        "isTransparent": true,
+        "width": "100%",
+        "height": "600",
+        "locale": "zh_CN",
+        "importanceFilter": "0,1",
+        "countryFilter": "us,cn,eu,jp,hk"
+      }
+      </script>
+    </div>
+  </div>
+
+  <div class="vx-foot">
+    活动内容以平台实际规则为准；财经日历由 TradingView 提供，不构成投资建议。
+  </div>
+</main>
+</body>
+</html>

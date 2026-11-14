@@ -1,0 +1,13 @@
+# =============================================================================
+# deploy/config/cms.properties.template
+# 目标位置：web3_project/admin_u/WEB-INF/classes/config/cms.properties
+#           源代码/comm/Cms/... （classpath:config/cms.properties，由 PropertiesUtilCms 读取）
+#
+# 可选：控制后台 CMS（单页/帮助中心/公告等）的默认语言与可用栏目模型。
+# =============================================================================
+
+# 后台 CMS 默认语言：chinese / english（按需）
+system_cms_language = chinese
+
+# CMS 栏目模型列表（逗号分隔；增删栏目类型时改这里）
+system_cms_model_list = system,info,help_center,knowledge,c2c_help_center_newbie,c2c_help_center_advanced,c2c_help_center_advertiser

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+		
+	<bean id="contractLoadCacheService" class="project.contract.data.loadcache.ContractLoadCacheService">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="assetService" ref="assetService" />
+	</bean>
+	
+	<bean id="contractOrderService" class="project.contract.internal.ContractOrderServiceImpl">
+		<property name="walletService" ref="walletService" />
+		<property name="userDataService" ref="userDataService" />
+		<property name="contractApplyOrderService" ref="contractApplyOrderService" />
+		<property name="itemService" ref="itemService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="partyService" ref="partyService" />
+		<property name="tipService" ref="tipService" />
+		<property name="assetService" ref="assetService" />
+	</bean>
+	
+	<bean id="contractApplyOrderService" class="project.contract.internal.ContractApplyOrderServiceImpl">
+		<property name="walletService" ref="walletService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="itemService" ref="itemService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="contractOrderService" ref="contractOrderService" />
+	</bean>
+
+	<bean id="contractApplyOrderHandleJob" class="project.contract.job.ContractApplyOrderHandleJob">
+		<property name="contractOrderService" ref="contractOrderService" />
+		<property name="dataService" ref="dataService" />
+		<property name="contractApplyOrderService" ref="contractApplyOrderService" />
+	</bean>
+
+	<bean id="contractOrderCalculationJob" class="project.contract.job.ContractOrderCalculationJob">
+		<property name="contractOrderCalculationService" ref="contractOrderCalculationService" />
+		<property name="contractOrderService" ref="contractOrderService" />
+	</bean>
+
+	<bean id="contractOrderCalculationService" class="project.contract.job.ContractOrderCalculationServiceImpl">
+		<property name="contractOrderService" ref="contractOrderService" />
+		<property name="dataService" ref="dataService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="walletService" ref="walletService" />
+	</bean>
+	
+	<bean id="contractLockService" class="project.contract.internal.ContractLockServiceImpl"/>
+</beans>

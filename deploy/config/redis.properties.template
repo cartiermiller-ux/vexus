@@ -1,0 +1,33 @@
+# =============================================================================
+# deploy/config/redis.properties.template
+# 目标位置（三应用各一份）：
+#   web3_project/admin_u/WEB-INF/classes/config/redis.properties
+#   web3_project/data_u/WEB-INF/classes/config/redis.properties
+#   源代码/{admin,api,data}/src/main/resources/config/redis.properties
+#
+# 这是本版本真正生效的 Redis 配置：project.redis.PropertiesUtilRedis 固定读取
+# classpath:config/redis.properties，project.redis.interal.Redis 里
+#   PropertiesUtilRedis.getProperty("redis.address").split(";")
+# 支持多地址分片，用英文分号隔开，例如 127.0.0.1:6379;127.0.0.1:6380
+# =============================================================================
+
+redis.address = 127.0.0.1:6379
+redis.address.port = 6379
+
+redis.pool.testOnBorrow = true
+redis.pool.testOnReturn = false
+redis.pool.testWhileIdle = false
+redis.pool.maxIdle = 300
+redis.pool.minIdle = 150
+redis.pool.maxActive = 1000
+redis.pool.maxWait = 10000
+redis.pool.timeout = 10000
+redis.pool.numTestsPerEvictionRun = 0
+redis.pool.timeBetweenEvictionRunsMillis = 0
+redis.pool.minEvictableIdleTimeMillis = 0
+
+# 安全提示：
+#   * 生产环境 Redis 只监听 127.0.0.1（bind 127.0.0.1 + protected-mode yes），
+#     并设置 requirepass 强密码；jedis 2.0.0（本包依赖）不支持在 URL 里带密码，
+#     因此走内网/本机 + 防火墙限制访问来源。
+#   * 不要对公网开放 6379。

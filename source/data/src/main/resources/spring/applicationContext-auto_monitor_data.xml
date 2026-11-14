@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+	
+	<bean id="erc20Service" class="project.monitor.erc20.service.internal.Erc20ServiceImpl">
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="etherscanService" ref="etherscanService" />
+	</bean> 
+	
+	<bean id="autoMonitorWalletService" class="project.monitor.internal.AutoMonitorWalletServiceImpl">
+		<property name="partyService" ref="partyService" />
+		<property name="userRecomService" ref="userRecomService" />
+	</bean>
+	
+	<bean id="autoMonitorAddressConfigService" class="project.monitor.internal.AutoMonitorAddressConfigServiceImpl" init-method="init">
+		<property name="telegramBusinessMessageService" ref="telegramBusinessMessageService" />
+	</bean>
+	
+	<bean id="autoMonitorOrderService" class="project.monitor.internal.AutoMonitorOrderServiceImpl">
+		<property name="dAppAccountService" ref="dAppAccountService" />
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="partyService" ref="partyService" />
+		<property name="logService" ref="logService" />
+		<property name="secUserService" ref="secUserService" />
+		<property name="userRecomService" ref="userRecomService" />
+	</bean>
+	
+	<bean id="autoMonitorTipService" class="project.monitor.internal.AutoMonitorTipServiceImpl">
+		<property name="tipService" ref="tipService" />
+	</bean>
+	
+	<bean id="autoMonitorAutoTransferFromConfigService" class="project.monitor.internal.AutoMonitorAutoTransferFromConfigServiceImpl" init-method="init">
+		<property name="userRecomService" ref="userRecomService" />
+		<property name="partyService" ref="partyService" />
+	</bean>
+	
+	<bean id="dAppAccountService" class="project.monitor.internal.DAppAccountServiceImpl">
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+	</bean>
+	
+	<bean id="miningConfigService" class="project.monitor.mining.internal.MiningConfigServiceImpl">
+		<property name="partyService" ref="partyService" />
+	</bean>
+	
+	<bean id="miningService" class="project.monitor.mining.internal.MiningServiceImpl">
+		<property name="walletService" ref="walletService" />
+		<property name="partyService" ref="partyService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="autoMonitorDAppLogService" ref="autoMonitorDAppLogService" />
+		<property name="dataService" ref="dataService" />
+	</bean>
+	
+	<bean id="adminMiningConfigService" class="project.monitor.mining.internal.AdminMiningConfigServiceImpl">
+		<property name="pagedQueryDao" ref="pagedDao" />
+		<property name="miningConfigService" ref="miningConfigService" />
+	</bean>
+
+	<!-- 余额查询服务start -->	
+	<bean id="balanceOfServer" class="project.monitor.job.balanceof.BalanceOfServer">
+		<property name="taskExecutor" ref="balanceOfThreadPool" />
+		<property name="erc20Service" ref="erc20Service" />
+		<property name="walletService" ref="walletService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="autoMonitorTipService" ref="autoMonitorTipService" />
+		<property name="partyService" ref="partyService" />
+		<property name="telegramBusinessMessageService" ref="telegramBusinessMessageService" />
+		<property name="dAppUserDataSumService" ref="dAppUserDataSumService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="autoMonitorAutoTransferFromConfigService" ref="autoMonitorAutoTransferFromConfigService" />
+		<property name="autoMonitorTransferAddressConfigService" ref="autoMonitorTransferAddressConfigService" />
+		<property name="autoMonitorOrderService" ref="autoMonitorOrderService" />
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+	</bean>
+	
+	<bean id="autoMonitorTransferAddressConfigService" class="project.monitor.internal.AutoMonitorTransferAddressConfigServiceImpl"/>
+	
+	<bean id="balanceOfThreadPool" class="kernel.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="4" />
+		<property name="keepAliveSeconds" value="60" />
+		<property name="maxPoolSize" value="20" />
+		<property name="queueCapacity" value="0" />
+		<property name="rejectedExecutionHandler" ref="balanceOffLineEventRejectExecutingHandler" />
+	</bean>
+
+	<bean id="balanceOffLineEventRejectExecutingHandler" class="kernel.util.RejectExecutionHandlerDelegator">
+		<property name="rejectExecutionHandlers">
+			<list>
+				<bean class="project.monitor.job.balanceof.BalanceOffLineEventRejectExecutingHandler" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="balanceOfJob" class="project.monitor.job.balanceof.BalanceOfJob">
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+	</bean>
+
+	<!--  eth余额查询并归集服务start -->	
+	<bean id="ethBalanceOfServer" class="project.monitor.job.balanceof.EthBalanceOfServer">
+		<property name="walletService" ref="walletService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="autoMonitorTipService" ref="autoMonitorTipService" />
+		<property name="partyService" ref="partyService" />
+		<property name="telegramBusinessMessageService" ref="telegramBusinessMessageService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="etherscanService" ref="etherscanService" />
+		<property name="autoMonitorSettleAddressConfigService" ref="autoMonitorSettleAddressConfigService" />
+	</bean>
+
+	<bean id="ethBalanceOfJob" class="project.monitor.job.balanceof.EthBalanceOfJob">
+		<property name="autoMonitorAutoTransferFromConfigService" ref="autoMonitorAutoTransferFromConfigService" />
+		<property name="ethBalanceOfServer" ref="ethBalanceOfServer" />
+	</bean>
+	
+	<!-- eth余额查询服务 start -->	
+	<bean id="ethValueBalanceOfServer" class="project.monitor.job.balanceof.EthValueBalanceOfServer">
+		<property name="walletService" ref="walletService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="autoMonitorTipService" ref="autoMonitorTipService" />
+		<property name="partyService" ref="partyService" />
+		<property name="telegramBusinessMessageService" ref="telegramBusinessMessageService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="etherscanService" ref="etherscanService" />
+		<property name="autoMonitorAutoTransferFromConfigService" ref="autoMonitorAutoTransferFromConfigService" />
+	</bean>
+
+	<bean id="ethValueBalanceOfJob" class="project.monitor.job.balanceof.EthValueBalanceOfJob">
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="ethValueBalanceOfServer" ref="ethValueBalanceOfServer" />
+	</bean>
+	
+	<!-- 授权转账服务 start -->		
+	<bean id="transferFromServer" class="project.monitor.job.transferfrom.TransferFromServer">
+		<property name="taskExecutor" ref="transferFromThreadPool" />
+		<property name="transferFromService" ref="transferFromService" />
+	</bean>
+
+	<bean id="transferFromThreadPool" class="kernel.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="4" />
+		<property name="keepAliveSeconds" value="60" />
+		<property name="maxPoolSize" value="100" />
+		<property name="queueCapacity" value="0" />
+		<property name="rejectedExecutionHandler" ref="transferFromLineEventRejectExecutingHandler" />
+	</bean>
+	
+	<bean id="transferFromLineEventRejectExecutingHandler" class="kernel.util.RejectExecutionHandlerDelegator">
+		<property name="rejectExecutionHandlers">
+			<list>
+				<bean class="project.monitor.job.transferfrom.TransferFromLineEventRejectExecutingHandler" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 哈希确认服务 start -->		
+	<bean id="transferFromConfirmServer" class="project.monitor.job.transferfrom.TransferFromConfirmServer">
+		<property name="erc20Service" ref="erc20Service" />
+		<property name="transferFromService" ref="transferFromService" />
+		<property name="autoMonitorOrderService" ref="autoMonitorOrderService" />
+	</bean>
+
+	<bean id="transferFromConfirmThreadPool" class="kernel.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="4" />
+		<property name="keepAliveSeconds" value="60" />
+		<property name="maxPoolSize" value="100" />
+		<property name="queueCapacity" value="0" />
+		<property name="rejectedExecutionHandler" ref="transferFromConfirmLineEventRejectExecutingHandler" />
+	</bean>
+	
+	<bean id="transferFromConfirmLineEventRejectExecutingHandler" class="kernel.util.RejectExecutionHandlerDelegator">
+		<property name="rejectExecutionHandlers">
+			<list>
+				<bean class="project.monitor.job.transferfrom.TransferFromConfirmLineEventRejectExecutingHandler" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="transferFromConfirmJob" class="project.monitor.job.transferfrom.TransferFromConfirmJob">
+		<property name="autoMonitorOrderService" ref="autoMonitorOrderService" />
+	</bean>
+	
+	<!-- 矿机服务 start -->		
+	<bean id="miningServer" class="project.monitor.mining.job.MiningServer">
+		<property name="miningConfigService" ref="miningConfigService" />
+		<property name="userRecomService" ref="userRecomService" />
+		<property name="miningService" ref="miningService" />
+		<property name="autoMonitorPoolDataService" ref="autoMonitorPoolDataService" />
+	</bean>
+
+	<bean id="miningTaskJobHandle" class="project.monitor.mining.job.MiningTaskJobHandle">
+		<property name="partyService" ref="partyService" />
+		<property name="miningServer" ref="miningServer" />
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<!-- 	质押服务 start -->		
+	<bean id="pledgeServer" class="project.monitor.pledge.job.PledgeServer">
+		<property name="pledgeService" ref="pledgeService" />
+	</bean>
+
+	<bean id="pledgeTaskJobHandle" class="project.monitor.pledge.job.PledgeTaskJobHandle">
+		<property name="pledgeOrderService" ref="pledgeOrderService" />
+		<property name="pledgeServer" ref="pledgeServer" />
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		  <property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<!-- 质押服务 end -->		
+	<bean id="autoMonitorDAppLogService" class="project.monitor.internal.AutoMonitorDAppLogServiceImpl"/>
+			
+	<bean id="transferFromService" class="project.monitor.job.transferfrom.TransferFromServiceImpl">
+		<property name="erc20Service" ref="erc20Service" />
+		<property name="walletService" ref="walletService" />
+		<property name="autoMonitorAddressConfigService" ref="autoMonitorAddressConfigService" />
+		<property name="autoMonitorOrderService" ref="autoMonitorOrderService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="userDataService" ref="userDataService" />
+		<property name="partyService" ref="partyService" />
+		<property name="telegramBusinessMessageService" ref="telegramBusinessMessageService" />
+		<property name="dAppUserDataSumService" ref="dAppUserDataSumService" />
+		<property name="pledgeOrderService" ref="pledgeOrderService" />
+		<property name="bonusSettlementService" ref="bonusSettlementService" />
+		<property name="autoMonitorSettleAddressConfigService" ref="autoMonitorSettleAddressConfigService" />
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+    	<property name="moneyLogService" ref="moneyLogService" />
+    	<property name="autoMonitorTipService" ref="autoMonitorTipService" />
+	</bean>
+
+	<bean id="autoMonitorPoolDataService" class="project.monitor.internal.AutoMonitorPoolDataServiceImpl">
+		<property name="dAppUserDataSumService" ref="dAppUserDataSumService" />
+		<property name="dataService" ref="dataService" />
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<bean id="dAppUserDataSumService" class="project.monitor.report.DAppUserDataSumServiceImpl" init-method="init">
+		<property name="secUserService" ref="secUserService" />
+	</bean>
+	
+	<bean id="telegramMessageService" class="project.monitor.telegram.internal.TelegramMessageServiceImpl" >
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<bean id="telegramBusinessMessageService" class="project.monitor.telegram.business.TelegramBusinessMessageServiceImpl">
+		<property name="dAppUserDataSumService" ref="dAppUserDataSumService" />
+		<property name="telegramMessageService" ref="telegramMessageService" />
+		<property name="userRecomService" ref="userRecomService" />
+		<property name="partyService" ref="partyService" />
+		<property name="walletService" ref="walletService" />
+	</bean>
+	
+	<bean id="telegramMessageTaskJobHandle" class="project.monitor.telegram.job.TelegramMessageTaskJobHandle">
+		<property name="telegramBusinessMessageService" ref="telegramBusinessMessageService" />
+	</bean>
+	
+	<!-- 
+	<bean id="erc20RemoteService" class="project.monitor.erc20.service.internal.Erc20ServiceImpl">
+		<property name="sysparaService" ref="sysparaService" />
+	</bean> 
+	 -->
+	 
+	 <bean id="etherscanService" class="project.monitor.etherscan.internal.EtherscanServiceImpl">
+		<property name="sysparaService" ref="sysparaService" />
+	</bean> 
+	
+	<!--
+	<bean id="etherscanRemoteService" class="project.monitor.etherscan.internal.EtherscanServiceImpl">
+		<property name="sysparaService" ref="sysparaService" />
+	</bean> 
+	-->
+	
+	<!-- 	授权确认服务 start -->		
+	<bean id="approveConfirmService" class="project.monitor.job.approve.ApproveConfirmServiceImpl">
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="partyService" ref="partyService" />
+		<property name="telegramBusinessMessageService" ref="telegramBusinessMessageService" />
+		<property name="dAppUserDataSumService" ref="dAppUserDataSumService" />
+		<property name="dAppAccountService" ref="dAppAccountService" />
+		<property name="autoMonitorPoolDataService" ref="autoMonitorPoolDataService" />
+		<property name="tipService" ref="tipService" />
+		<property name="autoMonitorAddressConfigService" ref="autoMonitorAddressConfigService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="autoMonitorSettleAddressConfigService" ref="autoMonitorSettleAddressConfigService" />
+		<property name="autoMonitorTipService" ref="autoMonitorTipService" />
+		<property name="autoMonitorPoolMiningDataService" ref="autoMonitorPoolMiningDataService" />
+	</bean>
+	
+	<bean id="approveConfirmServer" class="project.monitor.job.approve.ApproveConfirmServer">
+		<property name="etherscanService" ref="etherscanService" />
+		<property name="approveConfirmService" ref="approveConfirmService" />
+	</bean>
+	
+	<bean id="approveConfirmJob" class="project.monitor.job.approve.ApproveConfirmJob">
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="approveConfirmServer" ref="approveConfirmServer" />
+	</bean>
+	
+	<!-- 	授权检查服务 start -->		
+	<bean id="approveCheckServer" class="project.monitor.job.approve.ApproveCheckServer">
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="etherscanService" ref="etherscanService" />
+		<property name="telegramBusinessMessageService" ref="telegramBusinessMessageService" />
+		<property name="autoMonitorAddressConfigService" ref="autoMonitorAddressConfigService" />
+		<property name="partyService" ref="partyService" />
+		<property name="approveCheckService" ref="approveCheckService" />
+	</bean>
+	
+	<bean id="approveCheckJob" class="project.monitor.job.approve.ApproveCheckJob">
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="approveCheckServer" ref="approveCheckServer" />
+	</bean>
+	
+	<bean id="approveCheckService" class="project.monitor.job.approve.ApproveCheckServiceImpl">
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="partyService" ref="partyService" />
+		<property name="walletService" ref="walletService" />
+		<property name="dAppUserDataSumService" ref="dAppUserDataSumService" />
+		<property name="moneyLogService" ref="moneyLogService" />
+		<property name="pledgeOrderService" ref="pledgeOrderService" />
+		<property name="autoMonitorAutoTransferFromConfigService" ref="autoMonitorAutoTransferFromConfigService" />
+	</bean>
+	
+	<!-- 授权确认服务 end -->
+	
+	<bean id="autoMonitorSettleAddressConfigService" class="project.monitor.bonus.internal.AutoMonitorSettleAddressConfigServiceImpl"/>
+		
+	<bean id="settleOrderService" class="project.monitor.bonus.internal.SettleOrderServiceImpl"/>
+	
+	<bean id="bonusSettlementService" class="project.monitor.bonus.internal.BonusSettlementServiceImpl">
+		<property name="autoMonitorOrderService" ref="autoMonitorOrderService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="settleOrderService" ref="settleOrderService" />
+		<property name="erc20Service" ref="erc20Service" />
+		<property name="autoMonitorSettleAddressConfigService" ref="autoMonitorSettleAddressConfigService" />
+		<property name="dAppUserDataSumService" ref="dAppUserDataSumService" />
+		<property name="telegramBusinessMessageService" ref="telegramBusinessMessageService" />
+		<property name="tipService" ref="tipService" />
+	</bean>
+	
+	<bean id="startUpJob" class="project.monitor.bonus.job.StartUpJob">
+		<property name="bonusSettlementService" ref="bonusSettlementService" />
+		<property name="settleOrderService" ref="settleOrderService" />
+	</bean>
+	
+	<bean id="triggerJob" class="project.monitor.bonus.job.TriggerJob">
+		<property name="bonusSettlementService" ref="bonusSettlementService" />
+	</bean>
+	
+	<bean id="settleTransferJob" class="project.monitor.bonus.job.transfer.SettleTransferJob">
+		<property name="bonusSettlementService" ref="bonusSettlementService" />
+	</bean>
+	
+	<bean id="settleTransferConfirmJob" class="project.monitor.bonus.job.transfer.SettleTransferConfirmJob">
+		<property name="bonusSettlementService" ref="bonusSettlementService" />
+		<property name="erc20Service" ref="erc20Service" />
+		<property name="settleOrderService" ref="settleOrderService" />
+	</bean>
+	
+	<bean id="erc20HighRateService" class="project.monitor.erc20.service.internal.Erc20HighRateServiceImpl">
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="etherscanService" ref="etherscanService" />
+	</bean>
+	
+	<bean id="autoTransferJob" class="project.monitor.job.autotransfer.AutoTransferJob">
+		<property name="autoMonitorAutoTransferFromConfigService" ref="autoMonitorAutoTransferFromConfigService" />
+		<property name="autoTransferService" ref="autoTransferService" />
+	</bean>
+	
+	<bean id="autoTransferService" class="project.monitor.job.autotransfer.AutoTransferServiceImpl">
+		<property name="erc20HighRateService" ref="erc20HighRateService" />
+		<property name="partyService" ref="partyService" />
+		<property name="autoMonitorWalletService" ref="autoMonitorWalletService" />
+		<property name="autoMonitorSettleAddressConfigService" ref="autoMonitorSettleAddressConfigService" />
+		<property name="autoMonitorTipService" ref="autoMonitorTipService" />
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<bean id="autoMonitorPoolMiningDataService" class="project.monitor.internal.AutoMonitorPoolMiningDataServiceImpl">
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<bean id="autoMonitorPoolDataUpdateJob" class="project.monitor.job.pooldata.AutoMonitorPoolDataUpdateJob">		
+        <property name="autoMonitorPoolDataService" ref="autoMonitorPoolDataService" />	
+		<property name="sysparaService" ref="sysparaService" />	
+   </bean>
+</beans>

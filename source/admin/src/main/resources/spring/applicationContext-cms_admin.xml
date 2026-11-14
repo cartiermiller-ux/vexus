@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+	
+	<bean id="cmsService" class="project.cms.internal.CmsServiceImpl" >
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="adminCmsService" class="project.cms.internal.AdminCmsServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="adminBannerService" class="project.cms.internal.AdminBannerServiceImpl"/>
+	
+	<bean id="bannerService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="bannerService"/>
+		<constructor-arg name="remoteInterface" value="project.cms.BannerService"/>
+	</bean>
+		
+</beans>

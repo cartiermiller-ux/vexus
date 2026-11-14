@@ -1,0 +1,26 @@
+# =============================================================================
+# deploy/config/system.properties.template
+# 目标位置（三应用各一份）：
+#   web3_project/admin_u/WEB-INF/classes/config/system.properties
+#   web3_project/data_u/WEB-INF/classes/config/system.properties
+#   源代码/{admin,api,data}/src/main/resources/config/system.properties（及 target/classes 对应副本）
+#
+# 由 kernel.util.PropertiesUtil 读取（CONFIG_FILENAME = "config/system.properties"），
+# 也被 Constants.WEB_URL / Constants.IMAGES_DIR 静态初始化引用。
+# 改完必须重启 Tomcat。
+# =============================================================================
+
+# 图片访问前缀（拼接返回给前端的图片 URL，如 轮播图/币种图标/客服头像）
+# 生产建议：https://your-domain.com/images/   或 CDN 地址
+http.server.host = https://your-domain.com/images/
+
+# 图片在服务器上的绝对存储路径（不要用相对路径；Windows 反斜杠建议写成 /）
+# Linux: /www/wwwroot/images/     Windows: D:/wwwroot/images/
+images.dir = /www/wwwroot/images/
+
+# 后台访问地址（后台应用上下文，需与 Tomcat 部署的 war 名/context 一致）
+# 例：https://your-domain.com/schw（本包自带配置）或 https://admin.your-domain.com
+admin_url = https://your-domain.com/admin
+
+# 前台（wap/pc）访问地址，用于生成链接、邀请链接、图片/客服跳转
+web_url = https://your-domain.com/wap

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+		
+	<bean id="futuresParaService" class="project.futures.internal.FuturesParaServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="profitAndLossConfigService" class="project.futures.internal.ProfitAndLossConfigServiceImpl" >
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="logService" ref="logService" />
+		<property name="partyService" ref="partyService" />		
+	</bean>
+		
+	<bean id="adminFuturesOrderService" class="project.futures.internal.AdminFuturesOrderServiceImpl">
+		<property name="pagedQueryDao" ref="pagedDao" />
+		<property name="userRecomService" ref="userRecomService" />
+		<property name="futuresOrderService" ref="futuresOrderService" />
+	</bean>
+	
+	<bean id="adminFuturesParaService" class="project.futures.internal.AdminFuturesParaImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="pagedQueryDao" ref="pagedDao" />
+		<property name="futuresParaService" ref="futuresParaService" />
+	</bean>
+	
+	<bean id="adminContractManageService" class="project.futures.internal.AdminContractManageServiceImpl">
+		<property name="pagedQueryDao" ref="pagedDao" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="adminItemService" ref="adminItemService" />
+		<property name="adminFuturesParaService" ref="adminFuturesParaService" />
+		<property name="secUserService" ref="secUserService" />
+		<property name="logService" ref="logService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="googleAuthService" ref="googleAuthService" />
+	</bean>
+	
+	<bean id="adminProfitAndLossConfigService" class="project.futures.internal.AdminProfitAndLossConfigServiceImpl">
+		<property name="pagedQueryDao" ref="pagedDao" />
+		<property name="userRecomService" ref="userRecomService" />		
+	</bean>
+	
+</beans>

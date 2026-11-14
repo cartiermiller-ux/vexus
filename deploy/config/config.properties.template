@@ -1,0 +1,47 @@
+# 数据库连接（三应用共用，admin 的 applicationContext.xml 用 classpath:config.properties 加载；
+# api 用 classpath:*.properties 加载）
+# 注意：jdbc.password 必须是 3DES 密文，用 deploy/tools 生成（见 tools/README.md）
+jdbc.driver = com.mysql.jdbc.Driver
+jdbc.url = jdbc:mysql://127.0.0.1:3306/jiaoyipan?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+jdbc.username = vexus
+jdbc.password = <用 deploy/tools/db_password.py encrypt '你的数据库密码' 生成>
+
+# hibernate 配置（当前版本没有 SessionFactory，hbm2ddl 不生效，仅保留兼容）
+hibernate.dialect = org.hibernate.dialect.MySQLDialect
+hibernate.show_sql = false
+hibernate.format_sql = false
+hibernate.hbm2ddl.auto = none
+
+# 图片上传根目录（绝对路径；Linux 例：/www/wwwroot/images/，Windows 例：D:/wwwroot/images/）
+images.dir = /www/wwwroot/images/
+
+# Redis（注意：本版本真正生效的是 classes/config/redis.properties，
+#        这里保留是历史遗留/部分工具类会读）
+redis.address = 127.0.0.1:6379
+redis.address.port = 6379
+redis.pool.testOnBorrow = true
+redis.pool.testOnReturn = false
+redis.pool.testWhileIdle = false
+redis.pool.maxIdle = 300
+redis.pool.minIdle = 150
+redis.pool.maxActive = 1000
+redis.pool.maxWait = 10000
+redis.pool.timeout = 10000
+redis.pool.numTestsPerEvictionRun = 0
+redis.pool.timeBetweenEvictionRunsMillis = 0
+redis.pool.minEvictableIdleTimeMillis = 0
+
+# Dubbo + ZooKeeper（admin/api/data/dapp 互相调用）
+# 单机：127.0.0.1:2181；多机：替换成 ZK 地址。admin_u/data_u 的 dubbo.application.name 必须不同。
+dubbo.application.name = admin
+dubbo.registry.protocol = zookeeper
+dubbo.registry.address = 127.0.0.1:2181
+# data_u 额外需要（避免端口冲突）
+# dubbo.application.port.root = 21861
+
+# 邮件（可选；不填则发信功能不可用，不影响启动）
+email.host = smtp.office365.com
+email.port = 587
+email.username = your-mail@example.com
+email.password = <邮箱授权码>
+email.from = your-mail@example.com

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+
+	<bean id="userLoadCacheService" class="project.user.data.loadcache.UserLoadCacheService">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+
+	<bean id="userService" class="project.user.internal.UserServiceImpl">
+		<property name="partyService" ref="partyService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="secUserService" ref="secUserService" />
+	</bean>
+
+	<bean id="tokenService" class="project.user.token.internal.TokenServiceImpl">
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+	
+	<bean id="identifyingCodeService" class="project.user.idcode.internal.IdentifyingCodeServiceImpl">
+		<property name="smsSendService" ref="smsSendService" />
+		<property name="emailSendService" ref="emailSendService" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="identifyingCodeTimeWindowService" ref="identifyingCodeTimeWindowService" />
+		<property name="blacklistIpTimeWindow" ref="blacklistIpTimeWindow" />
+		<property name="sendCountTimeWindow" ref="sendCountTimeWindow" />
+		<property name="codeLogService" ref="codeLogService" />	
+	</bean>
+	
+	<bean id="identifyingCodeTimeWindowService" class="project.user.idcode.IdentifyingCodeTimeWindow"/>
+	
+	<bean id="blacklistIpTimeWindow" class="project.user.idcode.BlacklistIpTimeWindow"/>
+	
+	<bean id="sendCountTimeWindow" class="project.user.idcode.SendCountTimeWindow"/>
+		
+	<bean id="kycService" class="project.user.kyc.internal.KycServiceImpl">
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="sysparaService" ref="sysparaService" />
+	</bean>
+	
+	<bean id="kycHighLevelService" class="project.user.kyc.internal.KycHighLevelServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+</beans>

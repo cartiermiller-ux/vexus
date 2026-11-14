@@ -1,0 +1,37 @@
+# build output
+target/
+*.class
+*.war
+*.jar
+
+# runtime / logs
+logs/
+*.log
+dump.rdb
+*.pid
+*.tmp
+
+# local secrets and environment
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.jks
+**/secrets/
+**/config/local.properties
+
+# database dumps / backups
+*.sql.gz
+*.dump
+数据库/
+backup*/
+removed_originals/
+war_original/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+node_modules/

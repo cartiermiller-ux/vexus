@@ -1,0 +1,15 @@
+# =============================================================================
+# deploy/config/email.properties.template
+# 目标位置：web3_project/{admin_u,data_u}/WEB-INF/classes/config/email.properties
+#           源代码/{admin,api,data}/src/main/resources/config/email.properties
+#
+# 由 email.EmailPropertiesUtil 读取（CONFIG_FILENAME = "config/email.properties"）。
+# 可选：不配置则「邮件验证码/邮件通知」功能不可用，不影响应用启动。
+# 注意：很多邮箱（Gmail/Outlook/QQ/163）要求使用「授权码」而不是登录密码。
+# =============================================================================
+
+email.host = smtp.office365.com      # SMTP 服务器；Gmail: smtp.gmail.com；QQ: smtp.qq.com
+email.port = 587                     # 587(STARTTLS) / 465(SSL，需在代码/协议支持时使用)
+email.username = your-mail@example.com
+email.password = <邮箱授权码/应用专用密码>
+email.from = your-mail@example.com

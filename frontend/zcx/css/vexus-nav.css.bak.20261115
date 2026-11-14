@@ -1,0 +1,66 @@
+/* Vexus extended top navigation */
+.left-page-header{display:none !important}
+.vexus-nav-item{display:inline-flex;align-items:center}
+.vexus-nav-item .dropbtn{white-space:nowrap;font-size:14px !important;padding-left:9px !important;padding-right:9px !important}
+.vexus-nav-item.vexus-nav-soon .dropbtn{opacity:.78}
+.vexus-nav-item.vexus-nav-ai .dropbtn{
+  background:linear-gradient(92deg,#a78bfa,#38bdf8);
+  -webkit-background-clip:text;background-clip:text;color:transparent !important;
+  font-weight:700;letter-spacing:.5px;
+}
+.vexus-nav-item.vexus-nav-ai .dropbtn:after{
+  content:"";display:inline-block;width:6px;height:6px;margin-left:5px;border-radius:50%;
+  background:#38bdf8;box-shadow:0 0 10px #38bdf8;vertical-align:middle;animation:vexusAiPulse 1.8s infinite;
+}
+@keyframes vexusAiPulse{0%,100%{opacity:.45;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+.vexus-more-content{
+  display:none;position:absolute;top:calc(100% + 8px);left:0;z-index:999999;
+  padding:10px 8px;min-width:176px;background:rgba(23,20,48,.98);
+  border:1px solid rgba(255,255,255,.14);border-radius:12px;
+  box-shadow:0 22px 60px rgba(0,0,0,.5);backdrop-filter:blur(18px);
+}
+.vexus-nav-item:hover .vexus-more-content{display:block}
+/* mega dropdown for Trade / Futures */
+.dropdown-content.vexus-mega-wrap{
+  display:none;position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);
+  padding:0;background:transparent;border:0;box-shadow:none;z-index:999998;width:auto;
+}
+.dropdown:hover > .vexus-mega-wrap{display:block}
+.vexus-mega{
+  display:grid;grid-template-columns:1fr 1fr;gap:20px 26px;width:720px;
+  padding:20px 22px;border-radius:16px;border:1px solid rgba(255,255,255,.13);
+  background:linear-gradient(160deg,rgba(31,27,55,.985),rgba(13,11,26,.995));
+  box-shadow:0 34px 90px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.1);
+  backdrop-filter:blur(22px) saturate(150%);
+}
+.vexus-mega.is-single{width:430px;grid-template-columns:1fr;gap:2px}
+.vexus-mega-col-title{font-size:12px;color:rgba(255,255,255,.38);letter-spacing:.5px;margin:0 0 8px 10px}
+.vexus-mega.is-single .vexus-mega-col-title{margin-top:4px}
+.vexus-mega-item{display:flex;align-items:flex-start;gap:11px;padding:9px 10px;border-radius:10px;cursor:pointer}
+.vexus-mega-item:hover{background:rgba(124,92,255,.2)}
+.vexus-mega-icon{
+  flex:0 0 34px;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:#f0ebff;letter-spacing:.2px;
+  background:linear-gradient(135deg,rgba(124,92,255,.7),rgba(45,140,255,.45));
+  border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
+}
+.vexus-mega-text{min-width:0}
+.vexus-mega-title{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:600;color:#fff;white-space:nowrap}
+.vexus-mega-desc{font-size:11px;color:rgba(255,255,255,.42);line-height:1.45;margin-top:3px;white-space:nowrap}
+.vexus-mega-tag{font-size:10px;font-weight:600;line-height:1.5;padding:0 6px;border-radius:5px;color:#0c1622;background:#b9e86a}
+.vexus-mega-tag.is-new{background:#b9e86a}
+.vexus-mega-tag.is-hot{background:#ff8a5c}
+.vexus-mega-tag.is-gold{background:#f3c969}
+@media (max-width:1180px){.vexus-mega{width:600px;gap:14px 18px}.vexus-mega-desc{white-space:normal}}
+.vexus-more-link{padding:9px 14px;border-radius:8px;color:#d7d3e6;font-size:14px;cursor:pointer;white-space:nowrap}
+.vexus-more-link:hover{background:rgba(124,92,255,.28);color:#fff}
+#vexus-nav-toast{
+  position:fixed;left:50%;top:84px;transform:translate(-50%,-12px);z-index:999999;
+  padding:11px 18px;border-radius:12px;background:rgba(20,16,38,.95);color:#fff;
+  border:1px solid rgba(255,255,255,.18);box-shadow:0 16px 40px rgba(0,0,0,.4);
+  font-size:13px;opacity:0;pointer-events:none;transition:all .25s ease;
+}
+#vexus-nav-toast.show{opacity:1;transform:translate(-50%,0)}
+@media (max-width:1100px){
+  .vexus-nav-item{display:none}
+}

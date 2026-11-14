@@ -1,0 +1,12 @@
+<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 1533209102">
+<path id="Subtract" fill-rule="evenodd" clip-rule="evenodd" d="M0.195312 11.7873V4.97053H4.38476V0H14.1838V11.7873C10.2071 14.7696 5.09456 15.0536 0.195312 11.7873ZM2.53794 6.81637H4.24212V11.7869H2.53794V6.81637ZM12.0523 9.51367H6.51367V11.7859H12.0523V9.51367Z" fill="#9F82FF"/>
+<path id="Vector 4639" d="M11.1818 5.84979L8.27273 8.66797L6.04638 6.53068L9.18182 3.39524L7.45455 1.66797H13V7.57706L11.1818 5.84979Z" fill="url(#paint0_linear_4991_27214)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_4991_27214" x1="9.45824" y1="4.82364" x2="6.89769" y2="7.38419" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#464D57" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

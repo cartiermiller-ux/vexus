@@ -1,0 +1,316 @@
+(function () {
+  'use strict';
+  if (window.__vexusNavInited) return;
+  window.__vexusNavInited = true;
+
+  var lang = localStorage.getItem('localLan') || 'en';
+  var zh = lang === 'zh-CN' || lang === 'CN' || lang === 'cht';
+  var L = zh ? {
+    buy: '买币', futures: '合约', stocks: '股票', community: '币圈', ai: 'AI',
+    more: '更多', tradfi: 'TradFi', rewards: '福利中心', earn: '理财', mining: '矿池锁仓',
+    spot: '现货交易', flash: '闪兑', c2c: 'C2C', fund: '基金理财', promote: '推广中心',
+    soon: '该板块正在开发中，敬请期待'
+  } : {
+    buy: 'Buy Crypto', futures: 'Futures', stocks: 'Stocks', community: 'Community', ai: 'AI',
+    more: 'More', tradfi: 'TradFi', rewards: 'Rewards', earn: 'Earn', mining: 'Mining Pool',
+    spot: 'Spot', flash: 'Flash Exchange', c2c: 'C2C', fund: 'Fund Management', promote: 'Promotion',
+    soon: 'This module is under development'
+  };
+
+  function mark(el) {
+    el.setAttribute('data-v-33877ad3', '');
+    var kids = el.children || [];
+    for (var i = 0; i < kids.length; i++) mark(kids[i]);
+    return el;
+  }
+
+  function toast(msg) {
+    var t = document.getElementById('vexus-nav-toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'vexus-nav-toast';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(window.__vexusNavToastTimer);
+    window.__vexusNavToastTimer = setTimeout(function () { t.classList.remove('show'); }, 2400);
+  }
+
+  function go(path) {
+    location.hash = '#' + path;
+    setTimeout(function () { window.scrollTo(0, 0); }, 50);
+  }
+
+  function item(label, cls) {
+    var d = document.createElement('div');
+    d.className = 'dropdown vexus-nav-item ' + (cls || '');
+    d.setAttribute('data-vexus-nav', '1');
+    var b = document.createElement('button');
+    b.className = 'dropbtn';
+    b.textContent = label;
+    d.appendChild(b);
+    return mark(d);
+  }
+
+  var TRADE_MENU = [
+    { title: zh ? '基础交易' : 'Basic', items: [
+      { t: '现货', d: zh ? '买卖数字货币' : 'Buy and sell crypto', i: '现', go: '/spot' },
+      { t: '打金狗', d: zh ? '查看链上代币行情' : 'On-chain token market', i: '链', soon: true },
+      { t: '杠杆交易', d: zh ? '了解杠杆现货交易' : 'Leveraged spot trading', i: '杠', soon: true },
+      { t: '闪兑与定投', d: zh ? '查看币种兑换报价' : 'Convert and auto-invest', i: '闪', go: '/exchange' },
+      { t: 'ETF', d: zh ? '查看杠杆 ETF 产品' : 'Leveraged ETF products', i: 'ETF', soon: true },
+      { t: '盘前交易', d: zh ? '了解上市前交易' : 'Pre-market trading', i: '盘', soon: true }
+    ]},
+    { title: zh ? '进阶交易' : 'Advanced', items: [
+      { t: 'Vexus Web3', d: zh ? '查看链上市场与钱包工具' : 'On-chain market and wallet tools', i: 'W3', soon: true },
+      { t: zh ? '交易机器人' : 'Trading Bot', d: zh ? '创建和管理自动交易策略' : 'Automated trading strategies', i: '机', soon: true },
+      { t: '跟单', d: zh ? '发现交易员与跟单策略' : 'Copy trading strategies', i: '跟', soon: true },
+      { t: '跨所交易', d: zh ? '了解跨平台交易' : 'Cross-exchange trading', i: '跨', tag: 'New', soon: true },
+      { t: 'OTC 银行转账', d: zh ? '了解银行转账买卖币' : 'Buy/sell via bank transfer', i: 'OTC', soon: true },
+      { t: 'OTC RFQ', d: zh ? '了解大宗交易询价' : 'Block trade quotation', i: 'RFQ', soon: true }
+    ]}
+  ];
+
+  var FUTURES_MENU = [
+    { title: zh ? '合约交易' : 'Futures', items: [
+      { t: '合约', d: zh ? '永续合约市场' : 'Perpetual futures market', i: '合', go: '/trade/btc_usdt?RouterName=sustainable' },
+      { t: 'CFD 合约', d: zh ? '一站式交易全球传统资产' : 'Trade global traditional assets', i: 'CFD', tag: zh ? '黄金' : 'Gold', soon: true },
+      { t: '事件合约', d: zh ? '预测涨跌方向，把握市场机会' : 'Predict market direction', i: '事', tag: 'New', soon: true },
+      { t: '期权', d: zh ? '欧式 T 型报价，丰富的到期日和行权价' : 'European options', i: '期', tag: 'Hot', soon: true },
+      { t: '统一账户', d: zh ? '实现最大化资金效率' : 'Unified trading account', i: '统', go: '/contractAccounts' },
+      { t: '合约入门', d: zh ? '从零开始掌握合约交易技巧' : 'Futures trading guide', i: '入', go: '/help' },
+      { t: '合约活动', d: zh ? '查看合约活动与参与规则' : 'Futures campaigns', i: '活', go: '/promote' },
+      { t: '模拟交易', d: zh ? '使用模拟资金，体验交易' : 'Paper trading', i: '拟', soon: true }
+    ]}
+  ];
+
+  var TRADFI_MENU = [
+    { title: 'TradFi', items: [
+      { t: zh ? '外汇' : 'Forex', d: zh ? '全球主要货币对交易' : 'Major global currency pairs', i: 'FX', soon: true },
+      { t: zh ? '全球指数' : 'Global Indices', d: zh ? '美股/港股/欧洲主要指数' : 'US, HK and Europe indices', i: '指数', href: '/stocks/' },
+      { t: zh ? '大宗商品' : 'Commodities', d: zh ? '黄金、原油等商品行情' : 'Gold, oil and commodities', i: '商品', soon: true },
+      { t: zh ? '黄金' : 'Gold', d: zh ? '现货黄金与贵金属' : 'Spot gold and metals', i: '金', soon: true },
+      { t: zh ? '美股' : 'US Stocks', d: zh ? '美股市场热门标的' : 'Popular US equities', i: 'US', href: '/stocks/' },
+      { t: zh ? '市场资讯' : 'Market News', d: zh ? '全球市场新闻与数据' : 'Global market news and data', i: '讯', soon: true }
+    ]}
+  ];
+
+  var AI_MENU = [
+    { title: 'AI', items: [
+      { t: zh ? 'AI 客服' : 'AI Support', d: zh ? '智能问答与平台使用指引' : 'Smart Q&A and platform guidance', i: 'AI', action: 'ai' },
+      { t: zh ? '交易机器人' : 'Trading Bot', d: zh ? '智能策略，自动交易' : 'Automated trading strategies', i: '机', soon: true },
+      { t: '跟单', d: zh ? '跟随专家实现收益增长' : 'Copy expert strategies', i: '跟', soon: true },
+      { t: zh ? '分享好友' : 'Invite Friends', d: zh ? '邀请好友，共享返佣' : 'Invite friends and earn rewards', i: '邀', go: '/promote' },
+      { t: zh ? '合约入门' : 'Futures Guide', d: zh ? '从零开始掌握合约交易技巧' : 'Learn futures trading', i: '入', go: '/help' },
+      { t: zh ? '储备金证明' : 'Proof of Reserves', d: zh ? '客户负债与链上储备对照' : 'Liabilities vs on-chain reserves', i: '证', soon: true }
+    ]}
+  ];
+
+  var WELFARE_MENU = [
+    { title: zh ? '福利中心' : 'Rewards', items: [
+      { t: zh ? '分享好友' : 'Invite Friends', d: zh ? '邀请好友，获得返佣奖励' : 'Invite friends and earn commission', i: '邀', go: '/promote' },
+      { t: zh ? '合约活动' : 'Futures Campaigns', d: zh ? '查看合约活动与参与规则' : 'Futures events and rules', i: '合约', go: '/promote' },
+      { t: zh ? '股票活动' : 'Stock Campaigns', d: zh ? '查看股票活动与参与规则' : 'Stock events and rules', i: '股票', go: '/promote' },
+      { t: zh ? '每日签到' : 'Daily Check-in', d: zh ? '每日签到领取积分奖励' : 'Daily rewards', i: '签', soon: true },
+      { t: zh ? '任务中心' : 'Task Center', d: zh ? '完成任务领取福利' : 'Complete tasks for rewards', i: '任', soon: true }
+    ]}
+  ];
+
+  var COMMUNITY_MENU = [
+    { title: zh ? '币圈' : 'Community', items: [
+      { t: zh ? '更多新闻' : 'More News', d: zh ? '全网交易市场数据' : 'Market-wide news and data', i: '闻', go: '/my/announcement' },
+      { t: zh ? '慈善' : 'Charity', d: zh ? '帮助贡献，回馈社会' : 'Give back to the community', i: '善', soon: true },
+      { t: 'C2C', d: zh ? '点对点买卖加密货币' : 'Peer-to-peer crypto market', i: 'C2C', go: '/c2c' },
+      { t: zh ? '行情资讯' : 'Market News', d: zh ? '查看市场行情与公告' : 'Markets and announcements', i: '讯', go: '/market' }
+    ]}
+  ];
+
+  var EARN_MENU = [
+    { title: zh ? '理财' : 'Earn', items: [
+      { t: 'DeFi 借贷', d: zh ? '借贷交易，放大收益' : 'Lending and borrowing', i: 'DeFi', soon: true },
+      { t: zh ? '投资组合' : 'Portfolio', d: zh ? '涉及两种加密货币的组合收益' : 'Dual-asset structured yield', i: '组合', soon: true },
+      { t: zh ? '基金理财' : 'Fund Management', d: zh ? '活期/定期理财与申购' : 'Flexible and fixed-term products', i: '基金', go: '/fundMa' },
+      { t: zh ? '矿池锁仓' : 'Mining Pool', d: zh ? '锁仓获取矿池收益' : 'Lock assets for mining rewards', i: '矿池', soon: true }
+    ]}
+  ];
+
+  var STOCKS_MENU = [
+    { title: zh ? '股票市场' : 'Stocks', items: [
+      { t: 'CFD', d: zh ? '股票差价合约衍生产品' : 'Stock CFD derivatives', i: 'CFD', soon: true },
+      { t: zh ? '美股' : 'US Stocks', d: zh ? '美股市场与热门股票 ETF' : 'US market, stocks and ETFs', i: 'US', href: '/stocks/' },
+      { t: zh ? '港股' : 'HK Stocks', d: zh ? '香港股票市场与资产信息' : 'Hong Kong stock market', i: 'HK', href: '/stocks/' },
+      { t: zh ? '韩股' : 'KR Stocks', d: zh ? '韩国股票市场与热门标的' : 'Korea stock market', i: 'KR', tag: zh ? 'SK海力士' : 'SK Hynix', soon: true },
+      { t: zh ? '日股' : 'JP Stocks', d: zh ? '热门日股一站汇聚，了解日股市场' : 'Japan stock market', i: 'JP', soon: true },
+      { t: zh ? '股票合约' : 'Stock Futures', d: zh ? '高杠杆，7×24 连续交易' : 'Leveraged 24/7 trading', i: '合约', tag: '7×24h', soon: true },
+      { t: zh ? '股票活动' : 'Stock Campaigns', d: zh ? '查看股票活动与参与规则' : 'Stock campaigns and rules', i: '活动', go: '/promote' },
+      { t: zh ? '股票代币' : 'Tokenized Stocks', d: zh ? '锚定真实股票资产发行' : 'Tokenized real-world equities', i: '代币', soon: true },
+      { t: zh ? '直通 IPO' : 'IPO Access', d: zh ? '了解全球股票发行市场' : 'Global IPO market access', i: 'IPO', soon: true }
+    ]}
+  ];
+
+  function megaItem(x) {
+    var d = document.createElement('div');
+    d.className = 'vexus-mega-item';
+    d.setAttribute('data-v-33877ad3', '');
+    var icon = document.createElement('div');
+    icon.className = 'vexus-mega-icon';
+    icon.textContent = x.i || '';
+    var txt = document.createElement('div');
+    txt.className = 'vexus-mega-text';
+    var title = document.createElement('div');
+    title.className = 'vexus-mega-title';
+    title.textContent = x.t;
+    if (x.tag) {
+      var tag = document.createElement('span');
+      tag.className = 'vexus-mega-tag ' + (x.tag === 'Hot' ? 'is-hot' : x.tag === 'New' ? 'is-new' : 'is-gold');
+      tag.textContent = x.tag;
+      title.appendChild(tag);
+    }
+    var desc = document.createElement('div');
+    desc.className = 'vexus-mega-desc';
+    desc.textContent = x.d || '';
+    txt.appendChild(title);
+    txt.appendChild(desc);
+    d.appendChild(icon);
+    d.appendChild(txt);
+    d.addEventListener('click', function () {
+      if (x.action === 'ai') {
+        var fab = document.getElementById('vexus-ai-fab');
+        if (fab) { fab.click(); } else { toast(L.soon); }
+        return;
+      }
+      if (x.soon) { toast(L.soon); return; }
+      if (x.href) { location.href = x.href; return; }
+      if (x.go) { go(x.go); }
+    });
+    return d;
+  }
+
+  function makeMega(cols, single) {
+    var wrap = document.createElement('div');
+    wrap.className = 'vexus-mega' + (single ? ' is-single' : '');
+    cols.forEach(function (col) {
+      var c = document.createElement('div');
+      c.className = 'vexus-mega-col';
+      var h = document.createElement('div');
+      h.className = 'vexus-mega-col-title';
+      h.textContent = col.title;
+      c.appendChild(h);
+      col.items.forEach(function (x) { c.appendChild(megaItem(x)); });
+      wrap.appendChild(c);
+    });
+    return wrap;
+  }
+
+  function attachMega(dropdown, cols, single) {
+    if (!dropdown) return;
+    var content = dropdown.querySelector('.dropdown-content');
+    if (!content) {
+      content = document.createElement('div');
+      content.className = 'dropdown-content';
+      dropdown.appendChild(content);
+    }
+    content.className = 'dropdown-content vexus-mega-wrap';
+    content.innerHTML = '';
+    content.appendChild(makeMega(cols, single));
+    mark(content);
+    dropdown.setAttribute('data-vexus-mega', '1');
+  }
+
+  function build() {
+    var header = document.querySelector('.page-header-content.page-header-box');
+    if (!header) return false;
+    if (header.querySelector('[data-vexus-nav]')) return true;
+
+    var direct = [];
+    for (var i = 0; i < header.children.length; i++) {
+      var c = header.children[i];
+      if (c.classList && c.classList.contains('dropdown')) direct.push(c);
+    }
+    var first = direct[0] || null;
+    var transaction = direct[2] || direct[direct.length - 1] || null;
+    var left = header.querySelector('.left-page-header');
+    var right = header.querySelector('.right-page-header');
+
+    // buy crypto before Markets
+    var buy = item(L.buy);
+    buy.querySelector('.dropbtn').addEventListener('click', function () { go('/purchase'); });
+    if (first) header.insertBefore(buy, first); else if (left) header.insertBefore(buy, left); else header.appendChild(buy);
+
+    // futures / stocks after Transaction
+    var futures = item(L.futures, 'vexus-mega-drop');
+    futures.querySelector('.dropbtn').insertAdjacentHTML('beforeend', '<span class="icon-arrow-down"></span>');
+    attachMega(futures, FUTURES_MENU, true);
+    var stocks = item(L.stocks, 'vexus-mega-drop');
+    stocks.querySelector('.dropbtn').insertAdjacentHTML('beforeend', '<span class="icon-arrow-down"></span>');
+    attachMega(stocks, STOCKS_MENU, true);
+    if (transaction && transaction.nextSibling) {
+      header.insertBefore(stocks, transaction.nextSibling);
+      header.insertBefore(futures, stocks);
+    } else {
+      header.appendChild(futures);
+      header.appendChild(stocks);
+    }
+    // Replace the existing Transaction dropdown with the full two-column menu
+    attachMega(transaction, TRADE_MENU, false);
+
+    // community / AI / More / TradFi / rewards before existing fund+mining area
+    var group = document.createDocumentFragment();
+    var earn = item(L.earn, 'vexus-mega-drop');
+    earn.querySelector('.dropbtn').insertAdjacentHTML('beforeend', '<span class="icon-arrow-down"></span>');
+    attachMega(earn, EARN_MENU, true);
+    var community = item(L.community, 'vexus-mega-drop');
+    community.querySelector('.dropbtn').insertAdjacentHTML('beforeend', '<span class="icon-arrow-down"></span>');
+    attachMega(community, COMMUNITY_MENU, true);
+    var ai = item(L.ai, 'vexus-nav-ai vexus-mega-drop');
+    ai.querySelector('.dropbtn').insertAdjacentHTML('beforeend', '<span class="icon-arrow-down"></span>');
+    attachMega(ai, AI_MENU, true);
+    ai.querySelector('.dropbtn').addEventListener('click', function () {
+      var fab = document.getElementById('vexus-ai-fab');
+      if (fab) { fab.click(); }
+    });
+    var more = item(L.more);
+    more.querySelector('.dropbtn').insertAdjacentHTML('beforeend', '<span class="icon-arrow-down"></span>');
+    var content = document.createElement('div');
+    content.className = 'dropdown-content vexus-more-content';
+    content.innerHTML =
+      '<div class="vexus-more-link" data-go="/spot">' + L.spot + '</div>' +
+      '<div class="vexus-more-link" data-go="/exchange">' + L.flash + '</div>' +
+      '<div class="vexus-more-link" data-go="/c2c">' + L.c2c + '</div>' +
+      '<div class="vexus-more-link" data-go="/fundMa">' + L.fund + '</div>' +
+      '<div class="vexus-more-link" data-soon="1">' + L.mining + '</div>' +
+      '<div class="vexus-more-link" data-go="/promote">' + L.promote + '</div>';
+    more.appendChild(content);
+    content.querySelectorAll('.vexus-more-link').forEach(function (el) {
+      el.addEventListener('click', function () {
+        if (el.getAttribute('data-soon')) { toast(L.soon); } else { go(el.getAttribute('data-go')); }
+      });
+    });
+    var tradfi = item(L.tradfi, 'vexus-mega-drop');
+    tradfi.querySelector('.dropbtn').insertAdjacentHTML('beforeend', '<span class="icon-arrow-down"></span>');
+    attachMega(tradfi, TRADFI_MENU, true);
+    var rewards = item(L.rewards, 'vexus-mega-drop');
+    rewards.querySelector('.dropbtn').insertAdjacentHTML('beforeend', '<span class="icon-arrow-down"></span>');
+    attachMega(rewards, WELFARE_MENU, true);
+
+    [earn, community, ai, more, tradfi, rewards].forEach(function (el) {
+      if (left) header.insertBefore(el, left); else header.appendChild(el);
+    });
+    // fragment unused, keep for compatibility
+    return true;
+  }
+
+  var tries = 0;
+  var timer = setInterval(function () {
+    tries++;
+    if (build() || tries > 40) clearInterval(timer);
+  }, 250);
+
+  // Vue may re-render the header on language change/route; re-add if removed
+  var mo = new MutationObserver(function () {
+    if (!document.querySelector('[data-vexus-nav]')) build();
+  });
+  var root = document.getElementById('app') || document.body;
+  mo.observe(root, { childList: true, subtree: true });
+})();

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+	
+	<bean id="checkIpRequestCountService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="checkIpRequestCountService"/>
+		<constructor-arg name="remoteInterface" value="project.ddos.CheckIpRequestCountService"/>
+	</bean>
+	
+	<bean id="ipMenuService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="ipMenuService"/>
+		<constructor-arg name="remoteInterface" value="project.ddos.IpMenuService"/>
+	</bean>
+		
+	<bean id="urlSpecialService" class="kernel.web.RmiProxyFactoryBean" factory-method="getProxyBean">
+		<constructor-arg name="remoteBeanName" value="urlSpecialService"/>
+		<constructor-arg name="remoteInterface" value="project.ddos.UrlSpecialService"/>
+	</bean>
+		
+	<bean id="adminIpMenuService" class="project.ddos.internal.AdminIpMenuServiceImpl" >
+		<property name="secUserService" ref="secUserService" />
+		<property name="logService" ref="logService" />
+		<property name="ipMenuService" ref="ipMenuService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="checkIpRequestCountService" ref="checkIpRequestCountService" />
+	</bean>
+	
+	<bean id="adminUrlSpecialService" class="project.ddos.internal.AdminUrlSpecialServiceImpl" >
+		<property name="secUserService" ref="secUserService" />
+		<property name="logService" ref="logService" />
+		<property name="urlSpecialService" ref="urlSpecialService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+	</bean>
+	
+	<bean id="adminIpCountService" class="project.ddos.internal.AdminIpCountServiceImpl" >
+		<property name="secUserService" ref="secUserService" />
+		<property name="logService" ref="logService" />
+		<property name="ipMenuService" ref="ipMenuService" />
+		<property name="checkIpRequestCountService" ref="checkIpRequestCountService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="redisHandler" ref="redisHandler" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+</beans>

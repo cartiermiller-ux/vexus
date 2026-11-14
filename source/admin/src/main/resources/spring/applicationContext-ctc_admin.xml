@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
+	    http://www.springframework.org/schema/beans/spring-beans.xsd">         
+	
+	<bean id="adminC2cPaymentMethodConfigService" class="project.c2c.internal.AdminC2cPaymentMethodConfigServiceImpl">
+		<property name="pagedDao" ref="pagedDao" />
+	</bean>
+
+	<bean id="adminC2cPaymentMethodService" class="project.c2c.internal.AdminC2cPaymentMethodServiceImpl">
+		<property name="pagedDao" ref="pagedDao" />
+		<property name="c2cPaymentMethodService" ref="c2cPaymentMethodService" />
+		<property name="redisHandler" ref="redisHandler" />
+	</bean>
+
+	<bean id="adminC2cUserService" class="project.c2c.internal.AdminC2cUserServiceImpl">
+		<property name="pagedDao" ref="pagedDao" />
+		<property name="sysparaService" ref="sysparaService" />
+		<property name="c2cUserService" ref="c2cUserService" />		
+	</bean>
+
+	<bean id="adminC2cAdvertService" class="project.c2c.internal.AdminC2cAdvertServiceImpl">
+		<property name="pagedDao" ref="pagedDao" />
+	</bean>
+	
+	<bean id="adminC2cOrderService" class="project.c2c.internal.AdminC2cOrderServiceImpl">
+		<property name="pagedDao" ref="pagedDao" />
+		<property name="c2cOrderService" ref="c2cOrderService" />
+		<property name="c2cPaymentMethodService" ref="c2cPaymentMethodService" />
+		<property name="secUserService" ref="secUserService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="logService" ref="logService" />
+		<property name="c2cAdvertService" ref="c2cAdvertService" />
+	</bean>
+
+	<bean id="adminC2cAppealService" class="project.c2c.internal.AdminC2cAppealServiceImpl">
+		<property name="pagedDao" ref="pagedDao" />	
+		<property name="c2cAppealService" ref="c2cAppealService" />	
+		<property name="secUserService" ref="secUserService" />
+		<property name="logService" ref="logService" />
+		<property name="tipService" ref="tipService" />
+	</bean>
+
+</beans>
