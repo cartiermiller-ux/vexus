@@ -40,7 +40,12 @@
     if (!window.i18next) return;
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var key = el.getAttribute('data-i18n');
-      el.textContent = window.i18next.t(key);
+      var text = window.i18next.t(key);
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.setAttribute('placeholder', text);
+      } else {
+        el.textContent = text;
+      }
     });
     document.dispatchEvent(new CustomEvent('vexus-i18n-ready', { detail: { lang: window.i18next.language } }));
   }
