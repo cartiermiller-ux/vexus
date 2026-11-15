@@ -92,8 +92,9 @@
       if (ps0 && ps0.parentNode) ps0.parentNode.removeChild(ps0);
       var hb0 = document.querySelector('.page-header-background');
       var hr0 = hb0 ? hb0.parentNode : null;
-      if (hr0 && hr0.parentNode && hr0.nextElementSibling !== existing) {
+      if (hr0 && hr0.parentNode && existing.previousElementSibling !== hr0 && !existing.getAttribute('data-positioned')) {
         hr0.parentNode.insertBefore(existing, hr0.nextSibling);
+        existing.setAttribute('data-positioned', '1');
       }
       return;
     }
@@ -118,6 +119,7 @@
     var headerRoot = hb ? hb.parentNode : null;
     if (headerRoot && headerRoot.parentNode) {
       headerRoot.parentNode.insertBefore(hero, headerRoot.nextSibling);
+      hero.setAttribute('data-positioned', '1');
     } else {
       view.insertBefore(hero, view.firstChild);
     }
@@ -133,6 +135,4 @@
 
   document.addEventListener('vexus-i18n-ready', function () { var h = document.getElementById('vexus-market-hero'); if (h) applyHeroLang(h); });
   setInterval(ensure, 800);
-  var mo = new MutationObserver(function () { ensure(); });
-  mo.observe(document.body, { childList: true, subtree: true });
 })();
