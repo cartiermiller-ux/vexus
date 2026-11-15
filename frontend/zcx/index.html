@@ -249,25 +249,7 @@ body {
         <div id=app></div>
         <script src=/js/chunk-vendors.86b39d2f.js></script>
         <script src=/js/app.71218f6a.js></script>
-    <script id="vexus-strip-hash">
-(function () {
-  var MARK = 'vexus-strip-hash';
-  if (window.__vexusHashFix) return;
-  window.__vexusHashFix = true;
-  function strip() {
-    try {
-      if (window.location.hash) {
-        window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
-      }
-    } catch (e) {}
-  }
-  window.addEventListener('hashchange', function () { setTimeout(strip, 0); });
-  window.addEventListener('load', strip);
-  document.addEventListener('DOMContentLoaded', strip);
-  setInterval(strip, 400);
-})();
-</script>
-<script id="vexus-hide-empty-message">
+    <script id="vexus-hide-empty-message">
 (function () {
   if (window.__vexusMsgFix) return;
   window.__vexusMsgFix = true;
@@ -291,7 +273,8 @@ body {
 <script src="/js/vexus-ticker.js?v=20261220" defer></script>
 <script src="/js/vexus-bottom-ticker.js?v=20261211" defer></script>
 <script src="/js/i18next.min.js" defer></script>
-<script src="/js/vexus-i18n.js?v=20261230" defer></script>
-<script src="/js/vexus-market-hero.js?v=20261231" defer></script>
+<script src="/js/vexus-i18n.js?v=20261232" defer></script>
+<script src="/js/vexus-lang-modal.js?v=20261232" defer></script>
+<script src="/js/vexus-market-hero.js?v=20261232" defer></script>
 </body>
 </html>

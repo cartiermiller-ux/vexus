@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="">
     <head>
         <meta charset="utf-8">
@@ -22,25 +22,7 @@
             <strong>We're sorry but Vexus doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
         </noscript>
         <div id="app"></div>
-    <script id="vexus-strip-hash">
-(function () {
-  var MARK = 'vexus-strip-hash';
-  if (window.__vexusHashFix) return;
-  window.__vexusHashFix = true;
-  function strip() {
-    try {
-      if (window.location.hash) {
-        window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
-      }
-    } catch (e) {}
-  }
-  window.addEventListener('hashchange', function () { setTimeout(strip, 0); });
-  window.addEventListener('load', strip);
-  document.addEventListener('DOMContentLoaded', strip);
-  setInterval(strip, 400);
-})();
-</script>
-<script id="vexus-hide-empty-message">
+    <script id="vexus-hide-empty-message">
 (function () {
   if (window.__vexusMsgFix) return;
   window.__vexusMsgFix = true;
@@ -60,5 +42,6 @@
 })();
 </script>
 <script src="/js/vexus-chat.js?v=20261126" defer></script>
+<script src="/js/vexus-bottom-ticker.js?v=20261211" defer></script>
 </body>
 </html>

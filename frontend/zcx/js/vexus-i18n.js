@@ -51,6 +51,7 @@
   }
 
   function addSelector() {
+    if (document.getElementById('app') && document.querySelector('.page-header-background')) return;
     if (document.getElementById('vexus-lang-select')) return;
     var sel = document.createElement('select');
     sel.id = 'vexus-lang-select';
