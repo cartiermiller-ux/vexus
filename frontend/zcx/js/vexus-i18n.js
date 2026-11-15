@@ -105,6 +105,7 @@
         })(),
         interpolation: { escapeValue: false }
       }, function () {
+        window.i18next.changeLanguage(lang);
         window.VexusI18n = {
           t: function (k, o) { return window.i18next.t(k, o); },
           lang: lang,

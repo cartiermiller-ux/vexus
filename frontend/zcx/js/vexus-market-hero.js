@@ -69,22 +69,44 @@
     };
   }
 
+  var heroPack = null;
+
+  function heroLangCode() {
+    var stored = localStorage.getItem('vexusLang');
+    var supported = ['zh-CN', 'zh-TW', 'en', 'ja', 'ko', 'fr', 'de', 'it', 'es', 'pt', 'ru', 'ar', 'tr', 'vi', 'th'];
+    if (stored && supported.indexOf(stored) >= 0) return stored;
+    return 'en';
+  }
+
+  function loadHeroPack() {
+    var code = heroLangCode();
+    fetch('/locales/' + code + '/common.json', { cache: 'no-cache' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.hero) {
+          heroPack = data.hero;
+          var h = document.getElementById('vexus-market-hero');
+          if (h) applyHeroLang(h);
+        }
+      })
+      .catch(function () {});
+  }
+
   function applyHeroLang(hero) {
     if (!hero) return;
-    var pack = langPack();
+    var pack = heroPack || langPack();
     var t = window.VexusI18n && window.VexusI18n.t;
     var h1 = hero.querySelector('.vmh-h1');
     var p = hero.querySelector('.vmh-p');
     var a = hero.querySelector('.vmh-cta');
     var note = hero.querySelector('.vmh-note');
-    if (h1) h1.textContent = t ? t('hero.h1') : pack.h1;
-    if (p) p.textContent = t ? t('hero.p') : pack.p;
-    if (a) a.textContent = t ? t('hero.cta') : pack.cta;
-    if (note) note.textContent = t ? t('hero.note') : pack.note;
+    if (h1) h1.textContent = pack.h1;
+    if (p) p.textContent = pack.p;
+    if (a) a.textContent = pack.cta;
+    if (note) note.textContent = pack.note;
   }
 
   function ensure() {
-    if (!isMarket()) return;
     var existing = document.getElementById('vexus-market-hero');
     if (existing) {
       applyHeroLang(existing);
@@ -98,6 +120,7 @@
       }
       return;
     }
+    if (!isMarket()) return;
     var view = document.querySelector('.view');
     if (!view) return;
     var hero = document.createElement('section');
@@ -134,5 +157,6 @@
   }
 
   document.addEventListener('vexus-i18n-ready', function () { var h = document.getElementById('vexus-market-hero'); if (h) applyHeroLang(h); });
+  loadHeroPack();
   setInterval(ensure, 800);
 })();
