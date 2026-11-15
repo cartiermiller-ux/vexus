@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   'use strict';
   if (window.__vexusMarketHero) return;
   window.__vexusMarketHero = true;
@@ -135,7 +135,7 @@
       '<div class="vmh-copy"><div class="vmh-eyebrow">VEXUS · GLOBAL MARKETS</div>' +
       '<h1 class="vmh-h1"></h1>' +
       '<p class="vmh-p"></p>' +
-      '<a class="vmh-cta" href="/#/trade/btc_usdt"></a>' +
+      '<a class="vmh-cta" href="/#/trade/btc"></a>' +
       '<span class="vmh-note"></span></div>' +
       '<div class="vmh-scroll">⌄</div>';
     var hb = document.querySelector('.page-header-background');
