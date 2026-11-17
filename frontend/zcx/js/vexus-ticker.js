@@ -11,6 +11,8 @@
     '.vexus-ticker-card .moveListBodyLeftBot{font-size:24px}' +
     '.vexus-ticker-card .moveListBodybottom{margin-top:16px}' +
     '.vexus-ticker-card .vexus-spark{width:200px;height:70px;display:block;margin-top:4px}' +
+    '.vexus-ticker-card{position:relative!important}' +
+    '.vexus-ticker-card [data-vx-time]{position:absolute!important;left:0!important;right:0!important;bottom:18px!important;margin:0!important;font-size:12px!important;line-height:1!important;text-align:center!important}' +
     '.moveList .content-view-box{overflow-x:auto!important;scrollbar-width:none}' +
     '.moveList .content-view-box::-webkit-scrollbar{display:none}' +
     '.currency .more img{border-radius:0}';
