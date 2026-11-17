@@ -106,10 +106,29 @@
 								<th>基础货币</th>
 								<th>报价货币</th>
 								<th>小数位</th>
+								<th>操作</th>
 							</tr>
 						</thead>
 						<tbody id="pairsBody"></tbody>
 					</table>
+				</div>
+			</div>
+
+
+			<div class="panel panel-default">
+				<div class="panel-heading"><h3 class="panel-title">新增交易品种</h3></div>
+				<div class="panel-body">
+					<div class="form-inline">
+						<input type="text" class="form-control" id="newCode" placeholder="代码，如 USDSEK" style="width:150px">
+						<input type="text" class="form-control" id="newName" placeholder="名称，如 USD/SEK" style="width:150px;margin-left:8px">
+						<input type="text" class="form-control" id="newTv" placeholder="TV代码，如 FX:USDSEK" style="width:180px;margin-left:8px">
+						<input type="text" class="form-control" id="newBase" placeholder="基础货币 USD" style="width:120px;margin-left:8px">
+						<input type="text" class="form-control" id="newQuote" placeholder="报价货币 SEK" style="width:120px;margin-left:8px">
+						<input type="number" class="form-control" id="newDecimals" placeholder="小数位" value="5" style="width:90px;margin-left:8px">
+						<input type="number" class="form-control" id="newPip" placeholder="pip" value="0.0001" step="0.0001" style="width:100px;margin-left:8px">
+						<button type="button" class="btn btn-primary" id="addPairBtn" style="margin-left:8px">添加品种</button>
+					</div>
+					<div class="help-block" style="margin-top:8px">添加后点击保存配置，前台外汇模拟盘会立即出现新品种。</div>
 				</div>
 			</div>
 
@@ -143,16 +162,48 @@ document.getElementById('spread').value = Number(cfg.spread_pips) || 1.2;
 document.getElementById('commission').value = Number(cfg.commission) || 0;
 
 var tbody = document.getElementById('pairsBody');
-Object.keys(allPairs).forEach(function(k){
-  var p = allPairs[k];
-  var tr = document.createElement('tr');
-  tr.innerHTML = '<td><input type="checkbox" data-pair="'+k+'" checked></td>'
-    + '<td>'+(p.name || k)+'</td>'
-    + '<td>'+(p.tv || '')+'</td>'
-    + '<td>'+(p.base || '')+'</td>'
-    + '<td>'+(p.quote || '')+'</td>'
-    + '<td>'+(p.decimals == null ? 5 : p.decimals)+'</td>';
-  tbody.appendChild(tr);
+function renderPairs(){
+  tbody.innerHTML = '';
+  Object.keys(allPairs).forEach(function(k){
+    var p = allPairs[k];
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><input type="checkbox" data-pair="'+k+'" checked></td>'
+      + '<td>'+(p.name || k)+'</td>'
+      + '<td>'+(p.tv || '')+'</td>'
+      + '<td>'+(p.base || '')+'</td>'
+      + '<td>'+(p.quote || '')+'</td>'
+      + '<td>'+(p.decimals == null ? 5 : p.decimals)+'</td>'
+      + '<td><button type="button" class="btn btn-xs btn-danger" data-del="'+k+'">删除</button></td>';
+    tbody.appendChild(tr);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-del]'), function(b){
+    b.onclick = function(){
+      delete allPairs[b.getAttribute('data-del')];
+      renderPairs();
+    };
+  });
+}
+renderPairs();
+
+document.getElementById('addPairBtn').addEventListener('click', function(){
+  var code = (document.getElementById('newCode').value || '').trim().toUpperCase();
+  var name = (document.getElementById('newName').value || '').trim();
+  var tv = (document.getElementById('newTv').value || '').trim();
+  var base = (document.getElementById('newBase').value || '').trim().toUpperCase();
+  var quote = (document.getElementById('newQuote').value || '').trim().toUpperCase();
+  if (!/^[A-Z0-9]{3,16}$/.test(code)) { alert('请输入有效品种代码，例如 USDSEK'); return; }
+  if (!name) name = base && quote ? base + '/' + quote : code;
+  if (!tv) tv = 'FX:' + code;
+  if (!/^[A-Z]{3}$/.test(base) || !/^[A-Z]{3}$/.test(quote)) { alert('基础货币和报价货币必须是 3 位代码'); return; }
+  allPairs[code] = {
+    name: name, tv: tv, base: base, quote: quote,
+    decimals: Number(document.getElementById('newDecimals').value) || 5,
+    pip: Number(document.getElementById('newPip').value) || 0.0001
+  };
+  renderPairs();
+  document.getElementById('newCode').value = '';
+  document.getElementById('newName').value = '';
+  document.getElementById('newTv').value = '';
 });
 
 document.getElementById('saveBtn').addEventListener('click', function(){
