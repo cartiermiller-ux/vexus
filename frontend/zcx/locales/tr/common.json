@@ -30,5 +30,25 @@
     "stocks": "Hisse Senetleri",
     "tradfi": "Geleneksel Finans",
     "rewards": "Ödüller"
+  },
+  "forex": {
+    "title": "Forex Demo İşlemleri",
+    "subtitle": "Sanal fonlarla forex pratiği yapın; piyasa kurları herkese açık FX verilerinden alınır. Gerçek para içermez.",
+    "demoTag": "Sanal fonlar · Gerçek para yok",
+    "badge": "Demo Borsa",
+    "pair": "Enstrüman",
+    "leverage": "Kaldıraç",
+    "qty": "Miktar (standart lot)",
+    "sell": "Satış Fiyatı",
+    "buy": "Alış Fiyatı",
+    "buyBtn": "Al",
+    "sellBtn": "Sat",
+    "available": "Kullanılabilir Sanal Fonlar",
+    "tip": "1 standart lot = 100.000 temel para birimi. Spread, başlangıç fonları, kaldıraç ve enstrümanlar yönetici yapılandırmasında kontrol edilir.",
+    "positions": "Pozisyonlar",
+    "items": "adet",
+    "empty": "Pozisyon yok",
+    "updated": "Güncellendi",
+    "foot": "Demo işlemler yalnızca öğrenme ve gösterim amaçlıdır; tüm fiyatlar herkese açık FX verilerinden gelir. Sanal fonların gerçek değeri yoktur."
   }
 }

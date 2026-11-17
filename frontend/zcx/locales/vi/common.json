@@ -30,5 +30,25 @@
     "stocks": "Cổ phiếu",
     "tradfi": "Tài chính truyền thống",
     "rewards": "Phần thưởng"
+  },
+  "forex": {
+    "title": "Giao dịch Forex mô phỏng",
+    "subtitle": "Luyện giao dịch ngoại hối bằng vốn ảo; tỷ giá lấy từ dữ liệu FX công khai. Không dùng tiền thật.",
+    "demoTag": "Vốn ảo · Không dùng tiền thật",
+    "badge": "Sàn mô phỏng",
+    "pair": "Công cụ",
+    "leverage": "Đòn bẩy",
+    "qty": "Khối lượng (lot chuẩn)",
+    "sell": "Giá bán",
+    "buy": "Giá mua",
+    "buyBtn": "Mua",
+    "sellBtn": "Bán",
+    "available": "Vốn ảo khả dụng",
+    "tip": "1 lot chuẩn = 100.000 tiền tệ cơ sở. Spread, vốn ban đầu, đòn bẩy và công cụ do quản trị viên cấu hình.",
+    "positions": "Vị thế",
+    "items": "mục",
+    "empty": "Không có vị thế",
+    "updated": "Đã cập nhật",
+    "foot": "Giao dịch mô phỏng chỉ để học tập và minh họa; mọi giá lấy từ dữ liệu FX công khai. Vốn ảo không có giá trị thực."
   }
 }

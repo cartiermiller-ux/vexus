@@ -30,5 +30,25 @@
     "stocks": "Actions",
     "tradfi": "Finance traditionnelle",
     "rewards": "Récompenses"
+  },
+  "forex": {
+    "title": "Trading Forex fictif",
+    "subtitle": "Pratiquez le trading forex avec des fonds virtuels ; les taux de marché proviennent de données FX publiques. Aucun argent réel en jeu.",
+    "demoTag": "Fonds virtuels · Aucun argent réel",
+    "badge": "Plateforme fictive",
+    "pair": "Instrument",
+    "leverage": "Effet de levier",
+    "qty": "Quantité (lots standard)",
+    "sell": "Prix de vente",
+    "buy": "Prix d'achat",
+    "buyBtn": "Acheter",
+    "sellBtn": "Vendre",
+    "available": "Fonds virtuels disponibles",
+    "tip": "1 lot standard = 100 000 unités de devise de base. Spread, fonds initiaux, effet de levier et instruments sont contrôlés dans la configuration admin.",
+    "positions": "Positions",
+    "items": "éléments",
+    "empty": "Aucune position",
+    "updated": "Mis à jour",
+    "foot": "Le trading fictif sert uniquement à l'apprentissage et à la démonstration ; tous les prix proviennent de données FX publiques. Les fonds virtuels n'ont aucune valeur réelle."
   }
 }

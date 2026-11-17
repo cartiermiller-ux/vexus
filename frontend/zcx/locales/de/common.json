@@ -30,5 +30,25 @@
     "stocks": "Aktien",
     "tradfi": "TradFi",
     "rewards": "Belohnungen"
+  },
+  "forex": {
+    "title": "Forex-Demo-Handel",
+    "subtitle": "Forex-Handel mit virtuellen Mitteln üben; Marktkurse kommen aus öffentlichen FX-Daten. Kein echtes Geld im Spiel.",
+    "demoTag": "Virtuelle Mittel · Kein echtes Geld",
+    "badge": "Demo-Börse",
+    "pair": "Instrument",
+    "leverage": "Hebel",
+    "qty": "Menge (Standardlots)",
+    "sell": "Verkaufspreis",
+    "buy": "Kaufpreis",
+    "buyBtn": "Kaufen",
+    "sellBtn": "Verkaufen",
+    "available": "Verfügbare virtuelle Mittel",
+    "tip": "1 Standardlot = 100.000 Basiswährungseinheiten. Spread, Startkapital, Hebel und Instrumente werden in der Admin-Konfiguration festgelegt.",
+    "positions": "Positionen",
+    "items": "Einträge",
+    "empty": "Keine Positionen",
+    "updated": "Aktualisiert",
+    "foot": "Demo-Handel dient nur zu Lern- und Demonstrationszwecken; alle Kurse stammen aus öffentlichen FX-Daten. Virtuelle Mittel haben keinen realen Wert."
   }
 }

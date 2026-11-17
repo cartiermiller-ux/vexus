@@ -30,5 +30,25 @@
     "stocks": "Azioni",
     "tradfi": "Finanza tradizionale",
     "rewards": "Ricompense"
+  },
+  "forex": {
+    "title": "Trading Forex Simulato",
+    "subtitle": "Esercitati nel trading forex con fondi virtuali; i tassi di mercato provengono da dati FX pubblici. Nessun denaro reale coinvolto.",
+    "demoTag": "Fondi virtuali · Nessun denaro reale",
+    "badge": "Exchange Simulato",
+    "pair": "Strumento",
+    "leverage": "Leva",
+    "qty": "Quantità (lotti standard)",
+    "sell": "Prezzo di vendita",
+    "buy": "Prezzo di acquisto",
+    "buyBtn": "Compra",
+    "sellBtn": "Vendi",
+    "available": "Fondi virtuali disponibili",
+    "tip": "1 lotto standard = 100.000 valuta base. Spread, fondi iniziali, leva e strumenti sono configurati dall'amministratore.",
+    "positions": "Posizioni",
+    "items": "elementi",
+    "empty": "Nessuna posizione",
+    "updated": "Aggiornato",
+    "foot": "Il trading simulato è solo per apprendimento e dimostrazione; tutti i prezzi provengono da dati FX pubblici. I fondi virtuali non hanno valore reale."
   }
 }

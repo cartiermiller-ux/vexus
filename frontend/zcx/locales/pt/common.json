@@ -30,5 +30,25 @@
     "stocks": "Ações",
     "tradfi": "TradFi",
     "rewards": "Recompensas"
+  },
+  "forex": {
+    "title": "Forex com Dinheiro Virtual",
+    "subtitle": "Pratique trading de forex com fundos virtuais; as taxas de mercado vêm de dados públicos de FX. Sem dinheiro real envolvido.",
+    "demoTag": "Fundos virtuais · Sem dinheiro real",
+    "badge": "Exchange Simulada",
+    "pair": "Instrumento",
+    "leverage": "Alavancagem",
+    "qty": "Quantidade (lotes padrão)",
+    "sell": "Preço de Venda",
+    "buy": "Preço de Compra",
+    "buyBtn": "Comprar",
+    "sellBtn": "Vender",
+    "available": "Fundos Virtuais Disponíveis",
+    "tip": "1 lote padrão = 100.000 da moeda base. Spread, fundos iniciais, alavancagem e instrumentos são controlados na configuração do administrador.",
+    "positions": "Posições",
+    "items": "itens",
+    "empty": "Sem posições",
+    "updated": "Atualizado",
+    "foot": "O paper trading é apenas para aprendizado e demonstração; todos os preços vêm de dados públicos de FX. Fundos virtuais não têm valor real."
   }
 }

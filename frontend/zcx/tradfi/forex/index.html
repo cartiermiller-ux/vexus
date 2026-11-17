@@ -59,12 +59,12 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     <a href="/">首页</a><a href="/#/market">行情</a><a href="/#/trade/btc">交易</a>
     <a class="active" href="/tradfi/">TradFi</a><a href="/tradfi/forex/">外汇模拟</a>
   </nav>
-  <div class="fx-user">模拟资金 · 不涉及真实资金</div>
+  <div class="fx-user" data-i18n="forex.demoTag">模拟资金 · 不涉及真实资金</div>
 </header>
 <main class="fx-wrap">
   <div class="fx-head">
-    <div><h1>外汇模拟交易</h1><p>使用虚拟资金练习外汇交易，行情来自公开汇率接口；不涉及真实资金，不构成投资建议。</p></div>
-    <div class="fx-badge" id="cfgBadge">模拟交易所</div>
+    <div><h1 data-i18n="forex.title">外汇模拟交易</h1><p data-i18n="forex.subtitle">使用虚拟资金练习外汇交易，行情来自公开汇率接口；不涉及真实资金，不构成投资建议。</p></div>
+    <div class="fx-badge" id="cfgBadge" data-i18n="forex.badge">模拟交易所</div>
   </div>
 
   <div class="fx-grid">
@@ -73,24 +73,24 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       <div id="fx-chart"></div>
     </section>
     <aside class="fx-card order-card">
-      <div class="account"><span>虚拟可用资金</span><b id="balance">100,000.00 USD</b></div>
-      <label>交易品种</label><select id="pairSelect"></select>
+      <div class="account"><span data-i18n="forex.available">虚拟可用资金</span><b id="balance">100,000.00 USD</b></div>
+      <label data-i18n="forex.pair">交易品种</label><select id="pairSelect"></select>
       <div class="price-quote">
-        <div class="down"><span>卖出价</span><b id="sellPrice">--</b></div>
-        <div class="up"><span>买入价</span><b id="buyPrice">--</b></div>
+        <div class="down"><span data-i18n="forex.sell">卖出价</span><b id="sellPrice">--</b></div>
+        <div class="up"><span data-i18n="forex.buy">买入价</span><b id="buyPrice">--</b></div>
       </div>
-      <label>杠杆</label><select id="levSelect"></select>
-      <label>数量（标准手）</label><input id="qtyInput" type="number" value="1" min="0.01" step="0.01">
-      <div class="actions"><button class="buy" id="buyBtn">买入</button><button class="sell" id="sellBtn">卖出</button></div>
-      <div class="tip">1 标准手 = 100,000 基础货币。点差、初始资金、杠杆、品种由后台配置控制。</div>
+      <label data-i18n="forex.leverage">杠杆</label><select id="levSelect"></select>
+      <label data-i18n="forex.qty">数量（标准手）</label><input id="qtyInput" type="number" value="1" min="0.01" step="0.01">
+      <div class="actions"><button class="buy" id="buyBtn" data-i18n="forex.buyBtn">买入</button><button class="sell" id="sellBtn" data-i18n="forex.sellBtn">卖出</button></div>
+      <div class="tip" data-i18n="forex.tip">1 标准手 = 100,000 基础货币。点差、初始资金、杠杆、品种由后台配置控制。</div>
     </aside>
   </div>
 
   <section class="fx-card positions">
-    <div class="card-head"><b>持仓</b><span id="posCount">0 项</span></div>
+    <div class="card-head"><b data-i18n="forex.positions">持仓</b><span id="posCount">0 项</span></div>
     <div id="positions"></div>
   </section>
-  <div class="fx-foot">模拟交易仅用于学习演示，所有价格来自公开汇率数据；虚拟资金不具备任何现实价值。</div>
+  <div class="fx-foot" data-i18n="forex.foot">模拟交易仅用于学习演示，所有价格来自公开汇率数据；虚拟资金不具备任何现实价值。</div>
 </main>
 
 <script src="https://s3.tradingview.com/tv.js"></script>
@@ -148,7 +148,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     $('pairTitle').textContent = p.name;
     $('sellPrice').textContent = q.bid.toFixed(p.decimals||5);
     $('buyPrice').textContent = q.ask.toFixed(p.decimals||5);
-    $('quoteUpdated').textContent = '更新 ' + new Date().toLocaleTimeString('zh-CN',{hour12:false});
+    $('quoteUpdated').textContent = ((window.VexusI18n && window.VexusI18n.t('forex.updated')) || '更新 ') + ' ' + new Date().toLocaleTimeString('zh-CN',{hour12:false});
   }
   function loadChart(){
     var p = pairMeta();
@@ -182,7 +182,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   function renderState(){
     $('balance').textContent = money(state.balance);
     var list = state.positions || [];
-    $('posCount').textContent = list.length + ' 项';
+    $('posCount').textContent = list.length + ' ' + ((window.VexusI18n && window.VexusI18n.t('forex.items')) || '项');
     var html = '<div class="pos-row head"><span>品种</span><span>方向</span><span>数量</span><span>开仓价</span><span>浮动盈亏</span><span>操作</span></div>';
     if (!list.length) { html = '<div class="pos-empty">暂无持仓</div>'; }
     else {
@@ -245,5 +245,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   loadConfig(); loadRates(); setInterval(loadRates,30000);
 })();
 </script>
+<script src="/js/i18next.min.js"></script>
+<script src="/js/vexus-i18n.js?v=20261232"></script>
 </body>
 </html>
