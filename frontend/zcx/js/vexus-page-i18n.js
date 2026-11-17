@@ -28,7 +28,9 @@
     if (!key || !map[key]) return;
     var lead = raw.match(/^\s*/)[0];
     var tail = raw.match(/\s*$/)[0];
-    node.nodeValue = lead + map[key] + tail;
+    var next = lead + map[key] + tail;
+    if (next === raw) return;
+    node.nodeValue = next;
   }
 
   function walk(root) {
@@ -66,6 +68,7 @@
 
   function load() {
     lang = currentLang();
+    if (lang === 'zh-CN') return;
     fetch('/locales/' + lang + '/page-texts.json', { cache: 'no-cache' })
       .then(function (r) { if (!r.ok) throw new Error('page texts'); return r.json(); })
       .then(function (data) {
