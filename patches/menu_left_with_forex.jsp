@@ -507,13 +507,13 @@
 		<li class="divider"></li>
 		<li role="presentation" class="dropdown-header">外汇</li>
 		<li class="menu-item-mt">
-			<a href="<%=basePath%>forex_paper_config.jsp">
+			<a href="<%=basePath%>forex_paper_config.jsp" onclick="if(window.addTab){addTab('外汇模拟配置', this.href, true); return false;}">
 				<span class="icon color6"><i class="fa falist fa-line-chart"></i></span>
 				<span class="sp-title">外汇模拟配置</span>
 			</a>
 		</li>
 		<li class="menu-item-mt">
-			<a href="<%=basePath%>forex_paper_orders.jsp">
+			<a href="<%=basePath%>forex_paper_orders.jsp" onclick="if(window.addTab){addTab('外汇模拟订单', this.href, true); return false;}">
 				<span class="icon color6"><i class="fa falist fa-list-alt"></i></span>
 				<span class="sp-title">外汇模拟订单</span>
 			</a>
