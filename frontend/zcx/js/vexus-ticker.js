@@ -30,6 +30,26 @@
       '<path d="M0 30 L18 26 L36 29 L54 20 L72 24 L90 16 L108 21 L126 12 L144 17 L162 9 L180 14" fill="none" stroke="' + color + '" stroke-width="1.6" opacity=".9"/></svg>';
   }
 
+  function syncCardSizes() {
+    var box = document.querySelector('.moveList .content-view-box');
+    if (!box) return;
+    var sample = box.querySelector('.moveListBody:not([data-vexus-ticker-card])');
+    if (!sample) return;
+    var cs = getComputedStyle(sample);
+    var h = sample.getBoundingClientRect().height;
+    var w = sample.getBoundingClientRect().width;
+    if (h < 80) return;
+    box.querySelectorAll('[data-vexus-ticker-card]').forEach(function (card) {
+      card.style.setProperty('height', h + 'px', 'important');
+      card.style.setProperty('min-height', h + 'px', 'important');
+      card.style.setProperty('width', w + 'px', 'important');
+      card.style.setProperty('background', cs.background, 'important');
+      card.style.setProperty('border-radius', cs.borderRadius, 'important');
+      var spark = card.querySelector('.vexus-spark');
+      if (spark) spark.style.setProperty('height', '76px', 'important');
+    });
+  }
+
   function buildCards() {
     var box = document.querySelector('.moveList .content-view-box');
     if (!box) return false;
@@ -47,6 +67,8 @@
       box.insertBefore(el, box.firstChild);
     });
     box.scrollLeft = 0;
+    syncCardSizes();
+    setTimeout(syncCardSizes, 800);
     return true;
   }
 
