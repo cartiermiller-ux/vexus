@@ -512,6 +512,12 @@
 				<span class="sp-title">外汇模拟配置</span>
 			</a>
 		</li>
+		<li class="menu-item-mt">
+			<a href="<%=basePath%>forex_paper_orders.jsp">
+				<span class="icon color6"><i class="fa falist fa-list-alt"></i></span>
+				<span class="sp-title">外汇模拟订单</span>
+			</a>
+		</li>
 	
 	</ul>
 		

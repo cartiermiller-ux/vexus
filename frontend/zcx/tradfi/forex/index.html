@@ -112,6 +112,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   };
   var cfg = JSON.parse(JSON.stringify(DEFAULT));
   var state = null;
+  var authToken = localStorage.getItem('spToken') || '';
   var rates = {};
   var current = 'EURUSD';
   var tvWidget = null;
@@ -202,7 +203,17 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
         var q=quoteFor(pos.pair); var diff=pos.side==='buy'?(q.mid-pos.open):(pos.open-q.mid);
         var usd=diff*pos.qty*100000; var p=cfg.pairs[pos.pair]||DEFAULT.pairs[pos.pair];
         if(p.quote!=='USD'){ var ur=rates.USD&&rates.USD[p.quote]?rates.USD[p.quote]:1; usd=usd/ur; }
-        state.balance += usd; state.positions.splice(i,1); saveState(); renderState();
+        var serverId = pos.serverId;
+        function finishClose(){
+          state.balance += usd; state.positions.splice(i,1); saveState(); renderState();
+        }
+        if (authToken && serverId) {
+          fetch('/api/forexPaperApi.jsp', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+            body:'action=close&token=' + encodeURIComponent(authToken) + '&id=' + encodeURIComponent(serverId) + '&price=' + encodeURIComponent(q.mid)})
+            .then(function(r){return r.json()}).then(function(){ finishClose(); }).catch(function(){ finishClose(); });
+        } else {
+          finishClose();
+        }
       };
     });
   }
@@ -226,8 +237,16 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     var margin=qty*100000*price/lev;
     if(margin>state.balance){ alert('虚拟可用资金不足'); return; }
     state.balance-=margin;
-    state.positions.push({pair:current,side:side,qty:qty,open:price,margin:margin});
+    var pos = {pair:current,side:side,qty:qty,open:price,margin:margin};
+    state.positions.push(pos);
     saveState(); renderState();
+    if (authToken) {
+      var body = 'action=open&token=' + encodeURIComponent(authToken) + '&pair=' + encodeURIComponent(current) +
+        '&side=' + encodeURIComponent(side) + '&qty=' + encodeURIComponent(qty) +
+        '&leverage=' + encodeURIComponent(lev) + '&price=' + encodeURIComponent(price);
+      fetch('/api/forexPaperApi.jsp', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body})
+        .then(function(r){return r.json()}).then(function(d){ if(d && d.code === '0') { pos.serverId = d.id; saveState(); } }).catch(function(){});
+    }
   }
   function loadConfig(){
     fetch('/forex-paper-config.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(data){
@@ -243,6 +262,26 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState();
     });
   }
+  function syncServerOrders(){
+    if (!authToken) return;
+    fetch('/api/forexPaperApi.jsp?action=list&token=' + encodeURIComponent(authToken), {cache:'no-store'})
+      .then(function(r){return r.json()}).then(function(d){
+        if (!d || d.code !== '0' || !d.data) return;
+        var server = d.data.map(function(x){
+          var p = cfg.pairs[x.pair] || DEFAULT.pairs[x.pair] || DEFAULT.pairs.EURUSD;
+          var margin = Number(x.qty) * 100000 * Number(x.open) / Math.max(1, Number(x.leverage));
+          return {pair:x.pair, side:x.side, qty:Number(x.qty), open:Number(x.open), margin:margin, serverId:x.id};
+        });
+        // merge: keep local positions not present on server, add server positions missing locally
+        var local = state.positions.filter(function(p){ return !p.serverId; });
+        var known = {};
+        state.positions.forEach(function(p){ if(p.serverId) known[p.serverId] = p; });
+        server.forEach(function(p){ if(!known[p.serverId]) local.push(p); });
+        state.positions = local;
+        saveState(); renderState();
+      }).catch(function(){});
+  }
+
   function loadRates(){
     fetch('https://open.er-api.com/v6/latest/USD',{cache:'no-store'}).then(function(r){return r.json()}).then(function(data){
       if(data && data.result==='success' && data.rates){ rates = {USD:1}; Object.keys(data.rates).forEach(function(k){rates[k]=data.rates[k]}); renderPrice(); renderState(); }
@@ -250,7 +289,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   }
   $('buyBtn').onclick=function(){place('buy')};
   $('sellBtn').onclick=function(){place('sell')};
-  loadConfig(); loadRates(); setInterval(loadRates,30000);
+  loadConfig(); loadRates(); syncServerOrders(); setInterval(loadRates,30000); setInterval(syncServerOrders,20000);
 })();
 </script>
 <script src="/js/i18next.min.js"></script>
