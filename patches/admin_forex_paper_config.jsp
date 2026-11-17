@@ -1,4 +1,4 @@
-<%@ page language="java" pageEncoding="utf-8" isELIgnored="false" import="java.io.*" %>
+﻿<%@ page language="java" pageEncoding="utf-8" isELIgnored="false" import="java.io.*" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="security" class="security.web.BaseSecurityAction" scope="page" />
@@ -45,7 +45,7 @@
 <%@ include file="include/head.jsp"%>
 </head>
 <body>
-	<%@ include file="include/loading.jsp"%>
+
 	<div class="ifr-dody">
 		<div class="ifr-con">
 			<h3>外汇模拟交易配置</h3>
