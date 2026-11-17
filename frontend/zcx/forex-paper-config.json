@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "initial_balance": 100000,
+  "default_leverage": 100,
+  "leverage_options": [1, 10, 20, 50, 100],
+  "spread_pips": 1.2,
+  "commission": 0,
+  "pairs": {
+    "EURUSD": { "name": "EUR/USD", "tv": "FX:EURUSD", "base": "EUR", "quote": "USD", "pip": 0.0001, "decimals": 5 },
+    "GBPUSD": { "name": "GBP/USD", "tv": "FX:GBPUSD", "base": "GBP", "quote": "USD", "pip": 0.0001, "decimals": 5 },
+    "USDJPY": { "name": "USD/JPY", "tv": "FX:USDJPY", "base": "USD", "quote": "JPY", "pip": 0.01, "decimals": 3 },
+    "AUDUSD": { "name": "AUD/USD", "tv": "FX:AUDUSD", "base": "AUD", "quote": "USD", "pip": 0.0001, "decimals": 5 },
+    "USDCAD": { "name": "USD/CAD", "tv": "FX:USDCAD", "base": "USD", "quote": "CAD", "pip": 0.0001, "decimals": 5 },
+    "USDCHF": { "name": "USD/CHF", "tv": "FX:USDCHF", "base": "USD", "quote": "CHF", "pip": 0.0001, "decimals": 5 },
+    "NZDUSD": { "name": "NZD/USD", "tv": "FX:NZDUSD", "base": "NZD", "quote": "USD", "pip": 0.0001, "decimals": 5 },
+    "EURJPY": { "name": "EUR/JPY", "tv": "FX:EURJPY", "base": "EUR", "quote": "JPY", "pip": 0.01, "decimals": 3 }
+  }
+}

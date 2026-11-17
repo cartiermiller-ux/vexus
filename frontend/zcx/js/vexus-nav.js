@@ -96,7 +96,7 @@ function vexusIconSvg(name) {
 
   var TRADFI_MENU = [
     { title: 'TradFi', items: [
-      { t: zh ? '外汇' : 'Forex', d: zh ? '全球主要货币对交易' : 'Major global currency pairs', i: 'FX', href: '/tradfi/' },
+      { t: zh ? '外汇' : 'Forex', d: zh ? '全球主要货币对模拟交易' : 'Major FX pairs paper trading', i: 'FX', href: '/tradfi/forex/' },
       { t: zh ? '全球指数' : 'Global Indices', d: zh ? '美股/港股/欧洲主要指数' : 'US, HK and Europe indices', i: '指数', href: '/tradfi/' },
       { t: zh ? '大宗商品' : 'Commodities', d: zh ? '黄金、原油等商品行情' : 'Gold, oil and commodities', i: '商品', href: '/tradfi/' },
       { t: zh ? '黄金' : 'Gold', d: zh ? '现货黄金与贵金属' : 'Spot gold and metals', i: '金', href: '/tradfi/' },
