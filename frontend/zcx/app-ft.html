@@ -300,14 +300,38 @@
 			.dw-btn{display:flex;width:max-content;margin:18px auto 0;padding:12px 26px;border-radius:10px;
 				background:linear-gradient(135deg,#6d4aff,#a855f7);color:#fff;font-weight:700;
 				text-decoration:none;font-size:14px}
+
+			.ios-open{display:inline-flex;align-items:center;justify-content:center;width:4.8rem;height:1.05rem;
+				margin-top:14px;border-radius:.12rem;border:1px solid rgba(255,255,255,.28);
+				background:rgba(255,255,255,.08);color:#fff;font-size:14px;font-weight:600;cursor:pointer}
+			.ios-open:hover{background:rgba(255,255,255,.16)}
+			.ios-modal{display:none;position:fixed;inset:0;z-index:99999;background:rgba(3,3,10,.78);
+				align-items:center;justify-content:center;padding:22px;backdrop-filter:blur(8px)}
+			.ios-card{width:100%;max-width:420px;background:#171329;border:1px solid rgba(167,139,250,.28);
+				border-radius:18px;padding:24px 22px 20px;color:#fff;box-shadow:0 24px 80px rgba(0,0,0,.5);position:relative}
+			.ios-card h2{font-size:18px;margin:0 0 8px;font-weight:800}
+			.ios-card .ios-sub{font-size:12px;line-height:1.6;color:rgba(255,255,255,.58);margin:0 0 18px}
+			.ios-step{display:flex;gap:12px;align-items:flex-start;margin:13px 0;font-size:13px;line-height:1.6}
+			.ios-num{flex:0 0 24px;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#6d4aff,#a855f7);
+				text-align:center;line-height:24px;font-size:12px;font-weight:700}
+			.ios-open-wap{display:block;text-align:center;margin-top:18px;padding:11px;border-radius:10px;
+				background:linear-gradient(135deg,#6d4aff,#a855f7);color:#fff;text-decoration:none;font-weight:700;font-size:14px}
+			.ios-close{position:absolute;right:14px;top:12px;border:0;background:transparent;color:rgba(255,255,255,.6);
+				font-size:24px;line-height:1;cursor:pointer}
+			.ios-warn{font-size:11px;color:#f6b73c;margin-top:10px;line-height:1.6}
+			.part-dw .ios-open{width:auto;height:auto;padding:12px 26px;margin:14px auto 0;border-radius:10px}
 </style>
-		</head>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-title" content="Vexus">
+		<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
 	<body>
 		<div id="part-dw" class="part-dw">
 			<img class="logo-img" src="img/logos.4d851092.svg" style="width: 48px; height: 48px;">
 			<div>請使用手機掃描二維碼</div>
 			<img class="dw-img" src="images/dw.png" style="display:block;margin-left:auto;margin-right:auto" />
 			<a class="dw-btn" href="/app/Vexus.apk" download="Vexus.apk">下載 Android App</a>
+			<button type="button" class="ios-open">加入 iPhone 主畫面</button>
 		</div>
 		<div id="part1" class="part1">
 			<!-- <img class="bg" src="images/xz_bg.png" alt=""> -->
@@ -330,6 +354,7 @@
 						</a> -->
 					</div>
 				</div>
+				<button type="button" class="ios-open">加入 iPhone 主畫面</button>
 			</div>
 		</div>
 		<script>
@@ -353,6 +378,44 @@
 				}
 			}
 			isMobile();
+		</script>
+
+	
+		<div id="iosModal" class="ios-modal">
+			<div class="ios-card">
+				<button id="iosClose" class="ios-close" type="button">&times;</button>
+				<h2>將 Vexus 加入 iPhone 主畫面</h2>
+				<p class="ios-sub">使用 Safari 開啟，即可像 App 一樣從主畫面啟動。</p>
+				<div class="ios-step"><span class="ios-num">1</span><span>在 iPhone 的 Safari 中開啟本頁面。</span></div>
+				<div class="ios-step"><span class="ios-num">2</span><span>點擊 Safari 底部的「分享」按鈕。</span></div>
+				<div class="ios-step"><span class="ios-num">3</span><span>選擇「加入主畫面」，然後點擊「加入」。</span></div>
+				<a class="ios-open-wap" href="/wap/" target="_blank" rel="noopener">在 Safari 中開啟 WAP</a>
+				<div class="ios-warn">如果你使用的是 iPhone 上的 Chrome 或其他瀏覽器，請先用 Safari 開啟本頁面。</div>
+			</div>
+		</div>
+
+		<script>
+		(function () {
+			if (window.__vexusIosGuide) return;
+			window.__vexusIosGuide = true;
+			var modal = document.getElementById('iosModal');
+			if (!modal) return;
+			function open() { modal.style.display = 'flex'; }
+			function close() { modal.style.display = 'none'; }
+			Array.prototype.forEach.call(document.querySelectorAll('.ios-open'), function (b) {
+				b.addEventListener('click', open);
+			});
+			var c = document.getElementById('iosClose');
+			if (c) c.addEventListener('click', close);
+			modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+			var standalone = window.navigator.standalone === true;
+			if (standalone) {
+				Array.prototype.forEach.call(document.querySelectorAll('.ios-open'), function (b) {
+					b.textContent = 'Vexus 已安装到桌面';
+					b.disabled = true;
+				});
+			}
+		})();
 		</script>
 
 	</body>
