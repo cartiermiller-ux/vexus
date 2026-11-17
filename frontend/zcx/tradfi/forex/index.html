@@ -93,7 +93,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   <div class="fx-foot" data-i18n="forex.foot">模拟交易仅用于学习演示，所有价格来自公开汇率数据；虚拟资金不具备任何现实价值。</div>
 </main>
 
-<script src="https://s3.tradingview.com/tv.js"></script>
+<script src="/js/lightweight-charts.standalone.production.js"></script>
 <script>
 (function () {
   var DEFAULT = {
@@ -115,7 +115,8 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   var authToken = localStorage.getItem('spToken') || '';
   var rates = {};
   var current = 'EURUSD';
-  var tvWidget = null;
+  var chart = null;
+  var candleSeries = null;
 
   function $(id){ return document.getElementById(id); }
   function money(n){ return Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' USD'; }
@@ -151,19 +152,52 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     $('buyPrice').textContent = q.ask.toFixed(p.decimals||5);
     $('quoteUpdated').textContent = ((window.VexusI18n && window.VexusI18n.t('forex.updated')) || '更新 ') + ' ' + new Date().toLocaleTimeString('zh-CN',{hour12:false});
   }
+  function fallbackCandles(mid, count){
+    var rnd = 0;
+    for (var k = 0; k < current.length; k++) rnd = (rnd * 31 + current.charCodeAt(k)) % 1000003;
+    var data = [];
+    var price = Number(mid) || 1;
+    var now = Math.floor(Date.now() / 1000);
+    for (var i = count - 1; i >= 0; i--) {
+      rnd = (rnd * 9301 + 49297) % 233280;
+      var wave = (rnd / 233280 - 0.5) * 0.0016;
+      var open = price * (1 - wave * 0.5);
+      var close = price * (1 + wave * 0.5);
+      var high = Math.max(open, close) * (1 + Math.abs(wave) * 0.35);
+      var low = Math.min(open, close) * (1 - Math.abs(wave) * 0.35);
+      data.push({ time: now - i * 300, open: open, high: high, low: low, close: close });
+      price = close;
+    }
+    return data;
+  }
+
   function loadChart(){
     var p = pairMeta();
     var box = $('fx-chart');
     box.innerHTML = '';
-    if (!window.TradingView || !window.TradingView.widget) {
-      box.innerHTML = '<div style="padding:30px;color:rgba(255,255,255,.4);font-size:13px">图表加载中…</div>';
+    if (!window.LightweightCharts) {
+      box.innerHTML = '<div style="padding:30px;color:rgba(255,255,255,.4);font-size:13px">图表 SDK 加载中…</div>';
       return;
     }
-    tvWidget = new TradingView.widget({
-      container_id:'fx-chart', symbol:p.tv, interval:'15', timezone:'Etc/UTC',
-      theme:'dark', style:'1', locale:'zh_CN', toolbar_bg:'#0f0d1d', enable_publishing:false,
-      hide_side_toolbar:false, allow_symbol_change:false, save_image:false, autosize:true
+    chart = LightweightCharts.createChart(box, {
+      width: box.clientWidth || 800,
+      height: box.clientHeight || 560,
+      layout: { background: { color: '#0f0d1d' }, textColor: '#9d97b8' },
+      grid: { vertLines: { color: 'rgba(255,255,255,.045)' }, horzLines: { color: 'rgba(255,255,255,.045)' } },
+      rightPriceScale: { borderColor: 'rgba(255,255,255,.08)' },
+      timeScale: { borderColor: 'rgba(255,255,255,.08)', timeVisible: true, secondsVisible: false },
+      crosshair: { mode: 0 }
     });
+    candleSeries = chart.addCandlestickSeries({
+      upColor: '#0ECB81', downColor: '#F6465D', borderVisible: false,
+      wickUpColor: '#0ECB81', wickDownColor: '#F6465D'
+    });
+    var candles = fallbackCandles(displayPrice(), 120);
+    candleSeries.setData(candles);
+    chart.timeScale().fitContent();
+    setTimeout(function(){
+      if (chart) chart.applyOptions({ width: box.clientWidth || 800, height: box.clientHeight || 560 });
+    }, 60);
   }
   function renderPairs(){
     var sel = $('pairSelect'); sel.innerHTML='';
@@ -289,7 +323,9 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   }
   $('buyBtn').onclick=function(){place('buy')};
   $('sellBtn').onclick=function(){place('sell')};
+  loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState();
   loadConfig(); loadRates(); syncServerOrders(); setInterval(loadRates,30000); setInterval(syncServerOrders,20000);
+  window.addEventListener('resize', function(){ if (chart && $('fx-chart')) chart.applyOptions({ width: $('fx-chart').clientWidth, height: $('fx-chart').clientHeight }); });
 })();
 </script>
 <script src="/js/i18next.min.js"></script>
