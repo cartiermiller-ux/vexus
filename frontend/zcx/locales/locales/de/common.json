@@ -1,0 +1,54 @@
+{
+  "hero": {
+    "eyebrow": "VEXUS · GLOBAL MARKETS",
+    "h1": "Die Weltmärkte an einem Ort",
+    "p": "Schließen Sie sich Tradern weltweit an und verfolgen Sie Krypto, Aktien und globale Märkte auf einer Plattform.",
+    "cta": "Jetzt handeln",
+    "note": "Echtzeitmärkte · Mehrere Märkte · Sicherer Handel"
+  },
+  "stock": {
+    "title": "Aktienmarkt",
+    "subtitle": "A-Aktien / HK / US-Indizes und beliebte Aktien · öffentliche Marktdaten",
+    "search": "Name oder Code suchen",
+    "refresh": "Aktualisieren",
+    "name": "Name",
+    "price": "Letzter Preis",
+    "change": "Änderung",
+    "changePct": "Änderung %",
+    "open": "Eröffnung",
+    "prevClose": "Vortagesschluss",
+    "high": "Hoch",
+    "low": "Tief",
+    "chart": "Tägliches K-Liniendiagramm",
+    "close": "Schluss",
+    "updated": "Aktualisiert",
+    "dataNote": "US: Alpaca IEX in Echtzeit; A-Aktien/HK: Tencent verzögert. Preise sind splitbereinigt. Nur zur Information."
+  },
+  "nav": {
+    "home": "Startseite",
+    "market": "Märkte",
+    "stocks": "Aktien",
+    "tradfi": "TradFi",
+    "rewards": "Belohnungen"
+  },
+  "forex": {
+    "title": "Forex-Handel",
+    "subtitle": "Forex-Handel mit virtuellen Mitteln üben; Marktkurse kommen aus öffentlichen FX-Daten. Kein echtes Geld im Spiel.",
+    "demoTag": "Virtuelle Mittel · Kein echtes Geld",
+    "badge": "Demo-Börse",
+    "pair": "Instrument",
+    "leverage": "Hebel",
+    "qty": "Menge (Standardlots)",
+    "sell": "Verkaufspreis",
+    "buy": "Kaufpreis",
+    "buyBtn": "Kaufen",
+    "sellBtn": "Verkaufen",
+    "available": "Verfügbares Guthaben",
+    "tip": "1 Standardlot = 100.000 Basiswährungseinheiten. Spread, Startkapital, Hebel und Instrumente werden in der Admin-Konfiguration festgelegt.",
+    "positions": "Positionen",
+    "items": "Einträge",
+    "empty": "Keine Positionen",
+    "updated": "Aktualisiert",
+    "foot": "Demo-Handel dient nur zu Lern- und Demonstrationszwecken; alle Kurse stammen aus öffentlichen FX-Daten. Virtuelle Mittel haben keinen realen Wert."
+  }
+}

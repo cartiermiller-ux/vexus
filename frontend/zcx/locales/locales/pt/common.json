@@ -1,0 +1,54 @@
+{
+  "hero": {
+    "eyebrow": "VEXUS · GLOBAL MARKETS",
+    "h1": "Os mercados mundiais, num só lugar",
+    "p": "Junte-se a traders de todo o mundo e acompanhe cripto, ações e mercados globais numa única plataforma.",
+    "cta": "Começar a negociar",
+    "note": "Mercados em tempo real · Cobertura multi-mercado · Negociação segura"
+  },
+  "stock": {
+    "title": "Mercado de Ações",
+    "subtitle": "Índices A-shares / HK / EUA e ações populares · dados públicos de mercado",
+    "search": "Pesquisar nome ou código",
+    "refresh": "Atualizar",
+    "name": "Nome",
+    "price": "Último Preço",
+    "change": "Variação",
+    "changePct": "Variação %",
+    "open": "Abertura",
+    "prevClose": "Fechamento Anterior",
+    "high": "Alta",
+    "low": "Baixa",
+    "chart": "Gráfico Diário K-Line",
+    "close": "Fechamento",
+    "updated": "Atualizado",
+    "dataNote": "EUA: Alpaca IEX em tempo real; A-shares/HK: Tencent com atraso. Os preços são ajustados por desdobramentos. Apenas para referência."
+  },
+  "nav": {
+    "home": "Início",
+    "market": "Mercados",
+    "stocks": "Ações",
+    "tradfi": "TradFi",
+    "rewards": "Recompensas"
+  },
+  "forex": {
+    "title": "Negociação Forex",
+    "subtitle": "Pratique trading de forex com fundos virtuais; as taxas de mercado vêm de dados públicos de FX. Sem dinheiro real envolvido.",
+    "demoTag": "Fundos virtuais · Sem dinheiro real",
+    "badge": "Exchange Simulada",
+    "pair": "Instrumento",
+    "leverage": "Alavancagem",
+    "qty": "Quantidade (lotes padrão)",
+    "sell": "Preço de Venda",
+    "buy": "Preço de Compra",
+    "buyBtn": "Comprar",
+    "sellBtn": "Vender",
+    "available": "Saldo disponível",
+    "tip": "1 lote padrão = 100.000 da moeda base. Spread, fundos iniciais, alavancagem e instrumentos são controlados na configuração do administrador.",
+    "positions": "Posições",
+    "items": "itens",
+    "empty": "Sem posições",
+    "updated": "Atualizado",
+    "foot": "O paper trading é apenas para aprendizado e demonstração; todos os preços vêm de dados públicos de FX. Fundos virtuais não têm valor real."
+  }
+}

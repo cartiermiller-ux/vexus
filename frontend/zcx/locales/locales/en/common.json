@@ -1,0 +1,29 @@
+{
+  "hero": {
+    "eyebrow": "VEXUS · GLOBAL MARKETS",
+    "h1": "The world's markets, in one place",
+    "p": "Join traders worldwide and track crypto, stocks and global markets on one platform.",
+    "cta": "Start trading",
+    "note": "Real-time markets · Multi-market coverage · Secure trading"
+  },
+  "forex": {
+    "title": "Forex Trading",
+    "subtitle": "Practice forex trading with virtual funds; market rates come from public FX data. No real money involved.",
+    "demoTag": "Virtual funds · No real money",
+    "badge": "Paper Exchange",
+    "pair": "Instrument",
+    "leverage": "Leverage",
+    "qty": "Quantity (standard lots)",
+    "sell": "Sell Price",
+    "buy": "Buy Price",
+    "buyBtn": "Buy",
+    "sellBtn": "Sell",
+    "available": "Available Balance",
+    "tip": "1 standard lot = 100,000 base currency. Spread, initial funds, leverage and instruments are controlled in the admin configuration.",
+    "positions": "Positions",
+    "items": "items",
+    "empty": "No positions",
+    "updated": "Updated",
+    "foot": "Paper trading is for learning and demonstration only; all prices come from public FX data. Virtual funds have no real value."
+  }
+}

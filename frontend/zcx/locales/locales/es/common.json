@@ -1,0 +1,54 @@
+{
+  "hero": {
+    "eyebrow": "VEXUS · GLOBAL MARKETS",
+    "h1": "Los mercados del mundo, en un solo lugar",
+    "p": "Únete a traders de todo el mundo y sigue cripto, acciones y mercados globales en una sola plataforma.",
+    "cta": "Empezar a operar",
+    "note": "Mercados en tiempo real · Cobertura multi-mercado · Trading seguro"
+  },
+  "stock": {
+    "title": "Mercado de valores",
+    "subtitle": "Índices de acciones A / HK / EE. UU. y acciones populares · datos públicos de mercado",
+    "search": "Buscar nombre o código",
+    "refresh": "Actualizar",
+    "name": "Nombre",
+    "price": "Último precio",
+    "change": "Cambio",
+    "changePct": "Cambio %",
+    "open": "Apertura",
+    "prevClose": "Cierre anterior",
+    "high": "Máximo",
+    "low": "Mínimo",
+    "chart": "Gráfico diario K-Line",
+    "close": "Cierre",
+    "updated": "Actualizado",
+    "dataNote": "EE. UU.: Alpaca IEX en tiempo real; acciones A/HK: Tencent con retraso. Los precios están ajustados por splits. Solo como referencia."
+  },
+  "nav": {
+    "home": "Inicio",
+    "market": "Mercados",
+    "stocks": "Acciones",
+    "tradfi": "Finanzas tradicionales",
+    "rewards": "Recompensas"
+  },
+  "forex": {
+    "title": "Trading de Forex",
+    "subtitle": "Practica trading de forex con fondos virtuales; los precios de mercado provienen de datos públicos de FX. Sin dinero real involucrado.",
+    "demoTag": "Fondos virtuales · Sin dinero real",
+    "badge": "Exchange de Práctica",
+    "pair": "Instrumento",
+    "leverage": "Apalancamiento",
+    "qty": "Cantidad (lotes estándar)",
+    "sell": "Precio de venta",
+    "buy": "Precio de compra",
+    "buyBtn": "Comprar",
+    "sellBtn": "Vender",
+    "available": "Saldo disponible",
+    "tip": "1 lote estándar = 100.000 de divisa base. El spread, los fondos iniciales, el apalancamiento y los instrumentos se controlan en la configuración del administrador.",
+    "positions": "Posiciones",
+    "items": "elementos",
+    "empty": "Sin posiciones",
+    "updated": "Actualizado",
+    "foot": "El trading simulado es solo para aprendizaje y demostración; todos los precios provienen de datos públicos de FX. Los fondos virtuales no tienen valor real."
+  }
+}

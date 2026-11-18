@@ -1,0 +1,54 @@
+{
+  "hero": {
+    "eyebrow": "VEXUS · GLOBAL MARKETS",
+    "h1": "I mercati mondiali, in un unico posto",
+    "p": "Unisciti ai trader di tutto il mondo e segui crypto, azioni e mercati globali su un'unica piattaforma.",
+    "cta": "Inizia a fare trading",
+    "note": "Mercati in tempo reale · Multi-mercato · Trading sicuro"
+  },
+  "stock": {
+    "title": "Mercato azionario",
+    "subtitle": "Indici A-shares / HK / USA e azioni popolari · dati di mercato pubblici",
+    "search": "Cerca nome o codice",
+    "refresh": "Aggiorna",
+    "name": "Nome",
+    "price": "Ultimo prezzo",
+    "change": "Variazione",
+    "changePct": "Variazione %",
+    "open": "Apertura",
+    "prevClose": "Chiusura precedente",
+    "high": "Massimo",
+    "low": "Minimo",
+    "chart": "Grafico a candele giornaliero",
+    "close": "Chiusura",
+    "updated": "Aggiornato",
+    "dataNote": "USA: Alpaca IEX in tempo reale; A-shares/HK: Tencent con ritardo. I prezzi sono rettificati per frazionamenti. Solo a scopo informativo."
+  },
+  "nav": {
+    "home": "Home",
+    "market": "Mercati",
+    "stocks": "Azioni",
+    "tradfi": "Finanza tradizionale",
+    "rewards": "Ricompense"
+  },
+  "forex": {
+    "title": "Trading Forex",
+    "subtitle": "Esercitati nel trading forex con fondi virtuali; i tassi di mercato provengono da dati FX pubblici. Nessun denaro reale coinvolto.",
+    "demoTag": "Fondi virtuali · Nessun denaro reale",
+    "badge": "Exchange Simulato",
+    "pair": "Strumento",
+    "leverage": "Leva",
+    "qty": "Quantità (lotti standard)",
+    "sell": "Prezzo di vendita",
+    "buy": "Prezzo di acquisto",
+    "buyBtn": "Compra",
+    "sellBtn": "Vendi",
+    "available": "Saldo disponibile",
+    "tip": "1 lotto standard = 100.000 valuta base. Spread, fondi iniziali, leva e strumenti sono configurati dall'amministratore.",
+    "positions": "Posizioni",
+    "items": "elementi",
+    "empty": "Nessuna posizione",
+    "updated": "Aggiornato",
+    "foot": "Il trading simulato è solo per apprendimento e dimostrazione; tutti i prezzi provengono da dati FX pubblici. I fondi virtuali non hanno valore reale."
+  }
+}

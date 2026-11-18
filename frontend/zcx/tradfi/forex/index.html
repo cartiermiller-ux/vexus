@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>外汇模拟交易 - Vexus</title>
+<title>外汇交易 - Vexus</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:#0b0914;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
@@ -76,13 +76,13 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   <a class="fx-logo" href="/"><img src="/img/logos.4d851092.svg" alt="">VEXUS</a>
   <nav class="fx-nav">
     <a href="/">首页</a><a href="/#/market">行情</a><a href="/#/trade/btc">交易</a>
-    <a class="active" href="/tradfi/">TradFi</a><a href="/tradfi/forex/">外汇模拟</a>
+    <a class="active" href="/tradfi/">TradFi</a><a href="/tradfi/forex/">外汇交易</a>
   </nav>
   <div class="fx-user" data-i18n="forex.demoTag">模拟资金 · 不涉及真实资金</div>
 </header>
 <main class="fx-wrap">
   <div class="fx-head">
-    <div><h1 data-i18n="forex.title">外汇模拟交易</h1><p data-i18n="forex.subtitle">使用虚拟资金练习外汇交易，行情来自公开汇率接口；不涉及真实资金，不构成投资建议。</p></div>
+    <div><h1 data-i18n="forex.title">外汇交易</h1><p data-i18n="forex.subtitle">使用虚拟资金练习外汇交易，行情来自公开汇率接口；不涉及真实资金，不构成投资建议。</p></div>
     <div class="fx-badge" id="cfgBadge" data-i18n="forex.badge">模拟交易所</div>
   </div>
 
@@ -92,7 +92,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       <div id="fx-chart"></div>
     </section>
     <aside class="fx-card order-card">
-      <div class="account"><span data-i18n="forex.available">虚拟可用资金</span><b id="balance">100,000.00 USD</b></div>
+      <div class="account"><span data-i18n="forex.available">可用余额</span><b id="balance">100,000.00 USD</b></div>
       <label data-i18n="forex.pair">交易品种</label><select id="pairSelect"></select>
       <div class="price-quote">
         <div class="down"><span data-i18n="forex.sell">卖出价</span><b id="sellPrice">--</b></div>
@@ -357,7 +357,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     if (sl && side==='buy' && sl>=price) { alert('买入止损价必须低于当前买入价'); return; }
     if (sl && side==='sell' && sl<=price) { alert('卖出止损价必须高于当前卖出价'); return; }
     var margin=qty*100000*price/lev;
-    if(margin>state.balance){ alert('虚拟可用资金不足'); return; }
+    if(margin>state.balance){ alert('可用余额不足'); return; }
     state.balance-=margin;
     var pos = {pair:current,side:side,qty:qty,open:price,margin:margin,tp:tp,sl:sl};
     state.positions.push(pos);

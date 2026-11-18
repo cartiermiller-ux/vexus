@@ -1,0 +1,54 @@
+{
+  "hero": {
+    "eyebrow": "VEXUS · GLOBAL MARKETS",
+    "h1": "Dünya piyasaları tek bir yerde",
+    "p": "Dünya genelindeki yatırımcılara katılın; kripto, hisse ve küresel piyasaları tek platformda takip edin.",
+    "cta": "İşleme başla",
+    "note": "Gerçek zamanlı piyasalar · Çoklu piyasa · Güvenli işlem"
+  },
+  "stock": {
+    "title": "Borsa",
+    "subtitle": "A hisseleri / HK / ABD endeksleri ve popüler hisseler · halka açık piyasa verileri",
+    "search": "Ad veya kod ara",
+    "refresh": "Yenile",
+    "name": "Ad",
+    "price": "Son Fiyat",
+    "change": "Değişim",
+    "changePct": "Değişim %",
+    "open": "Açılış",
+    "prevClose": "Önceki Kapanış",
+    "high": "Yüksek",
+    "low": "Düşük",
+    "chart": "Günlük K Çizgisi",
+    "close": "Kapanış",
+    "updated": "Güncellendi",
+    "dataNote": "ABD: Alpaca IEX gerçek zamanlı; A hisseleri/HK: Tencent gecikmeli. Fiyatlar bölünmeye göre düzeltilmiştir. Yalnızca referans amaçlıdır."
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "market": "Piyasalar",
+    "stocks": "Hisse Senetleri",
+    "tradfi": "Geleneksel Finans",
+    "rewards": "Ödüller"
+  },
+  "forex": {
+    "title": "Forex İşlemleri",
+    "subtitle": "Sanal fonlarla forex pratiği yapın; piyasa kurları herkese açık FX verilerinden alınır. Gerçek para içermez.",
+    "demoTag": "Sanal fonlar · Gerçek para yok",
+    "badge": "Demo Borsa",
+    "pair": "Enstrüman",
+    "leverage": "Kaldıraç",
+    "qty": "Miktar (standart lot)",
+    "sell": "Satış Fiyatı",
+    "buy": "Alış Fiyatı",
+    "buyBtn": "Al",
+    "sellBtn": "Sat",
+    "available": "Kullanılabilir Bakiye",
+    "tip": "1 standart lot = 100.000 temel para birimi. Spread, başlangıç fonları, kaldıraç ve enstrümanlar yönetici yapılandırmasında kontrol edilir.",
+    "positions": "Pozisyonlar",
+    "items": "adet",
+    "empty": "Pozisyon yok",
+    "updated": "Güncellendi",
+    "foot": "Demo işlemler yalnızca öğrenme ve gösterim amaçlıdır; tüm fiyatlar herkese açık FX verilerinden gelir. Sanal fonların gerçek değeri yoktur."
+  }
+}
