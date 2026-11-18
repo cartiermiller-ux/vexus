@@ -75,6 +75,7 @@
   }
 
   function updateCards() {
+    if (!document.querySelector('[data-vexus-ticker-card]')) return;
     var pairs = ticker.map(function (c) { return c.pair; });
     var url = 'https://api.binance.com/api/v3/ticker/24hr?symbols=' + encodeURIComponent(JSON.stringify(pairs));
     fetch(url).then(function (r) { return r.json(); }).then(function (list) {
@@ -101,12 +102,14 @@
       var img = imgs[i];
       if (img.getAttribute('src') && img.getAttribute('src').indexOf('more-icon-real') < 0) {
         img.setAttribute('src', '/img/more-icon-real.svg?v=20261201');
+        img.setAttribute('data-vexus-icon-fixed', '1');
       }
     }
   }
 
   function autoScroll() {
     var box = document.querySelector('.moveList .content-view-box');
+    if (!box) { setTimeout(autoScroll, 1200); return; }
     if (box && box.getBoundingClientRect().bottom > 0 && box.getBoundingClientRect().top < window.innerHeight) {
       var max = box.scrollWidth - box.clientWidth;
       if (max > 0) {
@@ -117,17 +120,23 @@
     requestAnimationFrame(autoScroll);
   }
 
+  var tickerReady = false;
   function ensure() {
+    if (tickerReady) return;
     var old = document.getElementById('vexus-tv-ticker');
     if (old) old.remove();
-    buildCards();
+    var ok = buildCards();
     fixCoinIcons();
+    if (ok) tickerReady = true;
   }
 
-  setInterval(ensure, 800);
+  var ensureTimer = setInterval(function () {
+    ensure();
+    if (tickerReady) clearInterval(ensureTimer);
+  }, 1200);
+  setTimeout(ensure, 100);
+  setTimeout(function () { if (!tickerReady) clearInterval(ensureTimer); }, 15000);
   setInterval(updateCards, 8000);
   setTimeout(updateCards, 1500);
-  requestAnimationFrame(autoScroll);
-  var mo = new MutationObserver(function () { ensure(); });
-  mo.observe(document.body, { childList: true, subtree: true });
+  setTimeout(autoScroll, 100);
 })();

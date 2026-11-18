@@ -433,6 +433,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     box.innerHTML = html;
   }
   function tickMarket(){
+    if (document.hidden) return;
     var p = pairMeta(), q = quote();
     var step = (Number(p.pip) || 0.0001);
     simMid = (simMid || displayPrice()) + (Math.random() - 0.5) * step * 1.8;
@@ -450,7 +451,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     simMid = displayPrice();
     renderOrderbook(); renderTrades();
     if (window.__fxTicker) clearInterval(window.__fxTicker);
-    window.__fxTicker = setInterval(tickMarket, 1000);
+    window.__fxTicker = setInterval(tickMarket, 2500);
   }
   function bindTimeframes(){
     Array.prototype.forEach.call(document.querySelectorAll('#tfBtns button'), function(btn){
