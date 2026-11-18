@@ -23,7 +23,15 @@ a{color:inherit;text-decoration:none}
 .fx-market-head{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 18px;margin:0 0 12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.025);flex-wrap:wrap}
 .fx-symbol{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .fx-symbol b{font-size:20px}
+.pair-inline{border:0;background:transparent;color:#fff;font-size:19px;font-weight:700;outline:none;cursor:pointer}
+.pair-inline option{background:#171426;color:#fff}
 .fx-symbol .market-label{font-size:11px;color:rgba(255,255,255,.35)}
+.order-title{margin:4px 0 12px;font-size:14px;font-weight:600}
+.qty-stepper{display:flex;align-items:center;background:#171426;border:1px solid rgba(255,255,255,.09);border-radius:9px;overflow:hidden;height:44px}
+.qty-stepper button{width:42px;height:100%;border:0;background:rgba(255,255,255,.05);color:#fff;font-size:18px;cursor:pointer}
+.qty-stepper button:hover{background:rgba(124,92,255,.35)}
+.qty-stepper input{flex:1;height:100%;border:0;background:transparent;color:#fff;text-align:center;font-size:15px;outline:none;min-width:0}
+.qty-stepper input::-webkit-inner-spin-button,.qty-stepper input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .order-tabs{display:flex;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-bottom:10px}
 .order-tabs button{flex:1;border:0;background:transparent;color:rgba(255,255,255,.5);padding:9px 8px;font-size:12px;cursor:pointer}
 .order-tabs button.active{background:rgba(124,92,255,.32);color:#fff}
@@ -129,7 +137,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
 </div>
 
   <div class="fx-market-head">
-    <div class="fx-symbol"><b id="pairTitle">EUR/USD</b><span class="market-label">市场价格</span><span class="last" id="marketPrice">--</span><span class="chg" id="marketChange">--</span></div>
+    <div class="fx-symbol"><b id="pairTitle" style="display:none">EUR/USD</b><select id="pairSelect" class="pair-inline"></select><span class="market-label" data-i18n="forex.marketPrice">市场价格</span><span class="last" id="marketPrice">--</span><span class="chg" id="marketChange">--</span></div>
     <div class="fx-stats">
       <div><span data-i18n="forex.high24">24h 最高</span><b id="statHigh">--</b></div>
       <div><span data-i18n="forex.low24">24h 最低</span><b id="statLow">--</b></div>
@@ -164,39 +172,34 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     <aside class="fx-card order-card">
       <div class="order-tabs"><button type="button" class="active" data-otab="market" data-i18n="forex.marketPrice">市场价格</button><button type="button" data-otab="pending" data-i18n="forex.pendingOrders">挂单中订单</button></div>
       <div class="order-pane" id="marketOrderPane">
-      <div class="order-price"><span data-i18n="forex.marketPrice">市场价格</span><b id="orderMarketPrice">--</b></div>
-      <div class="account"><span data-i18n="forex.available">可用余额</span><b id="balance">100,000.00 USD</b></div>
-      <label data-i18n="forex.pair">交易品种</label><select id="pairSelect"></select>
-      <div class="price-quote">
-        <div class="down"><span data-i18n="forex.sell">卖出价</span><b id="sellPrice">--</b></div>
-        <div class="up"><span data-i18n="forex.buy">买入价</span><b id="buyPrice">--</b></div>
-      </div>
-      <label data-i18n="forex.leverage">杠杆</label><select id="levSelect"></select>
-      <label data-i18n="forex.qty">购买数量（标准手）</label><input id="qtyInput" type="number" value="1" min="0.01" step="0.01">
-      <div class="tpsl-fields">
-        <div class="tpsl-item">
-          <div class="tpsl-title"><span data-i18n="forex.stopLoss">止损价格</span><label class="fx-switch"><input type="checkbox" id="slToggle"><span class="fx-slider"></span></label></div>
-          <div class="tpsl-stepper"><button type="button" data-step="sl|-">−</button><input id="slInput" type="number" step="0.00001" value="0" disabled><button type="button" data-step="sl|+">＋</button></div>
-        </div>
-        <div class="tpsl-item">
-          <div class="tpsl-title"><span data-i18n="forex.takeProfit">止盈价格</span><label class="fx-switch"><input type="checkbox" id="tpToggle"><span class="fx-slider"></span></label></div>
-          <div class="tpsl-stepper"><button type="button" data-step="tp|-">−</button><input id="tpInput" type="number" step="0.00001" value="0" disabled><button type="button" data-step="tp|+">＋</button></div>
-        </div>
-      </div>
-      <div class="order-estimate">
-        <div class="line"><span data-i18n="forex.currentPrice">当前货币价格</span><b id="pricePreview">--</b></div>
-        <div class="line"><span data-i18n="forex.buyQty">购买数量</span><b id="qtyPreview">1 手</b></div>
-        <div class="line"><span data-i18n="forex.estFee">预估手续费</span><b id="feePreview">0.00 USD</b></div>
-        <div class="line"><span data-i18n="forex.estMargin">预估保证金</span><b id="marginPreview">0.00 USD</b></div>
-        <div class="line"><span data-i18n="forex.availBalance">可用余额（残高）</span><b id="availPreview">0.00 USD</b></div>
-      </div>
-      <div class="actions"><button class="buy" id="buyBtn" data-i18n="forex.buyBtn">买入</button><button class="sell" id="sellBtn" data-i18n="forex.sellBtn">卖出</button></div>
-      <div class="tip" data-i18n="forex.tip">1 标准手 = 100,000 基础货币。点差、初始资金、杠杆、品种由后台配置控制。</div>
+        <h4 class="order-title" data-i18n="forex.marketPrice">市场价格</h4>
+        <label data-i18n="forex.leverage">杠杆</label><select id="levSelect"></select>
+        <div class="tpsl-fields">
+          <div class="tpsl-item">
+            <div class="tpsl-title"><span data-i18n="forex.stopLoss">止损价格</span><label class="fx-switch"><input type="checkbox" id="slToggle"><span class="fx-slider"></span></label></div>
+            <div class="tpsl-stepper"><button type="button" data-step="sl|-">−</button><input id="slInput" type="number" step="0.00001" value="0" disabled><button type="button" data-step="sl|+">＋</button></div>
           </div>
+          <div class="tpsl-item">
+            <div class="tpsl-title"><span data-i18n="forex.takeProfit">止盈价格</span><label class="fx-switch"><input type="checkbox" id="tpToggle"><span class="fx-slider"></span></label></div>
+            <div class="tpsl-stepper"><button type="button" data-step="tp|-">−</button><input id="tpInput" type="number" step="0.00001" value="0" disabled><button type="button" data-step="tp|+">＋</button></div>
+          </div>
+        </div>
+        <label style="margin-top:14px" data-i18n="forex.buyQty">取引数量（Step 0.01）</label>
+        <div class="qty-stepper"><button type="button" id="qtyMinus">−</button><input id="qtyInput" type="number" value="0.01" min="0.01" step="0.01"><button type="button" id="qtyPlus">＋</button></div>
+        <div class="order-estimate">
+          <div class="line"><span>枚</span><b id="contractSpec">1 标准手 = 100,000 EUR/USD</b></div>
+          <div class="line"><span data-i18n="forex.estFee">预估手续费</span><b id="feePreview">0.00 USD</b></div>
+          <div class="line"><span data-i18n="forex.estMargin">预估保证金</span><b id="marginPreview">0.00 USD</b></div>
+          <div class="line"><span data-i18n="forex.availBalance">可用余额（残高）</span><b id="availPreview">0.00 USD</b></div>
+          <b id="balance" style="display:none">0.00 USD</b>
+        </div>
+        <div class="actions"><button class="buy" id="buyBtn" data-i18n="forex.buyBtn">买入</button><button class="sell" id="sellBtn" data-i18n="forex.sellBtn">卖出</button></div>
+        <div class="tip" data-i18n="forex.tip">1 标准手 = 100,000 基础货币。点差、初始资金、杠杆、品种由后台配置控制。</div>
+      </div>
       <div class="order-pane" id="pendingOrderPane" style="display:none">
         <div id="pendingOrderList" class="pending-empty">暂无挂单</div>
       </div>
-</aside>
+    </aside>
   </div>
 
   <section class="fx-card positions">
@@ -266,8 +269,9 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     var p = pairMeta(), q = quote();
     updateEstimate();
     $('pairTitle').textContent = p.name;
-    $('sellPrice').textContent = q.bid.toFixed(p.decimals||5);
-    $('buyPrice').textContent = q.ask.toFixed(p.decimals||5);
+    if ($('sellPrice')) $('sellPrice').textContent = q.bid.toFixed(p.decimals||5);
+    if ($('buyPrice')) $('buyPrice').textContent = q.ask.toFixed(p.decimals||5);
+    if ($('contractSpec')) $('contractSpec').textContent = '1 标准手 = 100,000 ' + p.name.replace('/','');
     $('quoteUpdated').textContent = ((window.VexusI18n && window.VexusI18n.t('forex.updated')) || '更新 ') + ' ' + new Date().toLocaleTimeString('zh-CN',{hour12:false});
     renderMarket();
   }
@@ -603,7 +607,12 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       };
     });
   }
-    loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState(); setupTpSlControls(); updateEstimate(); bindTimeframes(); startMarketTicker(); bindOrderTabs();
+    function setupQtyStepper(){
+    var q = $('qtyInput');
+    $('qtyMinus').onclick = function(){ q.value = Math.max(0.01, (Number(q.value)||0) - 0.01).toFixed(2); updateEstimate(); };
+    $('qtyPlus').onclick = function(){ q.value = ((Number(q.value)||0) + 0.01).toFixed(2); updateEstimate(); };
+  }
+  loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState(); setupTpSlControls(); updateEstimate(); bindTimeframes(); startMarketTicker(); bindOrderTabs(); setupQtyStepper();
   document.getElementById('qtyInput').addEventListener('input', updateEstimate);
     });
   }
@@ -635,6 +644,11 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   }
   $('buyBtn').onclick=function(){place('buy')};
   $('sellBtn').onclick=function(){place('sell')};
+  function setupQtyStepper(){
+    var q = $('qtyInput');
+    $('qtyMinus').onclick = function(){ q.value = Math.max(0.01, (Number(q.value)||0) - 0.01).toFixed(2); updateEstimate(); };
+    $('qtyPlus').onclick = function(){ q.value = ((Number(q.value)||0) + 0.01).toFixed(2); updateEstimate(); };
+  }
   loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState();
   loadConfig(); loadRates(); syncServerOrders(); setInterval(loadRates,30000); setInterval(syncServerOrders,20000);
   window.addEventListener('resize', function(){ if (chart && $('fx-chart')) chart.applyOptions({ width: $('fx-chart').clientWidth, height: $('fx-chart').clientHeight }); });
