@@ -50,9 +50,62 @@
     document.dispatchEvent(new CustomEvent('vexus-i18n-ready', { detail: { lang: window.i18next.language } }));
   }
 
+  function buildLangPanel(anchor) {
+    var old = document.getElementById('vexus-lang-panel');
+    if (old) { old.parentNode.removeChild(old); return; }
+    var panel = document.createElement('div');
+    panel.id = 'vexus-lang-panel';
+    panel.style.cssText = 'position:fixed;top:76px;right:18px;z-index:100000;min-width:150px;max-height:70vh;overflow:auto;' +
+      'background:#171426;border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:6px;box-shadow:0 12px 34px rgba(0,0,0,.45)';
+    SUPPORTED.forEach(function (code) {
+      var item = document.createElement('div');
+      item.textContent = LABELS[code];
+      item.style.cssText = 'padding:8px 12px;border-radius:6px;color:rgba(255,255,255,.82);font-size:13px;cursor:pointer;white-space:nowrap';
+      if (code === currentLang()) item.style.background = 'rgba(124,92,255,.28)';
+      item.onmouseenter = function () { item.style.background = 'rgba(124,92,255,.18)'; };
+      item.onmouseleave = function () { item.style.background = code === currentLang() ? 'rgba(124,92,255,.28)' : 'transparent'; };
+      item.onclick = function () {
+        localStorage.setItem('vexusLang', code);
+        localStorage.setItem('localLan', vueLang(code));
+        location.reload();
+      };
+      panel.appendChild(item);
+    });
+    document.body.appendChild(panel);
+    setTimeout(function () {
+      document.addEventListener('click', function close(e) {
+        if (!panel.contains(e.target)) { if (panel.parentNode) panel.parentNode.removeChild(panel); document.removeEventListener('click', close); }
+      });
+    }, 0);
+  }
+  function bindNativeLanguage() {
+    var triggers = document.querySelectorAll('.right-page-header .child-menu-img');
+    if (!triggers.length) {
+      triggers = document.querySelectorAll('.right-page-header img');
+    }
+    if (!triggers.length) return false;
+    var trigger = triggers[triggers.length - 1];
+    if (trigger.getAttribute('data-vexus-lang-bound')) return true;
+    trigger.setAttribute('data-vexus-lang-bound', '1');
+    trigger.style.cursor = 'pointer';
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      buildLangPanel(trigger);
+    }, true);
+    return true;
+  }
   function addSelector() {
-    if (document.getElementById('app') && document.querySelector('.page-header-background')) return;
     if (document.getElementById('vexus-lang-select')) return;
+    if (document.getElementById('app')) {
+      if (bindNativeLanguage()) return;
+      var tries = 0;
+      var timer = setInterval(function () {
+        tries++;
+        if (bindNativeLanguage() || tries > 50) clearInterval(timer);
+      }, 200);
+      return;
+    }
     var sel = document.createElement('select');
     sel.id = 'vexus-lang-select';
     sel.setAttribute('aria-label', 'Language');
