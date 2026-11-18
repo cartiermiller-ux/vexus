@@ -47,6 +47,10 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
 .pos-empty{padding:34px;text-align:center;color:rgba(255,255,255,.38);font-size:13px}
 .pos-row{display:grid;grid-template-columns:1fr .6fr .55fr .7fr .7fr .7fr .8fr 64px;gap:8px;align-items:center;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.055);font-size:12px}
 .pos-row.head{color:rgba(255,255,255,.4);font-size:11px}
+.order-estimate{margin-top:12px;padding:10px 12px;border-radius:10px;background:rgba(124,92,255,.10);border:1px solid rgba(124,92,255,.22)}
+.order-estimate .line{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:3px 0;color:rgba(255,255,255,.55)}
+.order-estimate .line b{color:#fff;font-size:13px;font-weight:600}
+.order-estimate .line.warn b{color:#F6465D}
 .tpsl-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 .tpsl-item{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:9px}
 .tpsl-title{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.65);margin-bottom:7px}
@@ -105,6 +109,10 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
           <div class="tpsl-title"><span>止盈价格</span><label class="fx-switch"><input type="checkbox" id="tpToggle"><span class="fx-slider"></span></label></div>
           <div class="tpsl-stepper"><button type="button" data-step="tp|-">−</button><input id="tpInput" type="number" step="0.00001" value="0" disabled><button type="button" data-step="tp|+">＋</button></div>
         </div>
+      </div>
+      <div class="order-estimate">
+        <div class="line"><span>预估保证金</span><b id="marginPreview">0.00 USD</b></div>
+        <div class="line"><span>可用资金</span><b id="availPreview">0.00 USD</b></div>
       </div>
       <div class="actions"><button class="buy" id="buyBtn" data-i18n="forex.buyBtn">买入</button><button class="sell" id="sellBtn" data-i18n="forex.sellBtn">卖出</button></div>
       <div class="tip" data-i18n="forex.tip">1 标准手 = 100,000 基础货币。点差、初始资金、杠杆、品种由后台配置控制。</div>
@@ -173,6 +181,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   }
   function renderPrice(){
     var p = pairMeta(), q = quote();
+    updateEstimate();
     $('pairTitle').textContent = p.name;
     $('sellPrice').textContent = q.bid.toFixed(p.decimals||5);
     $('buyPrice').textContent = q.ask.toFixed(p.decimals||5);
@@ -237,6 +246,21 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       if (pos.sl) priceLines.push(candleSeries.createPriceLine({price:Number(pos.sl), color:'#F6465D', lineWidth:1, lineStyle:2, axisLabelVisible:true, title:'止损'}));
     });
   }
+  function updateEstimate(){
+    var qtyEl = $('qtyInput'), levEl = $('levSelect'), marginEl = $('marginPreview'), availEl = $('availPreview');
+    if (!qtyEl || !levEl || !marginEl || !availEl) return;
+    var qty = Number(qtyEl.value) || 0;
+    var lev = Number(levEl.value) || 1;
+    var p = pairMeta(), q = quote();
+    var margin = qty * 100000 * q.mid / lev;
+    if (p.quote !== 'USD' && rates.USD && rates.USD[p.quote]) margin = margin / rates.USD[p.quote];
+    var avail = Number(state && state.balance ? state.balance : 0);
+    marginEl.textContent = money(margin);
+    availEl.textContent = money(avail);
+    var line = marginEl.parentNode;
+    if (line) line.className = 'line' + (margin > avail ? ' warn' : '');
+  }
+
   function renderPairs(){
     var sel = $('pairSelect'); sel.innerHTML='';
     Object.keys(cfg.pairs || DEFAULT.pairs).forEach(function(k){
@@ -251,6 +275,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       var o=document.createElement('option'); o.value=v; o.textContent=v+'x'; sel.appendChild(o);
     });
     sel.value=cfg.default_leverage || (cfg.leverage_options||[1])[0];
+    sel.onchange = updateEstimate;
   }
   function renderState(){
     $('balance').textContent = money(state.balance);
@@ -303,6 +328,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     return {bid:mid-spread/2,ask:mid+spread/2,mid:mid};
   }
   function place(side){
+    updateEstimate();
     authToken = localStorage.getItem('spToken') || '';
     if (cfg.enabled === false) { alert('模拟交易暂时关闭'); return; }
     var p=pairMeta(), q=quote();
@@ -368,7 +394,8 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       };
     });
   }
-  loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState(); setupTpSlControls();
+  loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState(); setupTpSlControls(); updateEstimate();
+  document.getElementById('qtyInput').addEventListener('input', updateEstimate);
     });
   }
   function syncServerOrders(){
