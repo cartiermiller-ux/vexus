@@ -84,6 +84,7 @@
     "positionsPnl": "浮動盈虧",
     "positionsAction": "操作",
     "positionsEmpty": "暫無持倉",
-    "closePos": "平倉"
+    "closePos": "平倉",
+    "qtyStep": "購買數量(Step:0.01)"
   }
 }

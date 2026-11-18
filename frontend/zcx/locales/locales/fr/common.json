@@ -84,6 +84,7 @@
     "positionsPnl": "P/L",
     "positionsAction": "Action",
     "positionsEmpty": "Aucune position",
-    "closePos": "Clôturer"
+    "closePos": "Clôturer",
+    "qtyStep": "Quantité (Step:0.01)"
   }
 }

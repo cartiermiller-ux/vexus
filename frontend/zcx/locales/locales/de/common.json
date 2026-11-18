@@ -84,6 +84,7 @@
     "positionsPnl": "G/V",
     "positionsAction": "Aktion",
     "positionsEmpty": "Keine Positionen",
-    "closePos": "Schließen"
+    "closePos": "Schließen",
+    "qtyStep": "Menge (Step:0.01)"
   }
 }

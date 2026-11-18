@@ -84,6 +84,7 @@
     "positionsPnl": "P/L",
     "positionsAction": "Action",
     "positionsEmpty": "No positions",
-    "closePos": "Close"
+    "closePos": "Close",
+    "qtyStep": "수량 (Step:0.01)"
   }
 }

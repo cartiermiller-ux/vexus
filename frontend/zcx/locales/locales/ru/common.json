@@ -84,6 +84,7 @@
     "positionsPnl": "P/L",
     "positionsAction": "Action",
     "positionsEmpty": "No positions",
-    "closePos": "Close"
+    "closePos": "Close",
+    "qtyStep": "Количество (Step:0.01)"
   }
 }

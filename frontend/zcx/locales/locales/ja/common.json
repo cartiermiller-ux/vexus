@@ -84,6 +84,7 @@
     "positionsPnl": "評価損益",
     "positionsAction": "操作",
     "positionsEmpty": "保有ポジションなし",
-    "closePos": "決済"
+    "closePos": "決済",
+    "qtyStep": "取引枚数(Step:0.01)"
   }
 }
