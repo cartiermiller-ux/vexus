@@ -99,7 +99,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
         <div class="up"><span data-i18n="forex.buy">买入价</span><b id="buyPrice">--</b></div>
       </div>
       <label data-i18n="forex.leverage">杠杆</label><select id="levSelect"></select>
-      <label data-i18n="forex.qty">数量（标准手）</label><input id="qtyInput" type="number" value="1" min="0.01" step="0.01">
+      <label data-i18n="forex.qty">购买数量（标准手）</label><input id="qtyInput" type="number" value="1" min="0.01" step="0.01">
       <div class="tpsl-fields">
         <div class="tpsl-item">
           <div class="tpsl-title"><span>止损价格</span><label class="fx-switch"><input type="checkbox" id="slToggle"><span class="fx-slider"></span></label></div>
@@ -111,10 +111,11 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
         </div>
       </div>
       <div class="order-estimate">
-        <div class="line"><span>数量</span><b id="qtyPreview">1 手</b></div>
+        <div class="line"><span>当前货币价格</span><b id="pricePreview">--</b></div>
+        <div class="line"><span>购买数量</span><b id="qtyPreview">1 手</b></div>
         <div class="line"><span>预估手续费</span><b id="feePreview">0.00 USD</b></div>
         <div class="line"><span>预估保证金</span><b id="marginPreview">0.00 USD</b></div>
-        <div class="line"><span>可用资金</span><b id="availPreview">0.00 USD</b></div>
+        <div class="line"><span>可用余额（残高）</span><b id="availPreview">0.00 USD</b></div>
       </div>
       <div class="actions"><button class="buy" id="buyBtn" data-i18n="forex.buyBtn">买入</button><button class="sell" id="sellBtn" data-i18n="forex.sellBtn">卖出</button></div>
       <div class="tip" data-i18n="forex.tip">1 标准手 = 100,000 基础货币。点差、初始资金、杠杆、品种由后台配置控制。</div>
@@ -258,9 +259,10 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     if (p.quote !== 'USD' && rates.USD && rates.USD[p.quote]) margin = margin / rates.USD[p.quote];
     var fee = qty * (Number(cfg.commission) || 0);
     var avail = Number(state && state.balance ? state.balance : 0);
-    var qtyElOut = $('qtyPreview'), feeEl = $('feePreview');
+    var qtyElOut = $('qtyPreview'), feeEl = $('feePreview'), priceEl = $('pricePreview');
     if (qtyElOut) qtyElOut.textContent = qty + ' 手';
     if (feeEl) feeEl.textContent = money(fee);
+    if (priceEl) priceEl.textContent = Number(q.mid).toFixed(p.decimals || 5);
     marginEl.textContent = money(margin);
     availEl.textContent = money(avail);
     var line = marginEl.parentNode;
