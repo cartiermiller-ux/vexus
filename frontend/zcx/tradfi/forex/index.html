@@ -45,8 +45,23 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
 .positions .card-head{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
 .positions .card-head b{font-size:16px}.positions .card-head span{font-size:12px;color:rgba(255,255,255,.45)}
 .pos-empty{padding:34px;text-align:center;color:rgba(255,255,255,.38);font-size:13px}
-.pos-row{display:grid;grid-template-columns:1.1fr .7fr .8fr .8fr .8fr 80px;gap:8px;align-items:center;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.055);font-size:12px}
+.pos-row{display:grid;grid-template-columns:1fr .6fr .55fr .7fr .7fr .7fr .8fr 64px;gap:8px;align-items:center;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.055);font-size:12px}
 .pos-row.head{color:rgba(255,255,255,.4);font-size:11px}
+.tpsl-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.tpsl-item{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:9px}
+.tpsl-title{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.65);margin-bottom:7px}
+.fx-switch{position:relative;display:inline-block;width:34px;height:18px;margin:0}
+.fx-switch input{display:none}
+.fx-slider{position:absolute;inset:0;border-radius:18px;background:rgba(255,255,255,.16);transition:.2s;cursor:pointer}
+.fx-slider:before{content:"";position:absolute;width:14px;height:14px;left:2px;top:2px;border-radius:50%;background:#fff;transition:.2s}
+.fx-switch input:checked + .fx-slider{background:#7c5cff}
+.fx-switch input:checked + .fx-slider:before{transform:translateX(16px)}
+.tpsl-stepper{display:flex;align-items:center;border-radius:7px;overflow:hidden;background:rgba(255,255,255,.05)}
+.tpsl-stepper button{border:0;background:rgba(255,255,255,.08);color:#fff;width:26px;height:28px;cursor:pointer}
+.tpsl-stepper button:hover{background:rgba(124,92,255,.4)}
+.tpsl-stepper input{flex:1;width:100%;border:0;background:transparent;color:#fff;text-align:center;font-size:12px;height:28px;outline:none}
+.tpsl-stepper input:disabled{color:rgba(255,255,255,.3)}
+.tpsl-stepper input::-webkit-outer-spin-button,.tpsl-stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .pos-row button{height:30px;border:0;border-radius:7px;background:rgba(124,92,255,.25);color:#d7ccff;cursor:pointer;font-size:12px}
 .fx-foot{text-align:center;color:rgba(255,255,255,.3);font-size:11px;margin-top:24px}
 @media(max-width:900px){.fx-grid{grid-template-columns:1fr}#fx-chart{height:380px}.fx-nav{display:none}.fx-head{display:block}.fx-badge{display:inline-block;margin-top:12px}}
@@ -81,6 +96,16 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       </div>
       <label data-i18n="forex.leverage">杠杆</label><select id="levSelect"></select>
       <label data-i18n="forex.qty">数量（标准手）</label><input id="qtyInput" type="number" value="1" min="0.01" step="0.01">
+      <div class="tpsl-fields">
+        <div class="tpsl-item">
+          <div class="tpsl-title"><span>止损价格</span><label class="fx-switch"><input type="checkbox" id="slToggle"><span class="fx-slider"></span></label></div>
+          <div class="tpsl-stepper"><button type="button" data-step="sl|-">−</button><input id="slInput" type="number" step="0.00001" value="0" disabled><button type="button" data-step="sl|+">＋</button></div>
+        </div>
+        <div class="tpsl-item">
+          <div class="tpsl-title"><span>止盈价格</span><label class="fx-switch"><input type="checkbox" id="tpToggle"><span class="fx-slider"></span></label></div>
+          <div class="tpsl-stepper"><button type="button" data-step="tp|-">−</button><input id="tpInput" type="number" step="0.00001" value="0" disabled><button type="button" data-step="tp|+">＋</button></div>
+        </div>
+      </div>
       <div class="actions"><button class="buy" id="buyBtn" data-i18n="forex.buyBtn">买入</button><button class="sell" id="sellBtn" data-i18n="forex.sellBtn">卖出</button></div>
       <div class="tip" data-i18n="forex.tip">1 标准手 = 100,000 基础货币。点差、初始资金、杠杆、品种由后台配置控制。</div>
     </aside>
@@ -117,6 +142,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   var current = 'EURUSD';
   var chart = null;
   var candleSeries = null;
+  var priceLines = [];
 
   function $(id){ return document.getElementById(id); }
   function money(n){ return Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' USD'; }
@@ -197,7 +223,19 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     chart.timeScale().fitContent();
     setTimeout(function(){
       if (chart) chart.applyOptions({ width: box.clientWidth || 800, height: box.clientHeight || 560 });
+      drawPriceLines();
     }, 60);
+  }
+  function drawPriceLines(){
+    if (!candleSeries) return;
+    priceLines.forEach(function(line){ try { candleSeries.removePriceLine(line); } catch(e) {} });
+    priceLines = [];
+    (state.positions || []).forEach(function(pos){
+      if (pos.pair !== current) return;
+      var p = cfg.pairs[pos.pair] || DEFAULT.pairs[pos.pair];
+      if (pos.tp) priceLines.push(candleSeries.createPriceLine({price:Number(pos.tp), color:'#0ECB81', lineWidth:1, lineStyle:2, axisLabelVisible:true, title:'止盈'}));
+      if (pos.sl) priceLines.push(candleSeries.createPriceLine({price:Number(pos.sl), color:'#F6465D', lineWidth:1, lineStyle:2, axisLabelVisible:true, title:'止损'}));
+    });
   }
   function renderPairs(){
     var sel = $('pairSelect'); sel.innerHTML='';
@@ -218,7 +256,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     $('balance').textContent = money(state.balance);
     var list = state.positions || [];
     $('posCount').textContent = list.length + ' ' + ((window.VexusI18n && window.VexusI18n.t('forex.items')) || '项');
-    var html = '<div class="pos-row head"><span>品种</span><span>方向</span><span>数量</span><span>开仓价</span><span>浮动盈亏</span><span>操作</span></div>';
+    var html = '<div class="pos-row head"><span>品种</span><span>方向</span><span>数量</span><span>开仓价</span><span>止盈价</span><span>止损价</span><span>浮动盈亏</span><span>操作</span></div>';
     if (!list.length) { html = '<div class="pos-empty">暂无持仓</div>'; }
     else {
       list.forEach(function(pos,i){
@@ -227,10 +265,13 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
         var diff = pos.side === 'buy' ? (q.mid - pos.open) : (pos.open - q.mid);
         var usd = diff * pos.qty * 100000;
         if (p.quote !== 'USD') { var usdrate = rates.USD && rates.USD[p.quote] ? rates.USD[p.quote] : 1; usd = usd / usdrate; }
-        html += '<div class="pos-row"><span>'+p.name+'</span><span style="color:'+(pos.side==='buy'?'#0ECB81':'#F6465D')+'">'+(pos.side==='buy'?'买入':'卖出')+'</span><span>'+pos.qty+' 手</span><span>'+pos.open.toFixed(p.decimals||5)+'</span><span style="color:'+(usd>=0?'#0ECB81':'#F6465D')+'">'+(usd>=0?'+':'')+usd.toFixed(2)+' USD</span><button data-close="'+i+'">平仓</button></div>';
+        var tp = pos.tp ? Number(pos.tp).toFixed(p.decimals||5) : '--';
+        var sl = pos.sl ? Number(pos.sl).toFixed(p.decimals||5) : '--';
+        html += '<div class="pos-row"><span>'+p.name+'</span><span style="color:'+(pos.side==='buy'?'#0ECB81':'#F6465D')+'">'+(pos.side==='buy'?'买入':'卖出')+'</span><span>'+pos.qty+' 手</span><span>'+pos.open.toFixed(p.decimals||5)+'</span><span style="color:#0ECB81">'+tp+'</span><span style="color:#F6465D">'+sl+'</span><span style="color:'+(usd>=0?'#0ECB81':'#F6465D')+'">'+(usd>=0?'+':'')+usd.toFixed(2)+' USD</span><button data-close="'+i+'">平仓</button></div>';
       });
     }
     $('positions').innerHTML = html;
+    drawPriceLines();
     Array.prototype.forEach.call(document.querySelectorAll('[data-close]'), function(b){
       b.onclick=function(){
         var i=Number(b.getAttribute('data-close')); var pos=state.positions[i]; if(!pos) return;
@@ -269,16 +310,28 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     if(!qty||qty<0.01){ alert('请输入有效数量'); return; }
     var lev=Number($('levSelect').value)||1;
     var price=side==='buy'?q.ask:q.bid;
+    var pipVal = Number(p.pip) || 0.0001;
+    if ($('tpToggle').checked && (!Number($('tpInput').value))) {
+      $('tpInput').value = (side === 'buy' ? price + pipVal * 30 : price - pipVal * 30).toFixed(p.decimals || 5);
+    }
+    if ($('slToggle').checked && (!Number($('slInput').value))) {
+      $('slInput').value = (side === 'buy' ? price - pipVal * 30 : price + pipVal * 30).toFixed(p.decimals || 5);
+    }
+    var tp=Number($('tpInput').value)||0, sl=Number($('slInput').value)||0;
+    if (tp && side==='buy' && tp<=price) { alert('买入止盈价必须高于当前买入价'); return; }
+    if (tp && side==='sell' && tp>=price) { alert('卖出止盈价必须低于当前卖出价'); return; }
+    if (sl && side==='buy' && sl>=price) { alert('买入止损价必须低于当前买入价'); return; }
+    if (sl && side==='sell' && sl<=price) { alert('卖出止损价必须高于当前卖出价'); return; }
     var margin=qty*100000*price/lev;
     if(margin>state.balance){ alert('虚拟可用资金不足'); return; }
     state.balance-=margin;
-    var pos = {pair:current,side:side,qty:qty,open:price,margin:margin};
+    var pos = {pair:current,side:side,qty:qty,open:price,margin:margin,tp:tp,sl:sl};
     state.positions.push(pos);
     saveState(); renderState();
     if (authToken) {
       var body = 'action=open&token=' + encodeURIComponent(authToken) + '&pair=' + encodeURIComponent(current) +
         '&side=' + encodeURIComponent(side) + '&qty=' + encodeURIComponent(qty) +
-        '&leverage=' + encodeURIComponent(lev) + '&price=' + encodeURIComponent(price);
+        '&leverage=' + encodeURIComponent(lev) + '&price=' + encodeURIComponent(price) + '&tp=' + encodeURIComponent(tp) + '&sl=' + encodeURIComponent(sl);
       fetch('/api/forexPaperApi.jsp', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body})
         .then(function(r){return r.json()}).then(function(d){ if(d && d.code === '0') { pos.serverId = d.id; saveState(); } }).catch(function(){});
     }
@@ -294,7 +347,28 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       $('sellBtn').style.opacity = enabled ? '1' : '.45';
       if (!enabled) { $('cfgBadge').style.color = '#f6b73c'; }
     }).catch(function(){}).then(function(){
-      loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState();
+      function setupTpSlControls(){
+    function sync(inputId, toggleId){
+      var on = $(toggleId).checked;
+      $(inputId).disabled = !on;
+      if (!on) $(inputId).value = '0';
+    }
+    $('tpToggle').onchange = function(){ sync('tpInput','tpToggle'); };
+    $('slToggle').onchange = function(){ sync('slInput','slToggle'); };
+    Array.prototype.forEach.call(document.querySelectorAll('[data-step]'), function(btn){
+      btn.onclick = function(){
+        var parts = btn.getAttribute('data-step').split('|');
+        var input = $(parts[0] + 'Input');
+        var toggle = $(parts[0] + 'Toggle');
+        if (!toggle.checked) { toggle.checked = true; sync(parts[0] + 'Input', parts[0] + 'Toggle'); }
+        var p = pairMeta(), q = quote();
+        var step = (Number(p.pip) || 0.0001) * 5;
+        var v = Number(input.value) || q.mid;
+        input.value = (parts[1] === '+' ? v + step : v - step).toFixed(p.decimals || 5);
+      };
+    });
+  }
+  loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState(); setupTpSlControls();
     });
   }
   function syncServerOrders(){
@@ -306,7 +380,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
         var server = d.data.map(function(x){
           var p = cfg.pairs[x.pair] || DEFAULT.pairs[x.pair] || DEFAULT.pairs.EURUSD;
           var margin = Number(x.qty) * 100000 * Number(x.open) / Math.max(1, Number(x.leverage));
-          return {pair:x.pair, side:x.side, qty:Number(x.qty), open:Number(x.open), margin:margin, serverId:x.id};
+          return {pair:x.pair, side:x.side, qty:Number(x.qty), open:Number(x.open), margin:margin, serverId:x.id, tp:Number(x.tp)||0, sl:Number(x.sl)||0};
         });
         // merge: keep local positions not present on server, add server positions missing locally
         var local = state.positions.filter(function(p){ return !p.serverId; });

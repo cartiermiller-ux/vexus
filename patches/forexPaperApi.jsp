@@ -31,7 +31,7 @@
 
         if ("list".equals(action)) {
             List<Map<String, Object>> rows = jdbc.queryForList(
-                "SELECT UUID,PAIR,SIDE,QTY,LEVERAGE,OPEN_PRICE,CLOSE_PRICE,PNL,STATUS,CREATE_TIME,CLOSE_TIME FROM T_FOREX_PAPER_ORDER WHERE PARTY_ID=? AND STATUS='open' ORDER BY CREATE_TIME DESC",
+                "SELECT UUID,PAIR,SIDE,QTY,LEVERAGE,OPEN_PRICE,CLOSE_PRICE,PNL,STATUS,TAKE_PROFIT,STOP_LOSS,CREATE_TIME,CLOSE_TIME FROM T_FOREX_PAPER_ORDER WHERE PARTY_ID=? AND STATUS='open' ORDER BY CREATE_TIME DESC",
                 new Object[] { partyId });
             JSONArray data = new JSONArray();
             for (Map<String, Object> row : rows) {
@@ -42,6 +42,8 @@
                 item.put("qty", row.get("QTY"));
                 item.put("leverage", row.get("LEVERAGE"));
                 item.put("open", row.get("OPEN_PRICE"));
+                item.put("tp", row.get("TAKE_PROFIT"));
+                item.put("sl", row.get("STOP_LOSS"));
                 item.put("status", row.get("STATUS"));
                 item.put("createTime", row.get("CREATE_TIME") == null ? "" : row.get("CREATE_TIME").toString());
                 data.add(item);
@@ -56,6 +58,8 @@
             double qty = parseDouble(request.getParameter("qty"), 0);
             int leverage = (int) parseDouble(request.getParameter("leverage"), 1);
             double price = parseDouble(request.getParameter("price"), 0);
+            double tp = parseDouble(request.getParameter("tp"), 0);
+            double sl = parseDouble(request.getParameter("sl"), 0);
             if (pair == null || !pair.matches("[A-Za-z0-9]{3,16}") || qty <= 0 || price <= 0 || !("buy".equals(side) || "sell".equals(side))) {
                 result.put("code", "1");
                 result.put("msg", "参数错误");
@@ -63,8 +67,8 @@
                 return;
             }
             String id = UUID.randomUUID().toString().replace("-", "");
-            jdbc.update("INSERT INTO T_FOREX_PAPER_ORDER (UUID,PARTY_ID,USERNAME,USERCODE,PAIR,SIDE,QTY,LEVERAGE,OPEN_PRICE,STATUS,CREATE_TIME) VALUES (?,?,?,?,?,?,?,?,?,?,NOW())",
-                new Object[] { id, partyId, username, usercode, pair.toUpperCase(), side, qty, leverage, price, "open" });
+            jdbc.update("INSERT INTO T_FOREX_PAPER_ORDER (UUID,PARTY_ID,USERNAME,USERCODE,PAIR,SIDE,QTY,LEVERAGE,OPEN_PRICE,TAKE_PROFIT,STOP_LOSS,STATUS,CREATE_TIME) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,NOW())",
+                new Object[] { id, partyId, username, usercode, pair.toUpperCase(), side, qty, leverage, price, tp > 0 ? tp : null, sl > 0 ? sl : null, "open" });
             result.put("code", "0");
             result.put("id", id);
         } else if ("close".equals(action)) {
