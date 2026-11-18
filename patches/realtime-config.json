@@ -1,0 +1,111 @@
+{
+  "enabled": true,
+  "interval_ms": 1000,
+  "instruments": {
+    "BTCUSDT": {
+      "type": "crypto",
+      "base": 64500.0,
+      "decimals": 2,
+      "volatility": 0.00035,
+      "spread": 0.0002
+    },
+    "ETHUSDT": {
+      "type": "crypto",
+      "base": 1753.0,
+      "decimals": 2,
+      "volatility": 0.00045,
+      "spread": 0.0002
+    },
+    "SOLUSDT": {
+      "type": "crypto",
+      "base": 69.21,
+      "decimals": 3,
+      "volatility": 0.0006,
+      "spread": 0.0003
+    },
+    "EURUSD": {
+      "type": "forex",
+      "base": 1.09895,
+      "decimals": 5,
+      "volatility": 0.00012,
+      "spread": 0.00012
+    },
+    "GBPUSD": {
+      "type": "forex",
+      "base": 1.274,
+      "decimals": 5,
+      "volatility": 0.00014,
+      "spread": 0.00012
+    },
+    "USDJPY": {
+      "type": "forex",
+      "base": 155.2,
+      "decimals": 3,
+      "volatility": 0.00014,
+      "spread": 0.012
+    },
+    "AUDUSD": {
+      "type": "forex",
+      "base": 0.655,
+      "decimals": 5,
+      "volatility": 0.00016,
+      "spread": 0.00012
+    },
+    "USDCAD": {
+      "type": "forex",
+      "base": 1.37,
+      "decimals": 5,
+      "volatility": 0.00014,
+      "spread": 0.00014
+    },
+    "USDCHF": {
+      "type": "forex",
+      "base": 0.885,
+      "decimals": 5,
+      "volatility": 0.00014,
+      "spread": 0.00014
+    },
+    "NZDUSD": {
+      "type": "forex",
+      "base": 0.595,
+      "decimals": 5,
+      "volatility": 0.00016,
+      "spread": 0.00012
+    },
+    "EURJPY": {
+      "type": "forex",
+      "base": 170.5,
+      "decimals": 3,
+      "volatility": 0.00016,
+      "spread": 0.015
+    },
+    "USDSEK": {
+      "type": "forex",
+      "base": 10.45,
+      "decimals": 4,
+      "volatility": 0.00014,
+      "spread": 0.004
+    },
+    "AAPL": {
+      "type": "stock",
+      "base": 228.0,
+      "decimals": 2,
+      "volatility": 0.0002,
+      "spread": 0.02
+    },
+    "TSLA": {
+      "type": "stock",
+      "base": 245.0,
+      "decimals": 2,
+      "volatility": 0.0003,
+      "spread": 0.03
+    },
+    "NVDA": {
+      "type": "stock",
+      "base": 135.0,
+      "decimals": 2,
+      "volatility": 0.0003,
+      "spread": 0.03
+    }
+  }
+}

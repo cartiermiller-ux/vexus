@@ -217,6 +217,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   <div class="fx-foot" data-i18n="forex.foot">模拟交易仅用于学习演示，所有价格来自公开汇率数据；虚拟资金不具备任何现实价值。</div>
 </main>
 
+<script src="/js/vexus-realtime.js?v=20261118"></script>
 <script src="/js/lightweight-charts.standalone.production.js"></script>
 <script>
 (function () {
@@ -266,14 +267,21 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     if (!r[p.base] || !r[p.quote]) return null;
     return (p.quote === 'USD' ? (1 / r[p.base]) : (r[p.quote] / r[p.base]));
   }
+  function serverQuote(){
+    try { return window.VexusRealtime && window.VexusRealtime.get ? window.VexusRealtime.get(current) : null; } catch (e) { return null; }
+  }
   function displayPrice(){
-    var p = pairMeta(), r = rawRate();
+    var p = pairMeta(), sq = serverQuote();
+    if (sq && sq.mid) return Number(Number(sq.mid).toFixed(p.decimals || 5));
+    var r = rawRate();
     if (r) return Number(r.toFixed(p.decimals || 5));
     var fallbacks = {EURUSD:1.0989,GBPUSD:1.2740,USDJPY:155.20,AUDUSD:0.6550,USDCAD:1.3700,USDCHF:0.8850,NZDUSD:0.5950,EURJPY:170.5};
     return fallbacks[current] || 1;
   }
   function quote(){
-    var p = pairMeta(), r = displayPrice();
+    var p = pairMeta(), sq = serverQuote();
+    if (sq && sq.mid) return { bid: Number(sq.bid), ask: Number(sq.ask), mid: Number(sq.mid) };
+    var r = displayPrice();
     var spread = (Number(cfg.spread_pips) || 0) * (Number(p.pip) || 0.0001);
     return { bid: Number((r - spread/2).toFixed(p.decimals||5)), ask: Number((r + spread/2).toFixed(p.decimals||5)), mid: r };
   }
@@ -378,8 +386,10 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     var price = q.mid;
     var fallback = {EURUSD:1.0989,GBPUSD:1.2740,USDJPY:155.20,AUDUSD:0.6550,USDCAD:1.3700,USDCHF:0.8850,NZDUSD:0.5950,EURJPY:170.5};
     var base = fallback[current] || 1;
-    var chg = ((price - base) / base * 100);
-    var high = price * 1.006, low = price * 0.994;
+    var sq = serverQuote();
+    var high = sq && sq.high ? Number(sq.high) : price * 1.006;
+    var low = sq && sq.low ? Number(sq.low) : price * 0.994;
+    var chg = sq && typeof sq.change !== 'undefined' ? Number(sq.change) : ((price - base) / base * 100);
     $('marketPrice').textContent = price.toFixed(p.decimals || 5);
     $('marketPrice').style.color = chg >= 0 ? '#0ECB81' : '#F6465D';
     if ($('orderMarketPrice')) { $('orderMarketPrice').textContent = price.toFixed(p.decimals || 5); $('orderMarketPrice').style.color = chg >= 0 ? '#0ECB81' : '#F6465D'; }
@@ -406,9 +416,21 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   }
   function renderOrderbook(){
     var box = $('orderbook'); if (!box) return;
-    var p = pairMeta(), q = quote(), mid = marketMid(), spread = q.ask - q.bid;
-    var step = (Number(p.pip) || 0.0001) * 2;
+    var p = pairMeta(), q = quote(), sq = serverQuote();
     var html = '';
+    if (sq && sq.asks && sq.bids) {
+      sq.asks.slice().reverse().forEach(function (row, i) {
+        html += '<div class="book-row ask"><span class="p">' + Number(row.price).toFixed(p.decimals||5) + '</span><span>' + Number(row.qty).toFixed(2) + '</span><span class="bar" style="--w:' + (18 + i * 7) + '%">' + (Number(row.qty) * (i + 1)).toFixed(2) + '</span></div>';
+      });
+      html += '<div class="book-row" style="border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)"><span class="p" style="color:#fff">' + Number(sq.mid).toFixed(p.decimals||5) + '</span><span></span><span></span></div>';
+      sq.bids.forEach(function (row, i) {
+        html += '<div class="book-row bid"><span class="p">' + Number(row.price).toFixed(p.decimals||5) + '</span><span>' + Number(row.qty).toFixed(2) + '</span><span class="bar" style="--w:' + (18 + i * 7) + '%">' + (Number(row.qty) * (i + 1)).toFixed(2) + '</span></div>';
+      });
+      box.innerHTML = html;
+      return;
+    }
+    var mid = marketMid(), spread = q.ask - q.bid;
+    var step = (Number(p.pip) || 0.0001) * 2;
     for (var a = 6; a >= 1; a--) {
       var price = mid + spread / 2 + step * a;
       var qty = 0.1 + Math.random() * 1.9;
@@ -424,7 +446,15 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   }
   function renderTrades(){
     var box = $('recentTrades'); if (!box) return;
-    var p = pairMeta();
+    var p = pairMeta(), sq = serverQuote();
+    if (sq && sq.trades) {
+      var h = '';
+      sq.trades.slice(0, 12).forEach(function (d) {
+        h += '<div class="trade-row"><span class="p" style="color:' + (d.side === 'buy' ? '#0ECB81' : '#F6465D') + '">' + Number(d.price).toFixed(p.decimals||5) + '</span><span>' + Number(d.qty).toFixed(2) + '</span><span>' + String(d.time || '').slice(0,8) + '</span></div>';
+      });
+      box.innerHTML = h;
+      return;
+    }
     var html = '';
     for (var t = 0; t < 12; t++) {
       var d = recentTradesData[t]; if (!d) continue;
@@ -434,17 +464,12 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   }
   function tickMarket(){
     if (document.hidden) return;
-    var p = pairMeta(), q = quote();
-    var step = (Number(p.pip) || 0.0001);
-    simMid = (simMid || displayPrice()) + (Math.random() - 0.5) * step * 1.8;
-    var drift = q.mid * 0.0015;
-    if (simMid > q.mid + drift) simMid = q.mid + drift;
-    if (simMid < q.mid - drift) simMid = q.mid - drift;
-    recentTradesData.unshift({price: simMid, qty: 0.1 + Math.random() * 2.2, time: tradeTimeLabel(), up: Math.random() > 0.45});
-    if (recentTradesData.length > 12) recentTradesData.pop();
-    if ($('marketPrice')) $('marketPrice').textContent = simMid.toFixed(p.decimals||5);
-    if ($('orderMarketPrice')) $('orderMarketPrice').textContent = simMid.toFixed(p.decimals||5);
-    renderOrderbook(); renderTrades();
+    var p = pairMeta(), sq = serverQuote();
+    if (sq && sq.mid) simMid = Number(sq.mid);
+    if (!simMid) simMid = displayPrice();
+    if ($('marketPrice')) $('marketPrice').textContent = Number(simMid).toFixed(p.decimals||5);
+    if ($('orderMarketPrice')) $('orderMarketPrice').textContent = Number(simMid).toFixed(p.decimals||5);
+    renderPrice(); renderOrderbook(); renderTrades();
   }
   function startMarketTicker(){
     seedTrades();
@@ -523,6 +548,8 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   }
   function quoteFor(code){
     var p=cfg.pairs[code]||DEFAULT.pairs[code];
+    var sq = window.VexusRealtime && window.VexusRealtime.get ? window.VexusRealtime.get(code) : null;
+    if (sq && sq.mid) return {bid:Number(sq.bid),ask:Number(sq.ask),mid:Number(sq.mid)};
     var fallbacks={EURUSD:1.0989,GBPUSD:1.2740,USDJPY:155.20,AUDUSD:0.6550,USDCAD:1.3700,USDCHF:0.8850,NZDUSD:0.5950,EURJPY:170.5};
     var mid=fallbacks[code]||1;
     if(rates&&rates[p.base]&&rates[p.quote]){
@@ -645,6 +672,9 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     } catch(e) {}
   });
   loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState(); setupTpSlControls(); updateEstimate(); bindTimeframes(); startMarketTicker(); bindOrderTabs(); setupQtyStepper();
+  document.addEventListener('vexus-realtime', function(e){
+    try { var q = e.detail && e.detail.quotes ? e.detail.quotes[current] : null; if (q) { simMid = Number(q.mid); renderPrice(); renderOrderbook(); renderTrades(); renderMarket(); } } catch (err) {}
+  });
   document.getElementById('qtyInput').addEventListener('input', updateEstimate);
     });
   }

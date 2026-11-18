@@ -518,6 +518,12 @@
 				<span class="sp-title">外汇模拟订单</span>
 			</a>
 		</li>
+		<li class="menu-item-mt">
+			<a href="<%=basePath%>realtime_config.jsp" onclick="if(window.addTab){addTab('实时行情控制', this.href, true); return false;}">
+				<span class="icon color6"><i class="fa falist fa-signal"></i></span>
+				<span class="sp-title">实时行情控制</span>
+			</a>
+		</li>
 	
 	</ul>
 		
