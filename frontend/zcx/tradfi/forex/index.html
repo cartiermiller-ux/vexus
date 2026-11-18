@@ -131,10 +131,10 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   <div class="fx-market-head">
     <div class="fx-symbol"><b id="pairTitle">EUR/USD</b><span class="market-label">市场价格</span><span class="last" id="marketPrice">--</span><span class="chg" id="marketChange">--</span></div>
     <div class="fx-stats">
-      <div>24h 最高<b id="statHigh">--</b></div>
-      <div>24h 最低<b id="statLow">--</b></div>
-      <div>点差<b id="statSpread">--</b></div>
-      <div>更新时间<b id="quoteUpdated">--</b></div>
+      <div><span data-i18n="forex.high24">24h 最高</span><b id="statHigh">--</b></div>
+      <div><span data-i18n="forex.low24">24h 最低</span><b id="statLow">--</b></div>
+      <div><span data-i18n="forex.spread">点差</span><b id="statSpread">--</b></div>
+      <div><span data-i18n="forex.updatedShort">更新时间</span><b id="quoteUpdated">--</b></div>
     </div>
   </div>
 
@@ -151,20 +151,20 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
 
     <aside class="market-side">
       <div class="book-card">
-        <h4><span>订单簿</span><span>模拟深度</span></h4>
-        <div class="book-head"><span>价格</span><span>数量</span><span>累计</span></div>
+        <h4><span data-i18n="forex.orderBook">订单簿</span><span data-i18n="forex.simDepth">模拟深度</span></h4>
+        <div class="book-head"><span data-i18n="forex.price">价格</span><span data-i18n="forex.qty">数量</span><span data-i18n="forex.total">累计</span></div>
         <div id="orderbook"></div>
       </div>
       <div class="trades-card">
-        <h4><span>最新成交</span><span>模拟</span></h4>
-        <div class="trades-head"><span>价格</span><span>数量</span><span>时间</span></div>
+        <h4><span data-i18n="forex.recentTrades">最新成交</span><span data-i18n="forex.sim">模拟</span></h4>
+        <div class="trades-head"><span data-i18n="forex.price">价格</span><span data-i18n="forex.qty">数量</span><span data-i18n="forex.time">时间</span></div>
         <div id="recentTrades"></div>
       </div>
     </aside>
     <aside class="fx-card order-card">
-      <div class="order-tabs"><button type="button" class="active" data-otab="market">市场价格</button><button type="button" data-otab="pending">挂单中订单</button></div>
+      <div class="order-tabs"><button type="button" class="active" data-otab="market" data-i18n="forex.marketPrice">市场价格</button><button type="button" data-otab="pending" data-i18n="forex.pendingOrders">挂单中订单</button></div>
       <div class="order-pane" id="marketOrderPane">
-      <div class="order-price"><span>市场价格</span><b id="orderMarketPrice">--</b></div>
+      <div class="order-price"><span data-i18n="forex.marketPrice">市场价格</span><b id="orderMarketPrice">--</b></div>
       <div class="account"><span data-i18n="forex.available">可用余额</span><b id="balance">100,000.00 USD</b></div>
       <label data-i18n="forex.pair">交易品种</label><select id="pairSelect"></select>
       <div class="price-quote">
@@ -175,20 +175,20 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       <label data-i18n="forex.qty">购买数量（标准手）</label><input id="qtyInput" type="number" value="1" min="0.01" step="0.01">
       <div class="tpsl-fields">
         <div class="tpsl-item">
-          <div class="tpsl-title"><span>止损价格</span><label class="fx-switch"><input type="checkbox" id="slToggle"><span class="fx-slider"></span></label></div>
+          <div class="tpsl-title"><span data-i18n="forex.stopLoss">止损价格</span><label class="fx-switch"><input type="checkbox" id="slToggle"><span class="fx-slider"></span></label></div>
           <div class="tpsl-stepper"><button type="button" data-step="sl|-">−</button><input id="slInput" type="number" step="0.00001" value="0" disabled><button type="button" data-step="sl|+">＋</button></div>
         </div>
         <div class="tpsl-item">
-          <div class="tpsl-title"><span>止盈价格</span><label class="fx-switch"><input type="checkbox" id="tpToggle"><span class="fx-slider"></span></label></div>
+          <div class="tpsl-title"><span data-i18n="forex.takeProfit">止盈价格</span><label class="fx-switch"><input type="checkbox" id="tpToggle"><span class="fx-slider"></span></label></div>
           <div class="tpsl-stepper"><button type="button" data-step="tp|-">−</button><input id="tpInput" type="number" step="0.00001" value="0" disabled><button type="button" data-step="tp|+">＋</button></div>
         </div>
       </div>
       <div class="order-estimate">
-        <div class="line"><span>当前货币价格</span><b id="pricePreview">--</b></div>
-        <div class="line"><span>购买数量</span><b id="qtyPreview">1 手</b></div>
-        <div class="line"><span>预估手续费</span><b id="feePreview">0.00 USD</b></div>
-        <div class="line"><span>预估保证金</span><b id="marginPreview">0.00 USD</b></div>
-        <div class="line"><span>可用余额（残高）</span><b id="availPreview">0.00 USD</b></div>
+        <div class="line"><span data-i18n="forex.currentPrice">当前货币价格</span><b id="pricePreview">--</b></div>
+        <div class="line"><span data-i18n="forex.buyQty">购买数量</span><b id="qtyPreview">1 手</b></div>
+        <div class="line"><span data-i18n="forex.estFee">预估手续费</span><b id="feePreview">0.00 USD</b></div>
+        <div class="line"><span data-i18n="forex.estMargin">预估保证金</span><b id="marginPreview">0.00 USD</b></div>
+        <div class="line"><span data-i18n="forex.availBalance">可用余额（残高）</span><b id="availPreview">0.00 USD</b></div>
       </div>
       <div class="actions"><button class="buy" id="buyBtn" data-i18n="forex.buyBtn">买入</button><button class="sell" id="sellBtn" data-i18n="forex.sellBtn">卖出</button></div>
       <div class="tip" data-i18n="forex.tip">1 标准手 = 100,000 基础货币。点差、初始资金、杠杆、品种由后台配置控制。</div>
@@ -583,11 +583,12 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   function renderPendingOrders(){
     var box = $('pendingOrderList'); if (!box) return;
     var list = (state.positions || []).filter(function(p){ return p.pair === current; });
-    if (!list.length) { box.className = 'pending-empty'; box.innerHTML = '暂无挂单'; return; }
+    var T = function(k, d){ return (window.VexusI18n && window.VexusI18n.t) ? (window.VexusI18n.t(k) || d) : d; };
+    if (!list.length) { box.className = 'pending-empty'; box.innerHTML = T('forex.pendingEmpty','暂无挂单'); return; }
     box.className = '';
     box.innerHTML = list.map(function(p){
       var pm = cfg.pairs[p.pair] || DEFAULT.pairs[p.pair];
-      return '<div class="pending-row"><span>' + pm.name + ' ' + (p.side === 'buy' ? '买入' : '卖出') + '</span><span>' + p.qty + ' 手</span><span style="color:rgba(255,255,255,.5)">持仓中</span></div>';
+      return '<div class="pending-row"><span>' + pm.name + ' ' + (p.side === 'buy' ? T('forex.buy','买入') : T('forex.sell','卖出')) + '</span><span>' + p.qty + ' 手</span><span style="color:rgba(255,255,255,.5)">' + T('forex.holding','持仓中') + '</span></div>';
     }).join('');
   }
   function bindOrderTabs(){
