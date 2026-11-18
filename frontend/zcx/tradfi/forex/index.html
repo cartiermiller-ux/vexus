@@ -24,6 +24,12 @@ a{color:inherit;text-decoration:none}
 .fx-symbol{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .fx-symbol b{font-size:20px}
 .fx-symbol .market-label{font-size:11px;color:rgba(255,255,255,.35)}
+.order-tabs{display:flex;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-bottom:10px}
+.order-tabs button{flex:1;border:0;background:transparent;color:rgba(255,255,255,.5);padding:9px 8px;font-size:12px;cursor:pointer}
+.order-tabs button.active{background:rgba(124,92,255,.32);color:#fff}
+.order-pane{display:block}
+.pending-empty{padding:22px 8px;text-align:center;color:rgba(255,255,255,.35);font-size:12px}
+.pending-row{display:flex;justify-content:space-between;gap:8px;padding:8px 4px;border-bottom:1px solid rgba(255,255,255,.06);font-size:11px}
 .order-price{padding:10px 12px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(255,255,255,.03);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
 .order-price span{font-size:11px;color:rgba(255,255,255,.5)}.order-price b{font-size:16px;color:#0ECB81}.fx-symbol .last{font-size:24px;font-weight:700;color:#0ECB81}.fx-symbol .chg{font-size:13px}
 .fx-stats{display:flex;gap:22px;flex-wrap:wrap;font-size:11px;color:rgba(255,255,255,.45)}
@@ -149,6 +155,8 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       </div>
     </aside>
     <aside class="fx-card order-card">
+      <div class="order-tabs"><button type="button" class="active" data-otab="market">市场价格</button><button type="button" data-otab="pending">挂单中订单</button></div>
+      <div class="order-pane" id="marketOrderPane">
       <div class="order-price"><span>市场价格</span><b id="orderMarketPrice">--</b></div>
       <div class="account"><span data-i18n="forex.available">可用余额</span><b id="balance">100,000.00 USD</b></div>
       <label data-i18n="forex.pair">交易品种</label><select id="pairSelect"></select>
@@ -177,7 +185,11 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       </div>
       <div class="actions"><button class="buy" id="buyBtn" data-i18n="forex.buyBtn">买入</button><button class="sell" id="sellBtn" data-i18n="forex.sellBtn">卖出</button></div>
       <div class="tip" data-i18n="forex.tip">1 标准手 = 100,000 基础货币。点差、初始资金、杠杆、品种由后台配置控制。</div>
-    </aside>
+          </div>
+      <div class="order-pane" id="pendingOrderPane" style="display:none">
+        <div id="pendingOrderList" class="pending-empty">暂无挂单</div>
+      </div>
+</aside>
   </div>
 
   <section class="fx-card positions">
@@ -462,6 +474,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       });
     }
     $('positions').innerHTML = html;
+    if (typeof renderPendingOrders === 'function') renderPendingOrders();
     drawPriceLines();
     Array.prototype.forEach.call(document.querySelectorAll('[data-close]'), function(b){
       b.onclick=function(){
@@ -560,7 +573,29 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       };
     });
   }
-  loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState(); setupTpSlControls(); updateEstimate(); bindTimeframes(); startMarketTicker();
+  function renderPendingOrders(){
+    var box = $('pendingOrderList'); if (!box) return;
+    var list = (state.positions || []).filter(function(p){ return p.pair === current; });
+    if (!list.length) { box.className = 'pending-empty'; box.innerHTML = '暂无挂单'; return; }
+    box.className = '';
+    box.innerHTML = list.map(function(p){
+      var pm = cfg.pairs[p.pair] || DEFAULT.pairs[p.pair];
+      return '<div class="pending-row"><span>' + pm.name + ' ' + (p.side === 'buy' ? '买入' : '卖出') + '</span><span>' + p.qty + ' 手</span><span style="color:rgba(255,255,255,.5)">持仓中</span></div>';
+    }).join('');
+  }
+  function bindOrderTabs(){
+    Array.prototype.forEach.call(document.querySelectorAll('[data-otab]'), function(btn){
+      btn.onclick = function(){
+        Array.prototype.forEach.call(document.querySelectorAll('[data-otab]'), function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        var market = btn.getAttribute('data-otab') === 'market';
+        $('marketOrderPane').style.display = market ? 'block' : 'none';
+        $('pendingOrderPane').style.display = market ? 'none' : 'block';
+        if (!market) renderPendingOrders();
+      };
+    });
+  }
+    loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState(); setupTpSlControls(); updateEstimate(); bindTimeframes(); startMarketTicker(); bindOrderTabs();
   document.getElementById('qtyInput').addEventListener('input', updateEstimate);
     });
   }
