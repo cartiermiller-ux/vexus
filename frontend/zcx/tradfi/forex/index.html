@@ -111,6 +111,8 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
         </div>
       </div>
       <div class="order-estimate">
+        <div class="line"><span>数量</span><b id="qtyPreview">1 手</b></div>
+        <div class="line"><span>预估手续费</span><b id="feePreview">0.00 USD</b></div>
         <div class="line"><span>预估保证金</span><b id="marginPreview">0.00 USD</b></div>
         <div class="line"><span>可用资金</span><b id="availPreview">0.00 USD</b></div>
       </div>
@@ -254,11 +256,15 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     var p = pairMeta(), q = quote();
     var margin = qty * 100000 * q.mid / lev;
     if (p.quote !== 'USD' && rates.USD && rates.USD[p.quote]) margin = margin / rates.USD[p.quote];
+    var fee = qty * (Number(cfg.commission) || 0);
     var avail = Number(state && state.balance ? state.balance : 0);
+    var qtyElOut = $('qtyPreview'), feeEl = $('feePreview');
+    if (qtyElOut) qtyElOut.textContent = qty + ' 手';
+    if (feeEl) feeEl.textContent = money(fee);
     marginEl.textContent = money(margin);
     availEl.textContent = money(avail);
     var line = marginEl.parentNode;
-    if (line) line.className = 'line' + (margin > avail ? ' warn' : '');
+    if (line) line.className = 'line' + (margin + fee > avail ? ' warn' : '');
   }
 
   function renderPairs(){
