@@ -1,0 +1,27 @@
+﻿/* Layout-only adaptation for spot / delivery / perpetual trade pages.
+   Mirrors the forex terminal: full viewport, chart + book + order columns,
+   no fixed 800px height and no oversized bottom gap. */
+.trade-box-top{height:calc(100vh - 112px)!important;min-height:520px!important;max-height:none!important}
+.trade-box-top .top-left{min-width:0!important}
+.trade-box-top .top-middle,.trade-box-top .top-right{width:300px!important;flex:0 0 300px!important}
+.trade-box-top .top-left,.trade-box-top .top-middle,.trade-box-top .top-right{height:100%!important}
+.trade-box-bottom{margin-bottom:0!important;min-height:150px!important}
+.home-container .trade-panel-box{min-height:calc(100vh - 96px)!important}
+.trade-box .kline-box,.trade-box .chart-box,.trade-box .order-book{height:100%!important}
+/* right-side order form: same visual rhythm as forex order panel */
+.trade-box-top .top-right{background:#0f0d1d!important;border-left:1px solid rgba(255,255,255,.08)!important;overflow-y:auto!important}
+.trade-box-top .top-right .place-order-container-common{padding:12px 14px 18px!important;height:100%!important;box-sizing:border-box!important}
+.trade-box-top .top-right input,.trade-box-top .top-right select{height:42px!important;border-radius:9px!important;background:#171426!important;color:#fff!important;border:1px solid rgba(255,255,255,.09)!important;box-sizing:border-box!important}
+.trade-box-top .top-right button{min-height:40px!important;border-radius:9px!important}
+.trade-box-top .top-right .place-order-form-box,.trade-box-top .top-right .place-order-inner-common{padding-top:4px!important}
+@media(max-width:1280px){
+  .trade-box-top{height:calc(100vh - 104px)!important;min-height:460px!important}
+  .trade-box-top .top-middle,.trade-box-top .top-right{width:280px!important;flex-basis:280px!important}
+}
+@media(max-width:900px){
+  .trade-box-top{height:auto!important;min-height:0!important}
+  .trade-box-top .top-left{height:360px!important}
+  .trade-box-top .top-middle{display:none!important}
+  .trade-box-top .top-right{display:block!important;width:100%!important;flex-basis:100%!important;height:auto!important;border-left:0!important}
+  .trade-box-bottom{display:block!important}
+}
