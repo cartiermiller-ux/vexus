@@ -262,6 +262,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     return {bid:mid-spread/2,ask:mid+spread/2,mid:mid};
   }
   function place(side){
+    authToken = localStorage.getItem('spToken') || '';
     if (cfg.enabled === false) { alert('模拟交易暂时关闭'); return; }
     var p=pairMeta(), q=quote();
     var qty=Number($('qtyInput').value);
@@ -297,6 +298,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     });
   }
   function syncServerOrders(){
+    authToken = localStorage.getItem('spToken') || '';
     if (!authToken) return;
     fetch('/api/forexPaperApi.jsp?action=list&token=' + encodeURIComponent(authToken), {cache:'no-store'})
       .then(function(r){return r.json()}).then(function(d){
