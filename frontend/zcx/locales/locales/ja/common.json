@@ -39,8 +39,8 @@
     "pair": "銘柄",
     "leverage": "レバレッジ",
     "qty": "数量",
-    "sell": "売値",
-    "buy": "買値",
+    "sell": "売り",
+    "buy": "買い",
     "buyBtn": "買い",
     "sellBtn": "売り",
     "available": "利用可能残高",
@@ -71,6 +71,19 @@
     "spread": "スプレッド",
     "updatedShort": "更新時刻",
     "pendingEmpty": "発注中の注文はありません",
-    "holding": "保有中"
+    "holding": "保有中",
+    "pieces": "枚",
+    "contractSpec": "1標準ロット = 100,000 {pair}",
+    "lots": "ロット",
+    "positionsPair": "銘柄",
+    "positionsSide": "方向",
+    "positionsQty": "数量",
+    "positionsOpen": "建値",
+    "positionsTp": "利益確定",
+    "positionsSl": "損切り",
+    "positionsPnl": "評価損益",
+    "positionsAction": "操作",
+    "positionsEmpty": "保有ポジションなし",
+    "closePos": "決済"
   }
 }

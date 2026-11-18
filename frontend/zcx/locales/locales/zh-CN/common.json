@@ -39,8 +39,8 @@
     "pair": "交易品种",
     "leverage": "杠杆",
     "qty": "数量",
-    "sell": "卖出价",
-    "buy": "买入价",
+    "sell": "卖出",
+    "buy": "买入",
     "buyBtn": "买入",
     "sellBtn": "卖出",
     "available": "可用余额",
@@ -71,6 +71,19 @@
     "spread": "点差",
     "updatedShort": "更新时间",
     "pendingEmpty": "暂无挂单",
-    "holding": "持仓中"
+    "holding": "持仓中",
+    "pieces": "枚",
+    "contractSpec": "1 标准手 = 100,000 {pair}",
+    "lots": "手",
+    "positionsPair": "品种",
+    "positionsSide": "方向",
+    "positionsQty": "数量",
+    "positionsOpen": "开仓价",
+    "positionsTp": "止盈价",
+    "positionsSl": "止损价",
+    "positionsPnl": "浮动盈亏",
+    "positionsAction": "操作",
+    "positionsEmpty": "暂无持仓",
+    "closePos": "平仓"
   }
 }

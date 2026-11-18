@@ -39,8 +39,8 @@
     "pair": "Enstrüman",
     "leverage": "Kaldıraç",
     "qty": "Qty",
-    "sell": "Satış Fiyatı",
-    "buy": "Alış Fiyatı",
+    "sell": "Sell",
+    "buy": "Buy",
     "buyBtn": "Al",
     "sellBtn": "Sat",
     "available": "Kullanılabilir Bakiye",
@@ -71,6 +71,19 @@
     "spread": "Spread",
     "updatedShort": "Updated",
     "pendingEmpty": "No pending orders",
-    "holding": "Open"
+    "holding": "Open",
+    "pieces": "Lots",
+    "contractSpec": "1 standard lot = 100,000 {pair}",
+    "lots": "lots",
+    "positionsPair": "Pair",
+    "positionsSide": "Side",
+    "positionsQty": "Qty",
+    "positionsOpen": "Open",
+    "positionsTp": "Take Profit",
+    "positionsSl": "Stop Loss",
+    "positionsPnl": "P/L",
+    "positionsAction": "Action",
+    "positionsEmpty": "No positions",
+    "closePos": "Close"
   }
 }

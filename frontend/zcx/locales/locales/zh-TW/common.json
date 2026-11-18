@@ -39,8 +39,8 @@
     "pair": "交易品種",
     "leverage": "槓桿",
     "qty": "數量",
-    "sell": "賣出價",
-    "buy": "買入價",
+    "sell": "賣出",
+    "buy": "買入",
     "buyBtn": "買入",
     "sellBtn": "賣出",
     "available": "可用餘額",
@@ -71,6 +71,19 @@
     "spread": "點差",
     "updatedShort": "更新時間",
     "pendingEmpty": "暫無掛單",
-    "holding": "持倉中"
+    "holding": "持倉中",
+    "pieces": "枚",
+    "contractSpec": "1 標準手 = 100,000 {pair}",
+    "lots": "手",
+    "positionsPair": "品種",
+    "positionsSide": "方向",
+    "positionsQty": "數量",
+    "positionsOpen": "開倉價",
+    "positionsTp": "止盈價",
+    "positionsSl": "止損價",
+    "positionsPnl": "浮動盈虧",
+    "positionsAction": "操作",
+    "positionsEmpty": "暫無持倉",
+    "closePos": "平倉"
   }
 }

@@ -39,8 +39,8 @@
     "pair": "Instrument",
     "leverage": "Effet de levier",
     "qty": "Qté",
-    "sell": "Prix de vente",
-    "buy": "Prix d'achat",
+    "sell": "Vendre",
+    "buy": "Acheter",
     "buyBtn": "Acheter",
     "sellBtn": "Vendre",
     "available": "Solde disponible",
@@ -71,6 +71,19 @@
     "spread": "Spread",
     "updatedShort": "Mis à jour",
     "pendingEmpty": "Aucun ordre en attente",
-    "holding": "Ouvert"
+    "holding": "Ouvert",
+    "pieces": "Lots",
+    "contractSpec": "1 lot standard = 100 000 {pair}",
+    "lots": "lots",
+    "positionsPair": "Paire",
+    "positionsSide": "Sens",
+    "positionsQty": "Qté",
+    "positionsOpen": "Ouverture",
+    "positionsTp": "Take-profit",
+    "positionsSl": "Stop-loss",
+    "positionsPnl": "P/L",
+    "positionsAction": "Action",
+    "positionsEmpty": "Aucune position",
+    "closePos": "Clôturer"
   }
 }

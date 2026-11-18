@@ -26,6 +26,10 @@ a{color:inherit;text-decoration:none}
 .pair-inline{border:0;background:transparent;color:#fff;font-size:19px;font-weight:700;outline:none;cursor:pointer}
 .pair-inline option{background:#171426;color:#fff}
 .fx-symbol .market-label{font-size:11px;color:rgba(255,255,255,.35)}
+.order-mini{margin-top:auto;border-top:1px solid rgba(255,255,255,.07);padding-top:10px}
+.mini-head{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.45);margin-bottom:6px}
+.mini-row{display:grid;grid-template-columns:1fr .7fr .7fr;gap:6px;font-size:11px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.045)}
+.mini-empty{font-size:11px;color:rgba(255,255,255,.3);padding:10px 0}
 .order-title{margin:4px 0 12px;font-size:14px;font-weight:600}
 .qty-stepper{display:flex;align-items:center;background:#171426;border:1px solid rgba(255,255,255,.09);border-radius:9px;overflow:hidden;height:44px}
 .qty-stepper button{width:42px;height:100%;border:0;background:rgba(255,255,255,.05);color:#fff;font-size:18px;cursor:pointer}
@@ -42,7 +46,7 @@ a{color:inherit;text-decoration:none}
 .order-price span{font-size:11px;color:rgba(255,255,255,.5)}.order-price b{font-size:16px;color:#0ECB81}.fx-symbol .last{font-size:24px;font-weight:700;color:#0ECB81}.fx-symbol .chg{font-size:13px}
 .fx-stats{display:flex;gap:22px;flex-wrap:wrap;font-size:11px;color:rgba(255,255,255,.45)}
 .fx-stats b{display:block;color:rgba(255,255,255,.82);font-size:12px;margin-top:2px;font-weight:500}
-.fx-grid{display:grid;grid-template-columns:minmax(0,1fr) 260px 330px;gap:12px;align-items:start}
+.fx-grid{display:grid;grid-template-columns:minmax(0,1fr) 260px 330px;gap:12px;align-items:stretch}
 .fx-card{background:linear-gradient(180deg,#15122a,#0f0d1d);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden}
 .chart-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.07);flex-wrap:wrap}
 .tf-btns{display:flex;gap:2px}.tf-btns button{border:0;background:transparent;color:rgba(255,255,255,.5);font-size:11px;padding:5px 8px;border-radius:5px;cursor:pointer}
@@ -68,8 +72,8 @@ a{color:inherit;text-decoration:none}
 .chart-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
 .chart-head strong{font-size:17px}
 .chart-head span{font-size:11px;color:rgba(255,255,255,.45)}
-#fx-chart{height:calc(100vh - 300px);min-height:480px;max-height:820px;background:#0f0d1d}
-.order-card{padding:18px}
+#fx-chart{height:calc(100vh - 360px);min-height:440px;max-height:760px;background:#0f0d1d}
+.order-card{display:flex;flex-direction:column;min-height:100%;padding:18px}
 .order-card .account{display:flex;justify-content:space-between;align-items:center;padding:14px 15px;border-radius:12px;background:rgba(124,92,255,.12);border:1px solid rgba(124,92,255,.25);margin-bottom:16px}
 .order-card .account span{font-size:12px;color:rgba(255,255,255,.62)}
 .order-card .account b{font-size:18px;color:#fff}
@@ -187,7 +191,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
         <label style="margin-top:14px" data-i18n="forex.buyQty">取引数量（Step 0.01）</label>
         <div class="qty-stepper"><button type="button" id="qtyMinus">−</button><input id="qtyInput" type="number" value="0.01" min="0.01" step="0.01"><button type="button" id="qtyPlus">＋</button></div>
         <div class="order-estimate">
-          <div class="line"><span>枚</span><b id="contractSpec">1 标准手 = 100,000 EUR/USD</b></div>
+          <div class="line"><span data-i18n="forex.pieces">枚</span><b id="contractSpec">1 标准手 = 100,000 EUR/USD</b></div>
           <div class="line"><span data-i18n="forex.estFee">预估手续费</span><b id="feePreview">0.00 USD</b></div>
           <div class="line"><span data-i18n="forex.estMargin">预估保证金</span><b id="marginPreview">0.00 USD</b></div>
           <div class="line"><span data-i18n="forex.availBalance">可用余额（残高）</span><b id="availPreview">0.00 USD</b></div>
@@ -195,6 +199,10 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
         </div>
         <div class="actions"><button class="buy" id="buyBtn" data-i18n="forex.buyBtn">买入</button><button class="sell" id="sellBtn" data-i18n="forex.sellBtn">卖出</button></div>
         <div class="tip" data-i18n="forex.tip">1 标准手 = 100,000 基础货币。点差、初始资金、杠杆、品种由后台配置控制。</div>
+        <div class="order-mini">
+          <div class="mini-head"><span data-i18n="forex.positions">持仓</span><span id="miniCount">0</span></div>
+          <div id="miniPositions" class="mini-empty">暂无持仓</div>
+        </div>
       </div>
       <div class="order-pane" id="pendingOrderPane" style="display:none">
         <div id="pendingOrderList" class="pending-empty">暂无挂单</div>
@@ -238,6 +246,10 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
   var maSeries = null;
   var timeframe = 900;
 
+  function T(k, d, opts){
+    var t = (window.VexusI18n && window.VexusI18n.t) ? window.VexusI18n.t(k, opts) : '';
+    return (t && t !== k) ? t : d;
+  }
   function $(id){ return document.getElementById(id); }
   function money(n){ return Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' USD'; }
   function loadState(){
@@ -271,7 +283,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     $('pairTitle').textContent = p.name;
     if ($('sellPrice')) $('sellPrice').textContent = q.bid.toFixed(p.decimals||5);
     if ($('buyPrice')) $('buyPrice').textContent = q.ask.toFixed(p.decimals||5);
-    if ($('contractSpec')) $('contractSpec').textContent = '1 标准手 = 100,000 ' + p.name.replace('/','');
+    if ($('contractSpec')) $('contractSpec').textContent = T('forex.contractSpec','1 标准手 = 100,000 {pair}', {pair: p.name.replace('/','')});
     $('quoteUpdated').textContent = ((window.VexusI18n && window.VexusI18n.t('forex.updated')) || '更新 ') + ' ' + new Date().toLocaleTimeString('zh-CN',{hour12:false});
     renderMarket();
   }
@@ -470,8 +482,8 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     $('balance').textContent = money(state.balance);
     var list = state.positions || [];
     $('posCount').textContent = list.length + ' ' + ((window.VexusI18n && window.VexusI18n.t('forex.items')) || '项');
-    var html = '<div class="pos-row head"><span>品种</span><span>方向</span><span>数量</span><span>开仓价</span><span>止盈价</span><span>止损价</span><span>浮动盈亏</span><span>操作</span></div>';
-    if (!list.length) { html = '<div class="pos-empty">暂无持仓</div>'; }
+    var html = '<div class="pos-row head"><span>'+T('forex.positionsPair','品种')+'</span><span>'+T('forex.positionsSide','方向')+'</span><span>'+T('forex.positionsQty','数量')+'</span><span>'+T('forex.positionsOpen','开仓价')+'</span><span>'+T('forex.positionsTp','止盈价')+'</span><span>'+T('forex.positionsSl','止损价')+'</span><span>'+T('forex.positionsPnl','浮动盈亏')+'</span><span>'+T('forex.positionsAction','操作')+'</span></div>';
+    if (!list.length) { html = '<div class="pos-empty">'+T('forex.positionsEmpty','暂无持仓')+'</div>'; }
     else {
       list.forEach(function(pos,i){
         var p = cfg.pairs[pos.pair] || DEFAULT.pairs[pos.pair];
@@ -481,11 +493,12 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
         if (p.quote !== 'USD') { var usdrate = rates.USD && rates.USD[p.quote] ? rates.USD[p.quote] : 1; usd = usd / usdrate; }
         var tp = pos.tp ? Number(pos.tp).toFixed(p.decimals||5) : '--';
         var sl = pos.sl ? Number(pos.sl).toFixed(p.decimals||5) : '--';
-        html += '<div class="pos-row"><span>'+p.name+'</span><span style="color:'+(pos.side==='buy'?'#0ECB81':'#F6465D')+'">'+(pos.side==='buy'?'买入':'卖出')+'</span><span>'+pos.qty+' 手</span><span>'+pos.open.toFixed(p.decimals||5)+'</span><span style="color:#0ECB81">'+tp+'</span><span style="color:#F6465D">'+sl+'</span><span style="color:'+(usd>=0?'#0ECB81':'#F6465D')+'">'+(usd>=0?'+':'')+usd.toFixed(2)+' USD</span><button data-close="'+i+'">平仓</button></div>';
+        html += '<div class="pos-row"><span>'+p.name+'</span><span style="color:'+(pos.side==='buy'?'#0ECB81':'#F6465D')+'">'+(pos.side==='buy'?T('forex.buy','买入'):T('forex.sell','卖出'))+'</span><span>'+pos.qty+' '+T('forex.lots','手')+'</span><span>'+pos.open.toFixed(p.decimals||5)+'</span><span style="color:#0ECB81">'+tp+'</span><span style="color:#F6465D">'+sl+'</span><span style="color:'+(usd>=0?'#0ECB81':'#F6465D')+'">'+(usd>=0?'+':'')+usd.toFixed(2)+' USD</span><button data-close="'+i+'">'+T('forex.closePos','平仓')+'</button></div>';
       });
     }
     $('positions').innerHTML = html;
     if (typeof renderPendingOrders === 'function') renderPendingOrders();
+    if (typeof renderMiniPositions === 'function') renderMiniPositions();
     drawPriceLines();
     Array.prototype.forEach.call(document.querySelectorAll('[data-close]'), function(b){
       b.onclick=function(){
@@ -584,6 +597,17 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
       };
     });
   }
+  function renderMiniPositions(){
+    var box = $('miniPositions'); if (!box) return;
+    var list = state.positions || [];
+    if ($('miniCount')) $('miniCount').textContent = list.length;
+    if (!list.length) { box.className = 'mini-empty'; box.innerHTML = T('forex.positionsEmpty','暂无持仓'); return; }
+    box.className = '';
+    box.innerHTML = list.slice(0,4).map(function(p){
+      var pm = cfg.pairs[p.pair] || DEFAULT.pairs[p.pair];
+      return '<div class="mini-row"><span>'+pm.name+' '+(p.side==='buy'?T('forex.buy','买入'):T('forex.sell','卖出'))+'</span><span>'+p.qty+' '+T('forex.lots','手')+'</span><span style="color:rgba(255,255,255,.55)">'+p.open.toFixed(pm.decimals||5)+'</span></div>';
+    }).join('');
+  }
   function renderPendingOrders(){
     var box = $('pendingOrderList'); if (!box) return;
     var list = (state.positions || []).filter(function(p){ return p.pair === current; });
@@ -592,7 +616,7 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     box.className = '';
     box.innerHTML = list.map(function(p){
       var pm = cfg.pairs[p.pair] || DEFAULT.pairs[p.pair];
-      return '<div class="pending-row"><span>' + pm.name + ' ' + (p.side === 'buy' ? T('forex.buy','买入') : T('forex.sell','卖出')) + '</span><span>' + p.qty + ' 手</span><span style="color:rgba(255,255,255,.5)">' + T('forex.holding','持仓中') + '</span></div>';
+      return '<div class="pending-row"><span>' + pm.name + ' ' + (p.side === 'buy' ? T('forex.buy','买入') : T('forex.sell','卖出')) + '</span><span>' + p.qty + ' ' + T('forex.lots','手') + '</span><span style="color:rgba(255,255,255,.5)">' + T('forex.holding','持仓中') + '</span></div>';
     }).join('');
   }
   function bindOrderTabs(){
@@ -612,6 +636,13 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     $('qtyMinus').onclick = function(){ q.value = Math.max(0.01, (Number(q.value)||0) - 0.01).toFixed(2); updateEstimate(); };
     $('qtyPlus').onclick = function(){ q.value = ((Number(q.value)||0) + 0.01).toFixed(2); updateEstimate(); };
   }
+  document.addEventListener('vexus-i18n-ready', function(){
+    try {
+      if ($('contractSpec')) $('contractSpec').textContent = T('forex.contractSpec','1 标准手 = 100,000 {pair}', {pair: (pairMeta().name || current).replace('/','')});
+      renderState(); renderPendingOrders(); renderMiniPositions(); renderMarket(); updateEstimate();
+      document.title = T('forex.title','外汇交易') + ' - Vexus';
+    } catch(e) {}
+  });
   loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState(); setupTpSlControls(); updateEstimate(); bindTimeframes(); startMarketTicker(); bindOrderTabs(); setupQtyStepper();
   document.getElementById('qtyInput').addEventListener('input', updateEstimate);
     });
@@ -649,6 +680,13 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
     $('qtyMinus').onclick = function(){ q.value = Math.max(0.01, (Number(q.value)||0) - 0.01).toFixed(2); updateEstimate(); };
     $('qtyPlus').onclick = function(){ q.value = ((Number(q.value)||0) + 0.01).toFixed(2); updateEstimate(); };
   }
+  document.addEventListener('vexus-i18n-ready', function(){
+    try {
+      if ($('contractSpec')) $('contractSpec').textContent = T('forex.contractSpec','1 标准手 = 100,000 {pair}', {pair: (pairMeta().name || current).replace('/','')});
+      renderState(); renderPendingOrders(); renderMiniPositions(); renderMarket(); updateEstimate();
+      document.title = T('forex.title','外汇交易') + ' - Vexus';
+    } catch(e) {}
+  });
   loadState(); renderPairs(); renderLeverage(); renderPrice(); loadChart(); renderState();
   loadConfig(); loadRates(); syncServerOrders(); setInterval(loadRates,30000); setInterval(syncServerOrders,20000);
   window.addEventListener('resize', function(){ if (chart && $('fx-chart')) chart.applyOptions({ width: $('fx-chart').clientWidth, height: $('fx-chart').clientHeight }); });

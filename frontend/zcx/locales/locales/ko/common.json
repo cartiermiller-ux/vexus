@@ -39,8 +39,8 @@
     "pair": "종목",
     "leverage": "레버리지",
     "qty": "Qty",
-    "sell": "매도가",
-    "buy": "매수가",
+    "sell": "Sell",
+    "buy": "Buy",
     "buyBtn": "매수",
     "sellBtn": "매도",
     "available": "사용 가능 잔액",
@@ -71,6 +71,19 @@
     "spread": "Spread",
     "updatedShort": "Updated",
     "pendingEmpty": "No pending orders",
-    "holding": "Open"
+    "holding": "Open",
+    "pieces": "Lots",
+    "contractSpec": "1 standard lot = 100,000 {pair}",
+    "lots": "lots",
+    "positionsPair": "Pair",
+    "positionsSide": "Side",
+    "positionsQty": "Qty",
+    "positionsOpen": "Open",
+    "positionsTp": "Take Profit",
+    "positionsSl": "Stop Loss",
+    "positionsPnl": "P/L",
+    "positionsAction": "Action",
+    "positionsEmpty": "No positions",
+    "closePos": "Close"
   }
 }

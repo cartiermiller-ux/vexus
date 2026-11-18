@@ -39,8 +39,8 @@
     "pair": "สินค้า",
     "leverage": "เลเวอเรจ",
     "qty": "Qty",
-    "sell": "ราคาขาย",
-    "buy": "ราคาซื้อ",
+    "sell": "Sell",
+    "buy": "Buy",
     "buyBtn": "ซื้อ",
     "sellBtn": "ขาย",
     "available": "ยอดเงินที่ใช้ได้",
@@ -71,6 +71,19 @@
     "spread": "Spread",
     "updatedShort": "Updated",
     "pendingEmpty": "No pending orders",
-    "holding": "Open"
+    "holding": "Open",
+    "pieces": "Lots",
+    "contractSpec": "1 standard lot = 100,000 {pair}",
+    "lots": "lots",
+    "positionsPair": "Pair",
+    "positionsSide": "Side",
+    "positionsQty": "Qty",
+    "positionsOpen": "Open",
+    "positionsTp": "Take Profit",
+    "positionsSl": "Stop Loss",
+    "positionsPnl": "P/L",
+    "positionsAction": "Action",
+    "positionsEmpty": "No positions",
+    "closePos": "Close"
   }
 }

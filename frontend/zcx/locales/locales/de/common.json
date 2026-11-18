@@ -39,8 +39,8 @@
     "pair": "Instrument",
     "leverage": "Hebel",
     "qty": "Menge",
-    "sell": "Verkaufspreis",
-    "buy": "Kaufpreis",
+    "sell": "Verkaufen",
+    "buy": "Kaufen",
     "buyBtn": "Kaufen",
     "sellBtn": "Verkaufen",
     "available": "Verfügbares Guthaben",
@@ -71,6 +71,19 @@
     "spread": "Spread",
     "updatedShort": "Aktualisiert",
     "pendingEmpty": "Keine offenen Orders",
-    "holding": "Offen"
+    "holding": "Offen",
+    "pieces": "Lots",
+    "contractSpec": "1 Standardlot = 100.000 {pair}",
+    "lots": "Lots",
+    "positionsPair": "Paar",
+    "positionsSide": "Seite",
+    "positionsQty": "Menge",
+    "positionsOpen": "Einstieg",
+    "positionsTp": "Take-Profit",
+    "positionsSl": "Stop-Loss",
+    "positionsPnl": "G/V",
+    "positionsAction": "Aktion",
+    "positionsEmpty": "Keine Positionen",
+    "closePos": "Schließen"
   }
 }
