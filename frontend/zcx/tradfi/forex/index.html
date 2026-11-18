@@ -105,6 +105,13 @@ select,input{width:100%;height:40px;border-radius:9px;border:1px solid rgba(255,
 .fx-foot{text-align:center;color:rgba(255,255,255,.3);font-size:11px;margin-top:24px}
 @media(max-width:1300px){.fx-grid{grid-template-columns:minmax(0,1fr) 340px}.market-side{display:none}}
 @media(max-width:900px){.fx-grid{grid-template-columns:1fr}#fx-chart{height:380px}.fx-nav{display:none}.fx-head{display:block}.fx-badge{display:inline-block;margin-top:12px}}
+
+/* order form fields match mobile terminal style */
+.order-card > label{display:block;font-size:11px;color:rgba(255,255,255,.55);margin:12px 0 6px}
+.order-card > select,.order-card > input[type=number]{width:100%;height:44px;background:#171426;border:1px solid rgba(255,255,255,.09);border-radius:9px;color:rgba(255,255,255,.92);padding:0 13px;font-size:14px;outline:none;box-sizing:border-box;-webkit-appearance:none;appearance:none}
+.order-card > select{background-image:linear-gradient(45deg,transparent 50%,rgba(255,255,255,.6) 50%),linear-gradient(135deg,rgba(255,255,255,.6) 50%,transparent 50%);background-position:calc(100% - 17px) 19px,calc(100% - 12px) 19px;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.order-card > input[type=number]::-webkit-inner-spin-button,.order-card > input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.order-card > input[type=number]{-moz-appearance:textfield}
 </style>
 </head>
 <body>
