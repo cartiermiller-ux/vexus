@@ -1,6 +1,5 @@
 ﻿/* Layout-only adaptation for spot / delivery / perpetual trade pages.
-   Mirrors the forex terminal: full viewport, chart + book + order columns,
-   no fixed 800px height and no oversized bottom gap. */
+   Only the right order panel is restyled; no trading logic is changed. */
 .trade-box-top{height:calc(100vh - 112px)!important;min-height:520px!important;max-height:none!important}
 .trade-box-top .top-left{min-width:0!important}
 .trade-box-top .top-middle,.trade-box-top .top-right{width:300px!important;flex:0 0 300px!important}
@@ -8,10 +7,26 @@
 .trade-box-bottom{margin-bottom:0!important;min-height:150px!important}
 .home-container .trade-panel-box{min-height:calc(100vh - 96px)!important}
 .trade-box .kline-box,.trade-box .chart-box,.trade-box .order-book{height:100%!important}
-/* right-side order form: same visual rhythm as forex order panel */
+
+/* right-side order form: same visual rhythm as forex order panel
+   Important: only real text/number inputs are styled. Range/checkbox/radio/hidden
+   inputs are left untouched so the original component cannot render a duplicate bar. */
 .trade-box-top .top-right{background:#0f0d1d!important;border-left:1px solid rgba(255,255,255,.08)!important;overflow-y:auto!important}
 .trade-box-top .top-right .place-order-container-common{padding:12px 14px 18px!important;height:100%!important;box-sizing:border-box!important}
-.trade-box-top .top-right input,.trade-box-top .top-right select{height:42px!important;border-radius:9px!important;background:#171426!important;color:#fff!important;border:1px solid rgba(255,255,255,.09)!important;box-sizing:border-box!important}
+.trade-box-top .top-right input[type=text],
+.trade-box-top .top-right input[type=number],
+.trade-box-top .top-right input:not([type]){
+  height:42px!important;border-radius:9px!important;background:#171426!important;color:#fff!important;
+  border:1px solid rgba(255,255,255,.09)!important;box-sizing:border-box!important;margin:0!important;
+}
+.trade-box-top .top-right select{height:42px!important;border-radius:9px!important;background:#171426!important;color:#fff!important;border:1px solid rgba(255,255,255,.09)!important;box-sizing:border-box!important}
+.trade-box-top .top-right input[type=range],
+.trade-box-top .top-right input[type=hidden],
+.trade-box-top .top-right input[type=checkbox],
+.trade-box-top .top-right input[type=radio]{height:auto!important;min-height:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.trade-box-top .top-right .place-order-input-box{position:relative!important;margin-top:0!important;border:0!important;background:transparent!important;height:auto!important}
+.trade-box-top .top-right .place-order-input-box .input-label-box{top:50%!important;transform:translateY(-50%)!important;height:auto!important;line-height:normal!important}
+.trade-box-top .top-right .place-order-input-box .input-unit{top:50%!important;transform:translateY(-50%)!important;height:auto!important;line-height:normal!important}
 .trade-box-top .top-right button{min-height:40px!important;border-radius:9px!important}
 .trade-box-top .top-right .place-order-form-box,.trade-box-top .top-right .place-order-inner-common{padding-top:4px!important}
 @media(max-width:1280px){
